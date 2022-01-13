@@ -13,7 +13,6 @@ public class Shooter extends SubsystemBase {
     // before the constructor is called when the "INSTANCE" variable initializes.
     CANSparkMax shooterMotor;
 
-
     public Shooter() {
         shooterMotor = new CANSparkMax(RobotMap.SHOOTER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
     }
