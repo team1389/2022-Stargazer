@@ -23,7 +23,11 @@ public class RobotMap {
     public static final int DRIVE_ENCODER_BACK_RIGHT = 12;
 
     //Shooter motor
-    public static final int SHOOTER_MOTOR = 13;
+    public static final int LEFT_SHOOTER_MOTOR = 13;
+    public static final int RIGHT_SHOOTER_MOTOR = 13;
+
+    //Hood servo
+    public static final int HOOD_SERVO = 13;
 
     //Conveyer motors
     public static final int LOWER_CONVEYER_MOTOR = 14;
@@ -35,7 +39,21 @@ public class RobotMap {
 
     //Climb motor
     public static final int CLIMB_MOTOR = 18;
-    
+
+
+    //Turret Motor
+    public static final int TURRET_MOTOR = 19;
+
+    //Indexer Motor
+    public static final int INDEXER_MOTOR = 20;
+
+    //Hopper Motor
+    public static final int HOPPER_MOTOR = 21;
+
+    //Robot dimensions (inches)
+    //Length and width are measured from the centers of the wheels
+    public static final int L = 32;
+    public static final int W = 32;
 
 
 
