@@ -47,5 +47,4 @@ public class Drivetrain extends SubsystemBase {
         frontLeft.setAngle(frontLeftAngle);
     }
 
-
 }
