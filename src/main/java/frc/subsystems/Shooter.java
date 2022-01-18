@@ -16,7 +16,6 @@ public class Shooter extends SubsystemBase {
     private TalonSRX rightShooterMotor; //Falcon 500
     private CANSparkMax turretMotor; //NEO Motor
     private CANSparkMax indexerMotor; //NEO motor
-    private Servo shooterHood;
 
 
     private SparkMaxPIDController turretPID;
@@ -31,7 +30,6 @@ public class Shooter extends SubsystemBase {
 
         turretMotor = new CANSparkMax(RobotMap.TURRET_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
 
-        shooterHood = new Servo(RobotMap.HOOD_SERVO);
 
         turretPID = turretMotor.getPIDController();
         turretPID.setP(kP);
