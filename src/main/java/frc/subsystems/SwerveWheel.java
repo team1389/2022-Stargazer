@@ -82,15 +82,15 @@ public class SwerveWheel extends SubsystemBase {
 
     //Get the closest angle between the given angles.
    private static double closestAngle(double a, double b) {
-           //Get direction
-           double dir = (b % 360.0) - (a % 360.0);
+        //Get direction
+        double dir = (b % 360.0) - (a % 360.0);
    
-           //Convert from -360 to 360 to -180 to 180
-           if (Math.abs(dir) > 180.0)
-           {
-                   dir = -(Math.signum(dir) * 360.0) + dir;
-           }
-           return dir;
+        //Convert from -360 to 360 to -180 to 180
+        if (Math.abs(dir) > 180.0)
+        {
+            dir = -(Math.signum(dir) * 360.0) + dir;
+        }
+        return dir;
    }
 
     //Only run this when training the angle, never in matches

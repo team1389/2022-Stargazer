@@ -14,12 +14,20 @@ public class Drivetrain extends SubsystemBase {
         frontRight = new SwerveWheel(RobotMap.DRIVE_MOTOR_FRONT_RIGHT, RobotMap.ROTATION_MOTOR_FRONT_RIGHT, RobotMap.DRIVE_ENCODER_FRONT_RIGHT);
         backLeft = new SwerveWheel(RobotMap.DRIVE_MOTOR_BACK_LEFT, RobotMap.ROTATION_MOTOR_BACK_LEFT, RobotMap.DRIVE_ENCODER_BACK_LEFT);
         backRight = new SwerveWheel(RobotMap.DRIVE_MOTOR_BACK_RIGHT, RobotMap.ROTATION_MOTOR_BACK_RIGHT, RobotMap.DRIVE_ENCODER_BACK_RIGHT);
-
+ 
         gyro.reset();
     }
 
     //y is desired motion forward, x sideways, and rotation is desired clockwise rotation
     public void drive(double x, double y, double rotation) {
+        double angle = gyro.getAngle() % 360;
+        angle = Math.toRadians(angle);
+
+        //Apply a rotation of angle radians to the <x, y> vector
+        final double temp = y * Math.cos(angle) + x * Math.sin(angle);
+        x = x * Math.cos(angle) - y * Math.sin(angle);
+        y = temp;
+
         //Radius from center to each wheel
         double r = Math.sqrt ((RobotMap.L * RobotMap.L) + (RobotMap.W * RobotMap.W));
 
@@ -41,15 +49,15 @@ public class Drivetrain extends SubsystemBase {
         double frontRightAngle = Math.atan2 (b, d) * (180/Math.PI);
         double frontLeftAngle = Math.atan2 (b, c) * (180/Math.PI);
 
-        backRight.setSpeed(backRightSpeed);
-        backLeft.setSpeed(backLeftSpeed);
-        frontRight.setSpeed(frontRightSpeed);
-        frontLeft.setSpeed(frontLeftSpeed);
-
         backRight.setAngle(backRightAngle);
         backLeft.setAngle(backLeftAngle);
         frontRight.setAngle(frontRightAngle);
         frontLeft.setAngle(frontLeftAngle);
+
+        backRight.setSpeed(backRightSpeed);
+        backLeft.setSpeed(backLeftSpeed);
+        frontRight.setSpeed(frontRightSpeed);
+        frontLeft.setSpeed(frontLeftSpeed);      
     }
 
 }
