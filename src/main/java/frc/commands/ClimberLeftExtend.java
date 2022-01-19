@@ -2,18 +2,18 @@ package frc.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
-import frc.subsystems.Hopper;
+import frc.subsystems.Climber;
 
 
-public class RunHopper extends CommandBase {
-    private Hopper hopper;
+public class ClimberLeftExtend extends CommandBase {
+    private Climber climber;
 
 
 
-    public RunHopper() {
-        hopper = Robot.hopper;
+    public ClimberLeftExtend() {
+        climber = Robot.climber;
 
-        addRequirements(hopper);
+        addRequirements(climber);
     }
 
     @Override
@@ -23,7 +23,8 @@ public class RunHopper extends CommandBase {
 
     @Override
     public void execute() {
-        hopper.setSpeed(1);
+
+        //climber.extendLeftClimber();
     }
 
     @Override
@@ -35,6 +36,6 @@ public class RunHopper extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        hopper.stopHopper();
+        //climber.stopLeftClimber();
     }
 }

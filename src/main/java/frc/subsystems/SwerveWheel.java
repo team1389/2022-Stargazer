@@ -31,7 +31,8 @@ public class SwerveWheel extends SubsystemBase {
         driveMotor = new CANSparkMax(driveMotorPort, CANSparkMaxLowLevel.MotorType.kBrushless);
         rotateMotor = new CANSparkMax(rotateMotorPort, CANSparkMaxLowLevel.MotorType.kBrushless);
         rotateAbsEncoder = new CANCoder(rotateEncoderPort);
-        
+
+
 
         //Assign PID controllers' parameters
         rotatePIDController = rotateMotor.getPIDController();
@@ -39,7 +40,7 @@ public class SwerveWheel extends SubsystemBase {
         rotatePIDController.setP(rotateP);
         rotatePIDController.setI(rotateI);
         rotatePIDController.setD(rotateD);
-        rotateMotor.getEncoder().setPositionConversionFactor(ROTATION_POSITION_CONVERSION_FACTOR*180);
+        rotateMotor.getEncoder().setPositionConversionFactor(ROTATION_POSITION_CONVERSION_FACTOR * 180);
     }
 
     public void setSpeed(double speed) {
@@ -80,8 +81,7 @@ public class SwerveWheel extends SubsystemBase {
     }
 
     //Get the closest angle between the given angles.
-   private static double closestAngle(double a, double b)
-   {
+   private static double closestAngle(double a, double b) {
            //Get direction
            double dir = (b % 360.0) - (a % 360.0);
    
