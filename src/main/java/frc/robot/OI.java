@@ -21,5 +21,15 @@ public class OI {
 
     }
 
+    public double getDriverLeftX() {
+        return driveController.getLeftX();
+    }
+    public double getDriverLeftY() {
+        return driveController.getLeftY();
+    }
+    public double getDriverRightX() {
+        return driveController.getRightX();
+    }
+
 
 }

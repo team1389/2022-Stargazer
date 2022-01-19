@@ -23,8 +23,7 @@ public class RobotMap {
     public static final int DRIVE_ENCODER_BACK_RIGHT = 12;
 
     //Shooter motor
-    public static final int LEFT_SHOOTER_MOTOR = 13;
-    public static final int RIGHT_SHOOTER_MOTOR = 13;
+    public static final int SHOOTER_MOTOR = 13;
 
     //Hood servo
     public static final int HOOD_SERVO = 13;
@@ -34,8 +33,7 @@ public class RobotMap {
     public static final int UPPPER_CONVEYER_MOTOR = 15;
 
     //Intake motors
-    public static final int FRONT_INTAKE_MOTOR = 16;
-    public static final int BACK_INTAKE_MOTOR = 17;
+    public static final int INTAKE_MOTOR = 16;
 
     //Climb motor
     public static final int CLIMB_MOTOR = 18;
