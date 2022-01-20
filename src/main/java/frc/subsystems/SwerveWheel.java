@@ -4,6 +4,9 @@ import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
+
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SwerveWheel extends SubsystemBase {
@@ -15,6 +18,10 @@ public class SwerveWheel extends SubsystemBase {
 
     //Multiplied by the native output units (-1 to 1) to find position
     private final double ROTATION_POSITION_CONVERSION_FACTOR = 5.33 * 7;
+
+    //Factor between RPM and m/s
+    //TODO: Figure out what this value is
+    private final double DRIVE_VELOCITY_CONVERSION_FACTOR = 1;
 
 
     //Create PID coefficients
@@ -96,6 +103,12 @@ public class SwerveWheel extends SubsystemBase {
     //Only run this when training the angle, never in matches
     public void resetAbsEncoder() {
         rotateAbsEncoder.setPosition(0);
+    }
+
+    public SwerveModuleState getState() {
+        //Return the current module position and speed
+        return new SwerveModuleState(driveMotor.getEncoder().getVelocity()*DRIVE_VELOCITY_CONVERSION_FACTOR,
+            Rotation2d.fromDegrees(-rotateMotor.getEncoder().getPosition()));
     }
 
 

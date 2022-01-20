@@ -19,6 +19,9 @@ public class RunIntake extends CommandBase {
 
     }
 
+    /**
+    * TODO: The hopper should be slowly turned while the robot is intaking
+    */
     @Override
     public void execute() {
         intake.setIntakePercent(1);
@@ -26,8 +29,6 @@ public class RunIntake extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        // TODO: Make this return true when this Command no longer needs to run execute()
-
         return false;
     }
 
