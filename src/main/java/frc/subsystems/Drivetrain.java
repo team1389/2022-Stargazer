@@ -1,6 +1,6 @@
 package frc.subsystems;
 
-import com.kauailabs.navx.frc;
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
