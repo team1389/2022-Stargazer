@@ -24,33 +24,39 @@ public class TurretTracking extends CommandBase {
 
     @Override
     public void initialize() {
+        //Setup limelight through NetworkTables
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
 
-        tv = 0;
-        tx = 0;
-        ty = 0;
-        ta = 0;
+        tv = 0; //# of Targets found
+        tx = 0; //Horizontal offset from -27 degrees to 27
+        ty = 0; //Vertical offset from 20.5 degrees to 20.5
+        ta = 0; //Target Area from 0% of image to 100% of image
+
     }
 
     @Override
     public void execute() {
+        //Updates the limelight values
         fetchValues();
 
+
         if(tv >= 1) {
-            //do the pid
-            turretPower = pid.calculate(tx, 0);
+            //Sets the pid controller's reference point to the ty and the setpoint to 0
+            turretPower = pid.calculate(ty, 0); //Need to test offset, ty because limelight is vetical
 
         }
         else {
             System.out.print("No target");
         }
 
+        //Sets the shooter to the turret power from PID
         Robot.shooter.setTurretPower(turretPower);
     }
 
     private void fetchValues() {
         tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
         tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+        ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
         ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
     }
 }

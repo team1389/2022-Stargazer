@@ -17,6 +17,7 @@ public class Drivetrain extends SubsystemBase {
     private SwerveDriveOdometry odometry;
 
     public Drivetrain() {
+        //Initializes 4 individual SwerveWheels using all ports from RobotMap
         frontLeft = new SwerveWheel(RobotMap.DRIVE_MOTOR_FRONT_LEFT, RobotMap.ROTATION_MOTOR_FRONT_LEFT, RobotMap.DRIVE_ENCODER_FRONT_LEFT);
         frontRight = new SwerveWheel(RobotMap.DRIVE_MOTOR_FRONT_RIGHT, RobotMap.ROTATION_MOTOR_FRONT_RIGHT, RobotMap.DRIVE_ENCODER_FRONT_RIGHT);
         backLeft = new SwerveWheel(RobotMap.DRIVE_MOTOR_BACK_LEFT, RobotMap.ROTATION_MOTOR_BACK_LEFT, RobotMap.DRIVE_ENCODER_BACK_LEFT);
@@ -27,9 +28,11 @@ public class Drivetrain extends SubsystemBase {
         Translation2d frontRightLocation = new Translation2d(0.381, -0.381);
         Translation2d backLeftLocation = new Translation2d(-0.381, 0.381);
         Translation2d backRightLocation = new Translation2d(-0.381, -0.381);
- 
+
+        //Resets the angle of the gyroscope
         gyro.reset();
 
+        //Initializes the SwerveDriveKinematics object using the 4 Translation2D objects from above
         kinematics = new SwerveDriveKinematics(
             frontLeftLocation,
             frontRightLocation,
@@ -37,6 +40,7 @@ public class Drivetrain extends SubsystemBase {
             backRightLocation
         );
 
+        //Initializes the SwerveDriveOdometry object using the kinematics and Rotation2d object
         odometry = new SwerveDriveOdometry(kinematics, new Rotation2d());
     }
 
@@ -72,11 +76,13 @@ public class Drivetrain extends SubsystemBase {
         double frontRightAngle = Math.atan2 (b, d) * (180/Math.PI);
         double frontLeftAngle = Math.atan2 (b, c) * (180/Math.PI);
 
+        //Sets the angle for all SwerveWheels from calculate angles above
         backRight.setAngle(backRightAngle);
         backLeft.setAngle(backLeftAngle);
         frontRight.setAngle(frontRightAngle);
         frontLeft.setAngle(frontLeftAngle);
 
+        //Sets the speed for all SwerveWheels from calculate speeds above
         backRight.setSpeed(backRightSpeed);
         backLeft.setSpeed(backLeftSpeed);
         frontRight.setSpeed(frontRightSpeed);

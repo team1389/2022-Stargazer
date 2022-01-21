@@ -7,10 +7,11 @@ import frc.robot.RobotMap;
 
 public class Hopper extends SubsystemBase {
 
-    private CANSparkMax hopperMotor;
+    private CANSparkMax hopperMotor; //NEO 550
 
 
     public Hopper() {
+        //Instantiate hopper motor as brushless motor with port from RobotMap
         hopperMotor = new CANSparkMax(RobotMap.HOPPER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
     }
 

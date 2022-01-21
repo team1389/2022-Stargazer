@@ -5,20 +5,24 @@ import frc.robot.Robot;
 import frc.subsystems.Drivetrain;
 
 public class TeleOpDrive extends CommandBase {
+    //Add pid using gyro
     public Drivetrain drivetrain;
 
     public TeleOpDrive() {
         drivetrain = Robot.drivetrain;
         addRequirements(drivetrain);
+
     }
 
     @Override
     public void execute() {
+        //Gets the driver's controller inputs
         double x = Robot.oi.getDriverLeftX();
         double y = Robot.oi.getDriverLeftY();
-        double rot = Robot.oi.getDriverRightX();
+        double rotation = Robot.oi.getDriverRightX();
 
-        Robot.drivetrain.drive(x, y, rot);
+        //Sets the swerve drive command using controller inputs
+        Robot.drivetrain.drive(x, y, rotation);
     }
 
 }

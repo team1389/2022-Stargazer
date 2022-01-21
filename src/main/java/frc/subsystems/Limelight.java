@@ -6,7 +6,7 @@ import frc.util.Coord;
 public class Limelight extends SubsystemBase {
 
 
-// TODO: TO BE DONE LATER
+// TODO: delete this class
 
     public Limelight() {
 

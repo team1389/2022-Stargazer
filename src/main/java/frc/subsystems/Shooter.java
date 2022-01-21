@@ -23,11 +23,14 @@ public class Shooter extends SubsystemBase {
 
 
     public Shooter() {
+        //Instantiate shooter and indexer motors with ports from RobotMap
         shooterMotor = new TalonFX(RobotMap.SHOOTER_MOTOR);
         indexerMotor = new TalonFX(RobotMap.INDEXER_MOTOR);
 
+        //Instantiate turret motor as brushless motor with port from RobotMap
         turretMotor = new CANSparkMax(RobotMap.TURRET_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
 
+        //Set the kP, kI, and kD values for the turretPID
         turretPID.setP(kP);
         turretPID.setI(kI);
         turretPID.setD(kD);
