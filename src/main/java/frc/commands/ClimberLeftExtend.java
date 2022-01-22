@@ -24,7 +24,7 @@ public class ClimberLeftExtend extends CommandBase {
     @Override
     public void execute() {
 
-        //climber.extendLeftClimber();
+        climber.win();
     }
 
     @Override
