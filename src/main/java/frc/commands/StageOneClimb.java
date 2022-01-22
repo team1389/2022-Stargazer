@@ -12,7 +12,8 @@ public class StageOneClimb extends SequentialCommandGroup {
         addCommands(new ClimberLeftExtend(), 
                     new ClimberRightExtend(), 
                     new WaitCommand(2),
-                    new ClimberRightRetract());
+                    new ClimberRightRetract(),
+                    new ClimberLeftRetract());
     } 
 
 }
