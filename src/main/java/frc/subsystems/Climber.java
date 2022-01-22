@@ -37,16 +37,19 @@ public class Climber extends SubsystemBase {
 
     }
 
-    public void winchUp() {
+    public void winchLeftUp() {
         //Extends the climber upwards
         leftClimbMotor.set(ControlMode.PercentOutput, climbSpeed);
+    }
+    public void winchRightUp() {
         rightClimbMotor.set(ControlMode.PercentOutput, climbSpeed);
-
     }
 
-    public void winchDown() {
+    public void winchLeftDown() {
         //Descends the climber
         leftClimbMotor.set(ControlMode.PercentOutput, -climbSpeed);
+    }
+    public void winchRightDown() {
         rightClimbMotor.set(ControlMode.PercentOutput, -climbSpeed);
     }
 
@@ -58,8 +61,29 @@ public class Climber extends SubsystemBase {
 
     //TODO: add the climber piston methods
     public void extendLeft() {
-
+        leftExtender.set(DoubleSolenoid.Value.kForward);
     }
+    public void extendRight() {
+        rightExtender.set(DoubleSolenoid.Value.kForward);
+    }
+
+    public void retractLeft() {
+        leftExtender.set(DoubleSolenoid.Value.kReverse);
+    }
+    public void retractRight() {
+        rightExtender.set(DoubleSolenoid.Value.kReverse);
+    }
+
+    /**
+     * 1. Extend both grab
+     * 2. retract right pull up
+     * 3. Move left back 5 degrees
+     * 4. Extend left hold second bar
+     * 5. Extend right release first bar
+     * 6.
+     */
+
+
 
 
 

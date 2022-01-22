@@ -48,7 +48,7 @@ public class SwerveWheel extends SubsystemBase {
         rotatePIDController.setD(rotateD);
         //this wrong, were not using the relative encoder
         rotateMotor.getEncoder().setPositionConversionFactor(ROTATION_POSITION_CONVERSION_FACTOR * 180);
-
+        //Find equivalent from the CANCoder class
     }
 
     public void setSpeed(double speed) {

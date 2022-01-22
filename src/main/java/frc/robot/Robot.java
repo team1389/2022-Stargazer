@@ -1,10 +1,7 @@
 package frc.robot;
 
 
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.PneumaticHub;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.subsystems.*;
 
@@ -25,8 +22,10 @@ public class Robot extends TimedRobot {
     public static Hopper hopper = new Hopper();
     public static Climber climber = new Climber();
     public static Shooter shooter = new Shooter();
+    public static ML ml = new ML();
     public static PneumaticHub pneumaticHub = new PneumaticHub(RobotMap.PNEUMATICS_HUB);
     public static Compressor phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
+    public static PowerDistribution powerDistributionHub = new PowerDistribution();
 
 
 

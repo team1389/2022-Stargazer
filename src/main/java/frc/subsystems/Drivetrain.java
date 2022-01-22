@@ -17,7 +17,7 @@ public class Drivetrain extends SubsystemBase {
     private SwerveDriveOdometry odometry;
 
     public Drivetrain() {
-        //Initializes 4 individual SwerveWheels using all ports from RobotMap
+        //Instantiates 4 individual SwerveWheels using all ports from RobotMap
         frontLeft = new SwerveWheel(RobotMap.DRIVE_MOTOR_FRONT_LEFT, RobotMap.ROTATION_MOTOR_FRONT_LEFT, RobotMap.DRIVE_ENCODER_FRONT_LEFT);
         frontRight = new SwerveWheel(RobotMap.DRIVE_MOTOR_FRONT_RIGHT, RobotMap.ROTATION_MOTOR_FRONT_RIGHT, RobotMap.DRIVE_ENCODER_FRONT_RIGHT);
         backLeft = new SwerveWheel(RobotMap.DRIVE_MOTOR_BACK_LEFT, RobotMap.ROTATION_MOTOR_BACK_LEFT, RobotMap.DRIVE_ENCODER_BACK_LEFT);
@@ -32,7 +32,7 @@ public class Drivetrain extends SubsystemBase {
         //Resets the angle of the gyroscope
         gyro.reset();
 
-        //Initializes the SwerveDriveKinematics object using the 4 Translation2D objects from above
+        //Instantiates the SwerveDriveKinematics object using the 4 Translation2D objects from above
         kinematics = new SwerveDriveKinematics(
             frontLeftLocation,
             frontRightLocation,
@@ -40,7 +40,7 @@ public class Drivetrain extends SubsystemBase {
             backRightLocation
         );
 
-        //Initializes the SwerveDriveOdometry object using the kinematics and Rotation2d object
+        //Instantiates the SwerveDriveOdometry object using the kinematics and Rotation2d object
         odometry = new SwerveDriveOdometry(kinematics, new Rotation2d());
     }
 

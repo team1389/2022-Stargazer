@@ -62,8 +62,8 @@ public class RobotMap {
 
     //Robot dimensions (inches)
     //Length and width are measured from the centers of the wheels
-    public static final int L = 32;
-    public static final int W = 32;
+    public static final int L = 29;
+    public static final int W = 29;
 
 
 
