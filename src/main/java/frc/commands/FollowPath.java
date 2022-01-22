@@ -6,29 +6,50 @@ package frc.commands;
 
 import java.util.ArrayList;
 
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
+
+import edu.wpi.first.math.controller.HolonomicDriveController;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.subsystems.Drivetrain;
 
 public class FollowPath extends CommandBase {
     private Drivetrain drivetrain = Robot.drivetrain;
-    private Trajectory trajectory;
+    private PathPlannerTrajectory trajectory;
+    private Timer timer = new Timer();
+    
+    //TODO: Tune these
+    private double p = 6;
+    private double i = 0;
+    private double d = 0.06;
+
+    private PathPlannerState state = new PathPlannerState();
+    private Pose2d odometryPose = new Pose2d();
+    private Rotation2d desiredAngle;
+    private ChassisSpeeds speeds = new ChassisSpeeds();
+
+    private HolonomicDriveController driveController;
 
     // Measured in m/s and m/s/s
     private final double MAX_VELOCITY = 5;
     private final double MAX_ACCELERATION = 4;
 
-    // The array of positions in the form (x, y) marking the desired path. x
-    // positive is left. Angles in degrees CCW. Distance in meters.
-    public FollowPath(double[][] points, double startAngle, double endAngle, double startVelocity, double endVelocity) {
-
-        trajectory = calculateTrajectory(points, startAngle, endAngle, startVelocity, endVelocity);
+    //Input the name of the generated path in PathPlanner
+    public FollowPath(String pathName) {
+        trajectory = getTrajectory(pathName);
 
         addRequirements(drivetrain);
     }
@@ -36,20 +57,52 @@ public class FollowPath extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+
+        //Create necessary profiled PID controller and configure it to be used with the holonomic controller
+        ProfiledPIDController rotationController =
+        new ProfiledPIDController(
+            2.5,
+            0.0,
+            0.0,
+            new TrapezoidProfile.Constraints(MAX_VELOCITY, MAX_ACCELERATION));
+
+        //Create main holonomic drive controller
+        driveController = new HolonomicDriveController(
+            new PIDController(p, i, d), new PIDController(p, i, d), rotationController);
+        driveController.setEnabled(true);
+
+        //Start timer when path begins 
+        timer.reset();
+        timer.start();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
-    // TODO: Create a HolonomicDriveController to follow the trajectory
     @Override
     public void execute() {
+        //To access the desired angle at the current state, the Trajectory.State must be cast to a PathPlannerState
+        state = (PathPlannerState) trajectory.sample(timer.get());
+        desiredAngle = state.holonomicRotation;
+        odometryPose = drivetrain.getPose();
+        speeds = driveController.calculate(odometryPose, (Trajectory.State)state, desiredAngle);
+
+        //Send the desired speeds to the drivetrain
+        drivetrain.setChassisSpeeds(speeds);
     }
 
-    // Calculate trajectory with a clamped cubic spline
+    //Read the path with the given name from the PathPlanner
+    private PathPlannerTrajectory getTrajectory(String pathName) {
+        PathPlannerTrajectory currentTrajectory = PathPlanner.loadPath(pathName, MAX_VELOCITY, MAX_ACCELERATION);
+
+        return currentTrajectory;
+    }
+
+    // Calculate trajectory manually with a clamped cubic spline
     private Trajectory calculateTrajectory(double[][] points, double startAngle, double endAngle, double startVelocity,
             double endVelocity) {
+
         Pose2d startPose = new Pose2d(points[0][0], points[0][1], Rotation2d.fromDegrees(startAngle));
         Pose2d endPose = new Pose2d(points[points.length - 1][0], points[points.length - 1][1],
-                Rotation2d.fromDegrees(endAngle));
+            Rotation2d.fromDegrees(endAngle));
 
         ArrayList<Translation2d> path = new ArrayList<>();
 
