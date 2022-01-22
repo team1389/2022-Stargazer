@@ -53,9 +53,12 @@ public class Climber extends SubsystemBase {
         rightClimbMotor.set(ControlMode.PercentOutput, -climbSpeed);
     }
 
-    public void stopClimber() {
+    public void stopLeftClimber() {
         //Stops the climber
         leftClimbMotor.set(ControlMode.PercentOutput, 0);
+    }
+    
+    public void stopRightClimber() {
         rightClimbMotor.set(ControlMode.PercentOutput, 0);
     }
 
