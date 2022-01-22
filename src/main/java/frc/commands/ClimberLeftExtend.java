@@ -6,36 +6,27 @@ import frc.subsystems.Climber;
 
 
 public class ClimberLeftExtend extends CommandBase {
+
     private Climber climber;
-
-
 
     public ClimberLeftExtend() {
         climber = Robot.climber;
-
         addRequirements(climber);
     }
 
     @Override
-    public void initialize() {
-
-    }
-
-    @Override
     public void execute() {
-
-        climber.win();
+        climber.winchLeftUp();
     }
 
     @Override
     public boolean isFinished() {
-        // TODO: Make this return true when this Command no longer needs to run execute()
-
+        // Stopper here
         return false;
     }
 
     @Override
     public void end(boolean interrupted) {
-        //climber.stopLeftClimber();
+        climber.stopLeftClimber();
     }
 }
