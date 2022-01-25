@@ -14,6 +14,10 @@ public class StageOneClimb extends SequentialCommandGroup {
                     new WaitCommand(2),
                     new ClimberRightRetract(),
                     new ClimberLeftRetract());
-    } 
-
+    }
 }
+/**
+ * 1. Extend both up
+ * 2. Wait 2 seconds
+ * 3. Retract both down
+ */

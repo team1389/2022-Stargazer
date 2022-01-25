@@ -77,14 +77,7 @@ public class Climber extends SubsystemBase {
         rightExtender.set(DoubleSolenoid.Value.kReverse);
     }
 
-    /**
-     * 1. Extend both grab
-     * 2. retract right pull up
-     * 3. Move left back 5 degrees
-     * 4. Extend left hold second bar
-     * 5. Extend right release first bar
-     * 6.
-     */
+
 
 
 

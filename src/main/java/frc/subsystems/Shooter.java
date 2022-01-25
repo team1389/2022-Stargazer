@@ -16,6 +16,7 @@ public class Shooter extends SubsystemBase {
 
     private CANSparkMax turretMotor; //NEO 550 Motor
 
+
     private PIDController turretPID;
     private final double kP = 0;
     private final double kI = 0;

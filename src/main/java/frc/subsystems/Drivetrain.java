@@ -89,6 +89,13 @@ public class Drivetrain extends SubsystemBase {
         frontLeft.setSpeed(frontLeftSpeed);      
     }
 
+    public void stopDrive() {
+        frontLeft.setSpeed(0);
+        frontRight.setSpeed(0);
+        backLeft.setSpeed(0);
+        backRight.setSpeed(0);
+    }
+
     //Called periodically in autonomous to track the robot's position
     public void updateOdometry() {
         odometry.update(Rotation2d.fromDegrees(-gyro.getAngle()),
