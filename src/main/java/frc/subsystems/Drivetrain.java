@@ -2,10 +2,13 @@ package frc.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
@@ -83,10 +86,10 @@ public class Drivetrain extends SubsystemBase {
         frontLeft.setAngle(frontLeftAngle);
 
         //Sets the speed for all SwerveWheels from calculate speeds above
-        backRight.setSpeed(backRightSpeed);
-        backLeft.setSpeed(backLeftSpeed);
-        frontRight.setSpeed(frontRightSpeed);
-        frontLeft.setSpeed(frontLeftSpeed);      
+        backRight.setPower(backRightSpeed);
+        backLeft.setPower(backLeftSpeed);
+        frontRight.setPower(frontRightSpeed);
+        frontLeft.setPower(frontLeftSpeed);      
     }
 
     public void stopDrive() {
@@ -104,6 +107,24 @@ public class Drivetrain extends SubsystemBase {
             backLeft.getState(),
             backRight.getState()
         );
+    }
+
+    public Pose2d getPose() {
+        return odometry.getPoseMeters();
+    }
+
+    public void setOdometry(SwerveDriveOdometry newOdometry) {
+        odometry.resetPosition(newOdometry.getPoseMeters(), gyro.getRotation2d());
+    }
+
+    //Manually set the speed of the drivetrain
+    public void setChassisSpeeds(ChassisSpeeds speeds) {
+        SwerveModuleState[] moduleStates = kinematics.toSwerveModuleStates(speeds);
+
+        frontLeft.setState(moduleStates[0]);
+        frontRight.setState(moduleStates[1]);
+        backLeft.setState(moduleStates[2]);
+        backRight.setState(moduleStates[3]);
     }
 
 }

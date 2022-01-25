@@ -51,8 +51,12 @@ public class SwerveWheel extends SubsystemBase {
         //Find equivalent from the CANCoder class
     }
 
-    public void setSpeed(double speed) {
-        driveMotor.set(speed);
+    public void setPower(double power) {
+        driveMotor.set(power);
+    }
+
+    public void setSpeed(double speedMetersPerSecond) {
+        drivePIDController.setReference(speedMetersPerSecond/DRIVE_VELOCITY_CONVERSION_FACTOR, CANSparkMax.ControlType.kVelocity);
     }
 
     //Angle should be measured in degrees, from -180 to 180
@@ -72,6 +76,14 @@ public class SwerveWheel extends SubsystemBase {
             driveMotor.setInverted(true);
             rotatePIDController.setReference(currentAngle + setpointAngleFlipped, CANSparkMax.ControlType.kPosition);
         }
+    }
+
+    //Set the set of the wheel with a SwerveModuleState
+    public void setState(SwerveModuleState state) {
+        //Reverse the angle to match default from rotation encoders
+        setAngle(-state.angle.getDegrees());
+
+        setSpeed(state.speedMetersPerSecond);
     }
 
     //Set the relative encoder to its wheel's actual angle
