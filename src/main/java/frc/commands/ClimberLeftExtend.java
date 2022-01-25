@@ -9,7 +9,7 @@ public class ClimberLeftExtend extends CommandBase {
 
     private Climber climber;
 
-    public ClimberLeftExtend(boolean arm, boolean piston) {
+    public ClimberLeftExtend() {
         climber = Robot.climber;
         addRequirements(climber);
     }
