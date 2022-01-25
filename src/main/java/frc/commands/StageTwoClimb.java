@@ -1,19 +1,32 @@
 package frc.commands;
 
-
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
+import frc.subsystems.Climber;
 
 public class StageTwoClimb extends SequentialCommandGroup {
 
-    public StageTwoClimb() {
-        addRequirements(Robot.climber);
-        addCommands(new ParallelCommandGroup(new ClimberLeftExtend(true, false), new ClimberRightExtend()),
-                    new WaitCommand(2),
-                    new ParallelCommandGroup(new ClimberLeftRetract(), new ClimberRightRetract())
+    private Climber climber;
 
+    public StageTwoClimb() {
+        climber = Robot.climber;
+        addRequirements(climber);
+        addCommands(
+            new ParallelCommandGroup(new InstantCommand(() -> climber.pistonRetractRight()), 
+                                    new InstantCommand(() -> climber.pistonRetractLeft())),
+            new WaitCommand(2),
+            new InstantCommand(() -> climber.pistonExtendLeft()),
+            new WaitCommand(2),
+            new ClimberLeftExtend(),
+            new WaitCommand(2),
+            new ParallelCommandGroup(new ClimberLeftRetract(), 
+                                    new SequentialCommandGroup(new WaitCommand(1), 
+                                                            new InstantCommand(() -> climber.pistonExtendRight()))),
+            new ClimberRightExtend(),
+            new ClimberRightRetract()
         );
     }
 }

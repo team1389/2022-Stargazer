@@ -63,17 +63,17 @@ public class Climber extends SubsystemBase {
     }
 
     //TODO: add the climber piston methods
-    public void extendLeft() {
+    public void pistonExtendLeft() {
         leftExtender.set(DoubleSolenoid.Value.kForward);
     }
-    public void extendRight() {
+    public void pistonExtendRight() {
         rightExtender.set(DoubleSolenoid.Value.kForward);
     }
 
-    public void retractLeft() {
+    public void pistonRetractLeft() {
         leftExtender.set(DoubleSolenoid.Value.kReverse);
     }
-    public void retractRight() {
+    public void pistonRetractRight() {
         rightExtender.set(DoubleSolenoid.Value.kReverse);
     }
 

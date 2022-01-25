@@ -21,7 +21,7 @@ public class SwerveWheel extends SubsystemBase {
 
     //Factor between RPM and m/s
     //TODO: Figure out what this value is
-    private final double DRIVE_VELOCITY_CONVERSION_FACTOR = 1;
+    private final double DRIVE_VELOCITY_CONVERSION_FACTOR = 5.33*Math.PI*3*(1/60);
 
 
     //Create PID coefficients
