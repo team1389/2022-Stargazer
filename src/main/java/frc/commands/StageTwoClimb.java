@@ -10,7 +10,7 @@ public class StageTwoClimb extends SequentialCommandGroup {
 
     public StageTwoClimb() {
         addRequirements(Robot.climber);
-        addCommands(new ParallelCommandGroup(new ClimberLeftExtend(true, false), new ClimberRightExtend()),
+        addCommands(new ParallelCommandGroup(new ClimberLeftExtend(), new ClimberRightExtend()),
                     new WaitCommand(2),
                     new ParallelCommandGroup(new ClimberLeftRetract(), new ClimberRightRetract())
 
