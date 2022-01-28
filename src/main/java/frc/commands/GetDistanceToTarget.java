@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 public class GetDistanceToTarget extends CommandBase {
-    private double TARGET_HEIGHT_INCHES = 83.25; //83.25 on real field, 95 on shelf
+    private double TARGET_HEIGHT_INCHES = 103;
     private double CAMERA_ANGLE_DEGREES = 27.21212218; //REMEMBER TO CHANGE THIS EVERY MATCH IF WE ADJUST THE SHOOTER
     private double CAMERA_HEIGHT_INCHES = 26;
 
