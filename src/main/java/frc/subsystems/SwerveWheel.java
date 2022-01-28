@@ -122,5 +122,11 @@ public class SwerveWheel extends SubsystemBase {
             Rotation2d.fromDegrees(-rotateMotor.getEncoder().getPosition()));
     }
 
+    public void setPID(double kP, double kI, double kD) {
+        rotatePIDController.setP(kP);
+        rotatePIDController.setI(kI);
+        rotatePIDController.setD(kD);
+
+    }
 
 }

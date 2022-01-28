@@ -15,18 +15,9 @@ public class Robot extends TimedRobot {
      * Ex: public static System system = new System();
      */
 
+    public static SwerveWheel swerveWheel = new SwerveWheel(RobotMap.DRIVE_MOTOR_FRONT_LEFT, RobotMap.ROTATION_MOTOR_FRONT_LEFT, RobotMap.DRIVE_ENCODER_FRONT_LEFT);
 
     public static OI oi = new OI();
-    public static Drivetrain drivetrain = new Drivetrain();
-    public static Intake intake = new Intake();
-    public static Hopper hopper = new Hopper();
-    public static Climber climber = new Climber();
-    public static Shooter shooter = new Shooter();
-    public static ML ml = new ML();
-    public static PneumaticHub pneumaticHub = new PneumaticHub(RobotMap.PNEUMATICS_HUB);
-    public static Compressor phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
-    public static PowerDistribution powerDistributionHub = new PowerDistribution();
-
 
 
     @Override
