@@ -16,7 +16,6 @@ public class Robot extends TimedRobot {
      */
 
 
-    public static OI oi = new OI();
     public static Drivetrain drivetrain = new Drivetrain();
     public static Intake intake = new Intake();
     public static Hopper hopper = new Hopper();
@@ -27,7 +26,8 @@ public class Robot extends TimedRobot {
     public static Compressor phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
     public static PowerDistribution powerDistributionHub = new PowerDistribution();
 
-
+    //Always create oi after all subsystems
+    public static OI oi = new OI();
 
     @Override
     public void robotInit() {
