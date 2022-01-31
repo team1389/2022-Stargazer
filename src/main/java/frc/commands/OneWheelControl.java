@@ -24,8 +24,8 @@ public class OneWheelControl extends CommandBase {
 
     @Override
     public void initialize() {
-        Robot.swerveWheel.resetAbsEncoder();
-        Robot.swerveWheel.coordinateRelativeEncoder();
+        //Robot.swerveWheel.resetAbsEncoder();
+        //Robot.swerveWheel.coordinateRelativeEncoder();
 
         Robot.swerveWheel.setPID(
             SmartDashboard.getNumber("kP", 1),

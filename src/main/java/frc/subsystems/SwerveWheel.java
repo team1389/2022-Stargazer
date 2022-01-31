@@ -14,7 +14,7 @@ public class SwerveWheel extends SubsystemBase {
     private SparkMaxPIDController rotatePIDController, drivePIDController;
 
     //Doesn't reset between matches, unlike the built in relative encoders
-    private CANCoder rotateAbsEncoder;
+    //private CANCoder rotateAbsEncoder;
 
     //Multiplied by the native output units (-1 to 1) to find position
     private final double ROTATION_POSITION_CONVERSION_FACTOR = 5.33 * 7;
@@ -37,7 +37,7 @@ public class SwerveWheel extends SubsystemBase {
         //Instantiate motors/sensors
         driveMotor = new CANSparkMax(driveMotorPort, CANSparkMaxLowLevel.MotorType.kBrushless);
         rotateMotor = new CANSparkMax(rotateMotorPort, CANSparkMaxLowLevel.MotorType.kBrushless);
-        rotateAbsEncoder = new CANCoder(rotateEncoderPort);
+        //rotateAbsEncoder = new CANCoder(rotateEncoderPort);
 
         //Assign PID controllers' parameters
         rotatePIDController = rotateMotor.getPIDController();
@@ -86,9 +86,10 @@ public class SwerveWheel extends SubsystemBase {
         setSpeed(state.speedMetersPerSecond);
     }
 
+    /*
     //Set the relative encoder to its wheel's actual angle
     public void coordinateRelativeEncoder() {
-        double absAngle = rotateAbsEncoder.getAbsolutePosition();
+        //double absAngle = rotateAbsEncoder.getAbsolutePosition();
         if(absAngle<=180) {
             rotateMotor.getEncoder().setPosition(absAngle);
         }
@@ -97,6 +98,7 @@ public class SwerveWheel extends SubsystemBase {
         }
         
     }
+    */
 
     //Get the closest angle between the given angles.
    private static double closestAngle(double a, double b) {
@@ -113,7 +115,7 @@ public class SwerveWheel extends SubsystemBase {
 
     //Only run this when training the angle, never in matches
     public void resetAbsEncoder() {
-        rotateAbsEncoder.setPosition(0);
+        //rotateAbsEncoder.setPosition(0);
     }
 
     public SwerveModuleState getState() {
