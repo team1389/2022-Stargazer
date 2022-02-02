@@ -16,7 +16,7 @@ public class OneWheelControl extends CommandBase {
     public OneWheelControl() {
         addRequirements(Robot.swerveWheel);
 
-        SmartDashboard.putNumber("kP", 1);
+        SmartDashboard.putNumber("kP", 0.025);
         SmartDashboard.putNumber("kI", 0);
         SmartDashboard.putNumber("kD", 0);
 
@@ -28,15 +28,17 @@ public class OneWheelControl extends CommandBase {
         //Robot.swerveWheel.coordinateRelativeEncoder();
 
         Robot.swerveWheel.setPID(
-            SmartDashboard.getNumber("kP", 1),
-            SmartDashboard.getNumber("kP", 0),
-            SmartDashboard.getNumber("kP", 0)
+            SmartDashboard.getNumber("kP", 0.025),
+            SmartDashboard.getNumber("kI", 0),
+            SmartDashboard.getNumber("kD", 0)
         );
     }
 
     @Override
     public void execute() {
-        Robot.swerveWheel.setAngle(90);
+        //Robot.swerveWheel.setAngle(90);
+        //Robot.swerveWheel.setSpeed(1);
+        Robot.swerveWheel.setPower(0.2);
 
         SmartDashboard.putNumber("Angle", Robot.swerveWheel.getState().angle.getDegrees());
         SmartDashboard.putNumber("Speed (m/s)", Robot.swerveWheel.getState().speedMetersPerSecond);

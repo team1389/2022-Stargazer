@@ -8,13 +8,13 @@ public class RobotMap {
     public static final int PNEUMATICS_HUB= 1;
 
     //Drive motors
-    public static final  int DRIVE_MOTOR_FRONT_LEFT = 1;
+    public static final  int DRIVE_MOTOR_FRONT_LEFT = 3; //real
     public static final int DRIVE_MOTOR_FRONT_RIGHT = 2;
     public static final int DRIVE_MOTOR_BACK_LEFT = 3;
     public static final int DRIVE_MOTOR_BACK_RIGHT = 4;
 
     //Rotation motors
-    public static final int ROTATION_MOTOR_FRONT_LEFT = 5;
+    public static final int ROTATION_MOTOR_FRONT_LEFT = 2;//real
     public static final int ROTATION_MOTOR_FRONT_RIGHT = 6;
     public static final int ROTATION_MOTOR_BACK_LEFT = 7;
     public static final int ROTATION_MOTOR_BACK_RIGHT = 8;

@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import frc.commands.OneWheelControl;
 
 public class OI {
 
@@ -9,7 +10,8 @@ public class OI {
 
     public OI() {
         initControllers();
-
+        
+        Robot.swerveWheel.setDefaultCommand(new OneWheelControl());
     }
 
     /**
