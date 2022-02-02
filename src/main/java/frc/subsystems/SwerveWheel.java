@@ -26,12 +26,12 @@ public class SwerveWheel extends SubsystemBase {
 
 
     //Create PID coefficients
-    public double rotateP = 1;
+    public double rotateP = 0.025;
     public double rotateI = 0;
     public double rotateD = 0;
 
-    public double driveP = 1;
-    public double driveI = 0;
+    public double driveP = 0.0007667;
+    public double driveI = 0.0000005;
     public double driveD = 0;
 
     public SwerveWheel(int driveMotorPort, int rotateMotorPort, int rotateEncoderPort) {
@@ -50,7 +50,13 @@ public class SwerveWheel extends SubsystemBase {
         //this wrong, were not using the relative encoder
         rotateMotor.getEncoder().setPositionConversionFactor(ROTATION_POSITION_CONVERSION_FACTOR*360);
         rotateMotor.getEncoder().setPosition(0);
-        //Find equivalent from the CANCoder class
+
+        drivePIDController = driveMotor.getPIDController();
+
+        //Set the kP, kI, and kD values for the rotatePIDController
+        drivePIDController.setP(driveP);
+        drivePIDController.setI(driveI);
+        drivePIDController.setD(driveD);
     }
 
     public void setPower(double power) {
@@ -58,7 +64,7 @@ public class SwerveWheel extends SubsystemBase {
     }
 
     public void setSpeed(double speedMetersPerSecond) {
-        drivePIDController.setReference(speedMetersPerSecond/DRIVE_VELOCITY_CONVERSION_FACTOR, CANSparkMax.ControlType.kVelocity);
+        drivePIDController.setReference(600, CANSparkMax.ControlType.kVelocity);//speedMetersPerSecond/DRIVE_VELOCITY_CONVERSION_FACTOR
     }
 
     //Angle should be measured in degrees, from -180 to 180
@@ -122,9 +128,7 @@ public class SwerveWheel extends SubsystemBase {
 
     public SwerveModuleState getState() {
         //Return the current module position and speed
-        SmartDashboard.putNumber("raw velocity", driveMotor.getEncoder().getVelocity());
-        SmartDashboard.putNumber("conversion factor", DRIVE_VELOCITY_CONVERSION_FACTOR);
-        SmartDashboard.putNumber("drive motor rotations", driveMotor.getEncoder().getPosition());
+        SmartDashboard.putNumber("raw speed", driveMotor.getEncoder().getVelocity());
         return new SwerveModuleState(driveMotor.getEncoder().getVelocity()*DRIVE_VELOCITY_CONVERSION_FACTOR, 
         Rotation2d.fromDegrees(-rotateMotor.getEncoder().getPosition()));
     }

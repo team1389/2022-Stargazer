@@ -2,6 +2,7 @@ package frc.robot;
 
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.subsystems.*;
 
@@ -53,7 +54,10 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+        SmartDashboard.putNumber("Angle", swerveWheel.getState().angle.getDegrees());
+        SmartDashboard.putNumber("Speed (m/s)", swerveWheel.getState().speedMetersPerSecond);
     }
+
 
     /**
      * This function is called periodically during test mode.

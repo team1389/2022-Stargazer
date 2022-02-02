@@ -37,8 +37,8 @@ public class OneWheelControl extends CommandBase {
     @Override
     public void execute() {
         //Robot.swerveWheel.setAngle(90);
-        //Robot.swerveWheel.setSpeed(1);
-        Robot.swerveWheel.setPower(0.2);
+        //Robot.swerveWheel.setSpeed(15);
+        //Robot.swerveWheel.setPower(0.2);
 
         SmartDashboard.putNumber("Angle", Robot.swerveWheel.getState().angle.getDegrees());
         SmartDashboard.putNumber("Speed (m/s)", Robot.swerveWheel.getState().speedMetersPerSecond);

@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.commands.OneWheelControl;
+import frc.commands.TestAngles;
 
 public class OI {
 
@@ -11,7 +12,7 @@ public class OI {
     public OI() {
         initControllers();
         
-        Robot.swerveWheel.setDefaultCommand(new OneWheelControl());
+        Robot.swerveWheel.setDefaultCommand(new TestAngles());
     }
 
     /**
