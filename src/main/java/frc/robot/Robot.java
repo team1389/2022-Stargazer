@@ -65,4 +65,9 @@ public class Robot extends TimedRobot {
     @Override
     public void testPeriodic() {
     }
+
+    @Override
+    public void teleopInit() {
+        Robot.drivetrain.resetAbsEncoders();
+    }
 }

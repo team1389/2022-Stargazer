@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import frc.commands.OneWheelTest;
 import frc.commands.TeleOpDrive;
 
 public class OI {
@@ -20,8 +21,7 @@ public class OI {
         driveController = new XboxController(0);
         manipController = new XboxController(1);
 
-        Robot.drivetrain.setDefaultCommand(new TeleOpDrive());
-
+        Robot.drivetrain.setDefaultCommand(new OneWheelTest());
     }
 
     public double getDriverLeftX() {

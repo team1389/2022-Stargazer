@@ -127,4 +127,17 @@ public class Drivetrain extends SubsystemBase {
         backRight.setState(moduleStates[3]);
     }
 
+    public void resetAbsEncoders() {
+        frontLeft.resetAbsEncoder();
+        frontRight.resetAbsEncoder();
+        backLeft.resetAbsEncoder();
+        backRight.resetAbsEncoder();
+    }
+
+    public void setPID(double kP, double kI, double kD) {
+        frontLeft.setPID(kP, kI, kD);
+        frontRight.setPID(kP, kI, kD);
+        backLeft.setPID(kP, kI, kD);
+        backRight.setPID(kP, kI, kD);
+    }
 }

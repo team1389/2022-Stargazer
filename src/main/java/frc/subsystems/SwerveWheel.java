@@ -120,12 +120,19 @@ public class SwerveWheel extends SubsystemBase {
     //Only run this when training the angle, never in matches
     public void resetAbsEncoder() {
         rotateAbsEncoder.setPosition(0);
+        rotateMotor.getEncoder().setPosition(0);
     }
 
     public SwerveModuleState getState() {
         //Return the current module position and speed
         return new SwerveModuleState(driveMotor.getEncoder().getVelocity()*DRIVE_VELOCITY_CONVERSION_FACTOR,
             Rotation2d.fromDegrees(-rotateMotor.getEncoder().getPosition()));
+    }
+
+    public void setPID(double kP, double kI, double kD) {
+        rotatePIDController.setP(kP);
+        rotatePIDController.setI(kI);
+        rotatePIDController.setD(kD);
     }
 
 
