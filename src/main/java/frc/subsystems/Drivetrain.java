@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Drivetrain extends SubsystemBase {
-    private SwerveWheel frontLeft, frontRight, backLeft, backRight;
+    public SwerveWheel frontLeft, frontRight, backLeft, backRight;
     private AHRS gyro = new AHRS(SerialPort.Port.kMXP);
     private SwerveDriveKinematics kinematics;
     private SwerveDriveOdometry odometry;

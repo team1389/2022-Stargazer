@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import frc.commands.TeleOpDrive;
 
 public class OI {
 
@@ -18,6 +19,8 @@ public class OI {
     private void initControllers() {
         driveController = new XboxController(0);
         manipController = new XboxController(1);
+
+        Robot.drivetrain.setDefaultCommand(new TeleOpDrive());
 
     }
 
