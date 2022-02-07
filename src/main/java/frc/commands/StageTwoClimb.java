@@ -38,5 +38,5 @@ public class StageTwoClimb extends SequentialCommandGroup {
  * 4. Retract both pistons
  * 5. Extend left arm
  * 6. Retract left arm, hooking onto upper bar
- * 7. Extend left arm, releasing from the lower bar
+ * 7. Extend right arm, releasing from the lower bar
  **/

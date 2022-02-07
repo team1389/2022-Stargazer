@@ -3,6 +3,7 @@ package frc.subsystems;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -15,13 +16,14 @@ public class SwerveWheel extends SubsystemBase {
 
     //Doesn't reset between matches, unlike the built in relative encoders
     private CANCoder rotateAbsEncoder;
+    private RelativeEncoder rotateRelativeEncoder, driveRelativeEncoder;
 
     //Multiplied by the native output units (-1 to 1) to find position
-    private final double ROTATION_POSITION_CONVERSION_FACTOR = 1/(5.33 * 7);;
+    private final double ROTATION_POSITION_CONVERSION_FACTOR = 1 / (5.33 * 7);;
 
     //Factor between RPM and m/s
     //TODO: Figure out what this value is
-    private final double DRIVE_VELOCITY_CONVERSION_FACTOR = (5.25 * Math.PI*3*0.0254)/60;
+    private final double DRIVE_VELOCITY_CONVERSION_FACTOR = (5.25 * Math.PI * 3 * 0.0254) / 60;
 
 
     //Create PID coefficients
@@ -39,6 +41,9 @@ public class SwerveWheel extends SubsystemBase {
         rotateMotor = new CANSparkMax(rotateMotorPort, CANSparkMaxLowLevel.MotorType.kBrushless);
         rotateAbsEncoder = new CANCoder(rotateEncoderPort);
 
+        rotateRelativeEncoder = rotateMotor.getEncoder();
+        driveRelativeEncoder = driveMotor.getEncoder();
+
         //Assign PID controllers' parameters
         rotatePIDController = rotateMotor.getPIDController();
 
@@ -46,11 +51,12 @@ public class SwerveWheel extends SubsystemBase {
         rotatePIDController.setP(rotateP);
         rotatePIDController.setI(rotateI);
         rotatePIDController.setD(rotateD);
-        rotateMotor.getEncoder().setPositionConversionFactor(ROTATION_POSITION_CONVERSION_FACTOR*360);
+        
+        rotateMotor.getEncoder().setPositionConversionFactor(ROTATION_POSITION_CONVERSION_FACTOR * 360);
         rotateMotor.getEncoder().setPosition(0);
 
         drivePIDController = driveMotor.getPIDController();
-
+ 
         //Set the kP, kI, and kD values for the rotatePIDController
         drivePIDController.setP(driveP);
         drivePIDController.setI(driveI);
@@ -124,6 +130,7 @@ public class SwerveWheel extends SubsystemBase {
 
     public SwerveModuleState getState() {
         //Return the current module position and speed
+        //driveMotor.getEncoder().setVelocityConversionFactor(DRIVE_VELOCITY_CONVERSION_FACTOR);
         return new SwerveModuleState(driveMotor.getEncoder().getVelocity()*DRIVE_VELOCITY_CONVERSION_FACTOR,
             Rotation2d.fromDegrees(-rotateMotor.getEncoder().getPosition()));
     }
