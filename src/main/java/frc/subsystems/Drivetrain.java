@@ -15,7 +15,7 @@ import frc.robot.RobotMap;
 
 public class Drivetrain extends SubsystemBase {
     public SwerveWheel frontLeft, frontRight, backLeft, backRight;
-    private AHRS gyro = new AHRS(SerialPort.Port.kMXP);
+    //private AHRS gyro = new AHRS(SerialPort.Port.kMXP);
     private SwerveDriveKinematics kinematics;
     private SwerveDriveOdometry odometry;
 
@@ -33,7 +33,7 @@ public class Drivetrain extends SubsystemBase {
         Translation2d backRightLocation = new Translation2d(-0.381, -0.381);
 
         //Resets the angle of the gyroscope
-        gyro.reset();
+        //gyro.reset();
 
         //Instantiates the SwerveDriveKinematics object using the 4 Translation2D objects from above
         kinematics = new SwerveDriveKinematics(
@@ -50,13 +50,13 @@ public class Drivetrain extends SubsystemBase {
     //Main TeleOp drive method
     //y is desired motion forward, x sideways, and rotation is desired clockwise rotation
     public void drive(double x, double y, double rotation) {
-        double angle = gyro.getAngle() % 360;
-        angle = Math.toRadians(angle);
+        //double angle = gyro.getAngle() % 360;
+        //angle = Math.toRadians(angle);
 
         //Apply a rotation of angle radians CCW to the <x, y> vector
-        final double temp = y * Math.cos(angle) + x * Math.sin(angle);
+        /*final double temp = y * Math.cos(angle) + x * Math.sin(angle);
         x = x * Math.cos(angle) - y * Math.sin(angle);
-        y = temp;
+        y = temp;*/
 
         //Radius from center to each wheel
         double r = Math.sqrt ((RobotMap.L * RobotMap.L) + (RobotMap.W * RobotMap.W));
@@ -68,6 +68,7 @@ public class Drivetrain extends SubsystemBase {
         double d = y + rotation * (RobotMap.W / r);
 
         //Range from 0-1
+        //THIS IS THE ISSUE
         double backRightSpeed = Math.sqrt ((a * a) + (d * d));
         double backLeftSpeed = Math.sqrt ((a * a) + (c * c));
         double frontRightSpeed = Math.sqrt ((b * b) + (d * d));
@@ -82,14 +83,14 @@ public class Drivetrain extends SubsystemBase {
         //Sets the angle for all SwerveWheels from calculate angles above
         backRight.setAngle(backRightAngle);
         backLeft.setAngle(backLeftAngle);
-        frontRight.setAngle(frontRightAngle);
+        //frontRight.setAngle(frontRightAngle);
         frontLeft.setAngle(frontLeftAngle);
 
         //Sets the speed for all SwerveWheels from calculate speeds above
-        backRight.setPower(backRightSpeed);
-        backLeft.setPower(backLeftSpeed);
-        frontRight.setPower(frontRightSpeed);
-        frontLeft.setPower(frontLeftSpeed);      
+        backRight.setPower(backRightSpeed/2);
+        backLeft.setPower(backLeftSpeed/2);
+        //frontRight.setPower(frontRightSpeed/2);
+        frontLeft.setPower(frontLeftSpeed/2);      
     }
 
     public void stopDrive() {
@@ -100,22 +101,22 @@ public class Drivetrain extends SubsystemBase {
     }
 
     //Called periodically in autonomous to track the robot's position
-    public void updateOdometry() {
+    /*public void updateOdometry() {
         odometry.update(Rotation2d.fromDegrees(-gyro.getAngle()),
             frontLeft.getState(),
             frontRight.getState(),
             backLeft.getState(),
             backRight.getState()
         );
-    }
+    }*/
 
     public Pose2d getPose() {
         return odometry.getPoseMeters();
     }
 
-    public void setOdometry(SwerveDriveOdometry newOdometry) {
+    /*public void setOdometry(SwerveDriveOdometry newOdometry) {
         odometry.resetPosition(newOdometry.getPoseMeters(), gyro.getRotation2d());
-    }
+    }*/
 
     //Manually set the speed of the drivetrain
     public void setChassisSpeeds(ChassisSpeeds speeds) {

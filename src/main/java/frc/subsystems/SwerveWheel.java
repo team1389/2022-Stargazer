@@ -10,7 +10,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SwerveWheel extends SubsystemBase {
-    private CANSparkMax rotateMotor, driveMotor;
+    public CANSparkMax rotateMotor, driveMotor;
     private SparkMaxPIDController rotatePIDController, drivePIDController;
 
     //Doesn't reset between matches, unlike the built in relative encoders
@@ -38,6 +38,9 @@ public class SwerveWheel extends SubsystemBase {
         driveMotor = new CANSparkMax(driveMotorPort, CANSparkMaxLowLevel.MotorType.kBrushless);
         rotateMotor = new CANSparkMax(rotateMotorPort, CANSparkMaxLowLevel.MotorType.kBrushless);
         rotateAbsEncoder = new CANCoder(rotateEncoderPort);
+
+
+        driveMotor.setInverted(false);
 
         //Assign PID controllers' parameters
         rotatePIDController = rotateMotor.getPIDController();
@@ -71,6 +74,8 @@ public class SwerveWheel extends SubsystemBase {
         double setpointAngle = closestAngle(currentAngle, angle);
         double setpointAngleFlipped = closestAngle(currentAngle, angle + 180.0);
 
+        rotatePIDController.setReference(currentAngle + setpointAngle, CANSparkMax.ControlType.kPosition);
+        /*
         //If the closest angle to setpoint is shorter
         if (Math.abs(setpointAngle) <= Math.abs(setpointAngleFlipped)) {
             driveMotor.setInverted(false);
@@ -81,7 +86,7 @@ public class SwerveWheel extends SubsystemBase {
         else {
             driveMotor.setInverted(true);
             rotatePIDController.setReference(currentAngle + setpointAngleFlipped, CANSparkMax.ControlType.kPosition);
-        }
+        }*/
     }
 
     //Set the set of the wheel with a SwerveModuleState

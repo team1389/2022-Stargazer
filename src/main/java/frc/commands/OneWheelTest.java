@@ -32,7 +32,11 @@ public class OneWheelTest extends SequentialCommandGroup {
 
   @Override
   public void execute() {
-    Robot.drivetrain.frontLeft.setAngle(90);
+    /*Robot.drivetrain.frontLeft.setAngle(90);
+    Robot.drivetrain.frontRight.setAngle(90);
+    Robot.drivetrain.backLeft.setAngle(90);
+    Robot.drivetrain.backRight.setAngle(90);*/
+
     // Robot.drivetrain.frontLeft.setSpeed(15);
     // Robot.drivetrain.frontLeft.setPower(0.2);
 

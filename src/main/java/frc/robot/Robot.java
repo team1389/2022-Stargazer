@@ -17,9 +17,6 @@ public class Robot extends TimedRobot {
 
 
     public static Drivetrain drivetrain = new Drivetrain();
-    public static PneumaticHub pneumaticHub = new PneumaticHub(RobotMap.PNEUMATICS_HUB);
-    public static Compressor phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
-    public static PowerDistribution powerDistributionHub = new PowerDistribution();
 
     //Always create oi after all subsystems
     public static OI oi = new OI();
