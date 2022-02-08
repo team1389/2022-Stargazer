@@ -69,12 +69,13 @@ public class SwerveWheel extends SubsystemBase {
     }
 
     //Angle should be measured in degrees, from -180 to 180
-    public void setAngle(double angle) {
+    public double setAngle(double angle) {
         double currentAngle = rotateMotor.getEncoder().getPosition();
         double setpointAngle = closestAngle(currentAngle, angle);
         double setpointAngleFlipped = closestAngle(currentAngle, angle + 180.0);
 
         rotatePIDController.setReference(currentAngle + setpointAngle, CANSparkMax.ControlType.kPosition);
+
         /*
         //If the closest angle to setpoint is shorter
         if (Math.abs(setpointAngle) <= Math.abs(setpointAngleFlipped)) {
@@ -87,6 +88,8 @@ public class SwerveWheel extends SubsystemBase {
             driveMotor.setInverted(true);
             rotatePIDController.setReference(currentAngle + setpointAngleFlipped, CANSparkMax.ControlType.kPosition);
         }*/
+
+        return currentAngle + setpointAngle;
     }
 
     //Set the set of the wheel with a SwerveModuleState

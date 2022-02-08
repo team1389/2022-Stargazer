@@ -10,7 +10,9 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class Drivetrain extends SubsystemBase {
@@ -68,7 +70,6 @@ public class Drivetrain extends SubsystemBase {
         double d = y + rotation * (RobotMap.W / r);
 
         //Range from 0-1
-        //THIS IS THE ISSUE
         double backRightSpeed = Math.sqrt ((a * a) + (d * d));
         double backLeftSpeed = Math.sqrt ((a * a) + (c * c));
         double frontRightSpeed = Math.sqrt ((b * b) + (d * d));
@@ -90,7 +91,17 @@ public class Drivetrain extends SubsystemBase {
         backRight.setPower(backRightSpeed/2);
         backLeft.setPower(backLeftSpeed/2);
         //frontRight.setPower(frontRightSpeed/2);
-        frontLeft.setPower(frontLeftSpeed/2);      
+        frontLeft.setPower(frontLeftSpeed/2); 
+        
+        SmartDashboard.putNumber("BR Target", backRightAngle);
+        SmartDashboard.putNumber("BL Target", backLeftAngle);
+        SmartDashboard.putNumber("FR Target", frontRightAngle);
+        SmartDashboard.putNumber("FL Target", frontLeftAngle);
+
+        SmartDashboard.putNumber("BR Power", backRightSpeed);
+        SmartDashboard.putNumber("BL Power", backLeftSpeed);
+        SmartDashboard.putNumber("FR Power", frontRightSpeed);
+        SmartDashboard.putNumber("FL Power", frontLeftSpeed);
     }
 
     public void stopDrive() {

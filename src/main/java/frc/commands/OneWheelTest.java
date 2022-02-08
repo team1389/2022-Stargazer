@@ -40,7 +40,8 @@ public class OneWheelTest extends SequentialCommandGroup {
     // Robot.drivetrain.frontLeft.setSpeed(15);
     // Robot.drivetrain.frontLeft.setPower(0.2);
 
-    SmartDashboard.putNumber("Angle", Robot.drivetrain.frontLeft.getState().angle.getDegrees());
-    SmartDashboard.putNumber("Speed (m/s)", Robot.drivetrain.frontLeft.getState().speedMetersPerSecond);
+    SmartDashboard.putNumber("FL Angle", Robot.drivetrain.frontLeft.getState().angle.getDegrees());
+    
+    
   }
 }

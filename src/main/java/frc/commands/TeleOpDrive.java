@@ -22,12 +22,17 @@ public class TeleOpDrive extends CommandBase {
         double y = Robot.oi.getDriverLeftY();
         double rotation = Robot.oi.getDriverRightX();
 
+        SmartDashboard.putNumber("x", x);
+        SmartDashboard.putNumber("y", y);
+        SmartDashboard.putNumber("rotation", rotation);
+
         //Sets the swerve drive command using controller inputs
         Robot.drivetrain.drive(x, y, rotation);
 
-        SmartDashboard.putNumber("Angle", Robot.drivetrain.frontLeft.getState().angle.getDegrees());
-        SmartDashboard.putBoolean("IsInverted", Robot.drivetrain.frontLeft.driveMotor.getInverted());
-        SmartDashboard.putNumber("Speed (m/s)", Robot.drivetrain.frontLeft.getState().speedMetersPerSecond);
+        SmartDashboard.putNumber("FL Angle", Robot.drivetrain.frontLeft.getState().angle.getDegrees());
+        SmartDashboard.putNumber("FR Angle", Robot.drivetrain.frontRight.getState().angle.getDegrees());
+        SmartDashboard.putNumber("BL Angle", Robot.drivetrain.backLeft.getState().angle.getDegrees());
+        SmartDashboard.putNumber("BR Angle", Robot.drivetrain.backRight.getState().angle.getDegrees());
     }
 
 }
