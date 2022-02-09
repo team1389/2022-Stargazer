@@ -84,14 +84,14 @@ public class Drivetrain extends SubsystemBase {
         //Sets the angle for all SwerveWheels from calculate angles above
         backRight.setAngle(backRightAngle);
         backLeft.setAngle(backLeftAngle);
-        //frontRight.setAngle(frontRightAngle);
+        frontRight.setAngle(frontRightAngle);
         frontLeft.setAngle(frontLeftAngle);
 
         //Sets the speed for all SwerveWheels from calculate speeds above
-        backRight.setPower(backRightSpeed/2);
-        backLeft.setPower(backLeftSpeed/2);
-        //frontRight.setPower(frontRightSpeed/2);
-        frontLeft.setPower(frontLeftSpeed/2); 
+        backRight.setPower(backRightSpeed / 2);
+        backLeft.setPower(backLeftSpeed / 2);
+        frontRight.setPower(frontRightSpeed / 2);
+        frontLeft.setPower(frontLeftSpeed / 2); 
         
         SmartDashboard.putNumber("BR Target", backRightAngle);
         SmartDashboard.putNumber("BL Target", backLeftAngle);

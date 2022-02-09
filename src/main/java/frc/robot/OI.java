@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.commands.OneWheelTest;
 import frc.commands.TeleOpDrive;
+import frc.commands.TestAngles;
 
 public class OI {
 
@@ -28,7 +29,8 @@ public class OI {
         return driveController.getLeftX();
     }
     public double getDriverLeftY() {
-        return driveController.getLeftY();
+        //negative because we want up to be a positive value
+        return -driveController.getLeftY();
     }
     public double getDriverRightX() {
         return driveController.getRightX();

@@ -25,7 +25,7 @@ public class SwerveWheel extends SubsystemBase {
 
 
     //Create PID coefficients
-    public double rotateP = 0.025;
+    public double rotateP = 0.010; //0.025
     public double rotateI = 0;
     public double rotateD = 0;
 
@@ -70,7 +70,7 @@ public class SwerveWheel extends SubsystemBase {
 
     //Angle should be measured in degrees, from -180 to 180
     public double setAngle(double angle) {
-        double currentAngle = rotateMotor.getEncoder().getPosition();
+        double currentAngle = rotateMotor.getEncoder().getPosition() * ROTATION_POSITION_CONVERSION_FACTOR;
         double setpointAngle = closestAngle(currentAngle, angle);
         double setpointAngleFlipped = closestAngle(currentAngle, angle + 180.0);
 
