@@ -70,16 +70,16 @@ public class Drivetrain extends SubsystemBase {
         double d = y + rotation * (RobotMap.W / r);
 
         //Range from 0-1
-        double backRightSpeed = Math.sqrt ((a * a) + (d * d));
-        double backLeftSpeed = Math.sqrt ((a * a) + (c * c));
-        double frontRightSpeed = Math.sqrt ((b * b) + (d * d));
-        double frontLeftSpeed = Math.sqrt ((b * b) + (c * c));
+        double backRightSpeed = Math.sqrt ((a * a) + (c * c));
+        double backLeftSpeed = Math.sqrt ((a * a) + (d * d));
+        double frontRightSpeed = Math.sqrt ((b * b) + (c * c));
+        double frontLeftSpeed = Math.sqrt ((b * b) + (d * d));
 
         //Measured in degrees
-        double backRightAngle = Math.atan2 (a, d) * (180/Math.PI);
-        double backLeftAngle = Math.atan2 (a, c) * (180/Math.PI);
-        double frontRightAngle = Math.atan2 (b, d) * (180/Math.PI);
-        double frontLeftAngle = Math.atan2 (b, c) * (180/Math.PI);
+        double backRightAngle = Math.atan2 (a, c) * (180/Math.PI);
+        double backLeftAngle = Math.atan2 (a, d) * (180/Math.PI);
+        double frontRightAngle = Math.atan2 (b, c) * (180/Math.PI);
+        double frontLeftAngle = Math.atan2 (b, d) * (180/Math.PI);
 
         //Sets the angle for all SwerveWheels from calculate angles above
         backRight.setAngle(backRightAngle);
@@ -88,10 +88,10 @@ public class Drivetrain extends SubsystemBase {
         frontLeft.setAngle(frontLeftAngle);
 
         //Sets the speed for all SwerveWheels from calculate speeds above
-        backRight.setPower(backRightSpeed / 2);
-        backLeft.setPower(backLeftSpeed / 2);
-        frontRight.setPower(frontRightSpeed / 2);
-        frontLeft.setPower(frontLeftSpeed / 2); 
+        backRight.setPower(backRightSpeed / 4);
+        backLeft.setPower(backLeftSpeed / 4);
+        frontRight.setPower(frontRightSpeed / 4);
+        frontLeft.setPower(frontLeftSpeed / 4); 
         
         SmartDashboard.putNumber("BR Target", backRightAngle);
         SmartDashboard.putNumber("BL Target", backLeftAngle);
@@ -105,10 +105,10 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void stopDrive() {
-        frontLeft.setSpeed(0);
-        frontRight.setSpeed(0);
-        backLeft.setSpeed(0);
-        backRight.setSpeed(0);
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
     }
 
     //Called periodically in autonomous to track the robot's position

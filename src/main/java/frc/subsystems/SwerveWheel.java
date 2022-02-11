@@ -4,9 +4,11 @@ import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SwerveWheel extends SubsystemBase {
@@ -14,7 +16,7 @@ public class SwerveWheel extends SubsystemBase {
     private SparkMaxPIDController rotatePIDController, drivePIDController;
 
     //Doesn't reset between matches, unlike the built in relative encoders
-    private CANCoder rotateAbsEncoder;
+    public CANCoder rotateAbsEncoder;
 
     //Multiplied by the native output units (-1 to 1) to find position
     private final double ROTATION_POSITION_CONVERSION_FACTOR = 1/(5.33 * 7);;
@@ -25,8 +27,8 @@ public class SwerveWheel extends SubsystemBase {
 
 
     //Create PID coefficients
-    public double rotateP = 0.010; //0.025
-    public double rotateI = 0;
+    public double rotateP = 0.005; //0.025
+    public double rotateI = 0.0000;
     public double rotateD = 0;
 
     public double driveP = 0.0007667;
@@ -39,6 +41,11 @@ public class SwerveWheel extends SubsystemBase {
         rotateMotor = new CANSparkMax(rotateMotorPort, CANSparkMaxLowLevel.MotorType.kBrushless);
         rotateAbsEncoder = new CANCoder(rotateEncoderPort);
 
+        rotateAbsEncoder.setPositionToAbsolute();
+
+        driveMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        rotateMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
 
         driveMotor.setInverted(false);
 
@@ -49,6 +56,9 @@ public class SwerveWheel extends SubsystemBase {
         rotatePIDController.setP(rotateP);
         rotatePIDController.setI(rotateI);
         rotatePIDController.setD(rotateD);
+
+        rotatePIDController.setSmartMotionAccelStrategy(SparkMaxPIDController.AccelStrategy.kTrapezoidal, 0);
+
         rotateMotor.getEncoder().setPositionConversionFactor(ROTATION_POSITION_CONVERSION_FACTOR*360);
         rotateMotor.getEncoder().setPosition(0);
 
@@ -58,6 +68,7 @@ public class SwerveWheel extends SubsystemBase {
         drivePIDController.setP(driveP);
         drivePIDController.setI(driveI);
         drivePIDController.setD(driveD);
+
     }
 
     public void setPower(double power) {
@@ -70,24 +81,24 @@ public class SwerveWheel extends SubsystemBase {
 
     //Angle should be measured in degrees, from -180 to 180
     public double setAngle(double angle) {
-        double currentAngle = rotateMotor.getEncoder().getPosition() * ROTATION_POSITION_CONVERSION_FACTOR;
+        double currentAngle = rotateMotor.getEncoder().getPosition();
         double setpointAngle = closestAngle(currentAngle, angle);
         double setpointAngleFlipped = closestAngle(currentAngle, angle + 180.0);
 
-        rotatePIDController.setReference(currentAngle + setpointAngle, CANSparkMax.ControlType.kPosition);
+        //rotatePIDController.setReference(currentAngle + setpointAngle, CANSparkMax.ControlType.kPosition, 0);
 
-        /*
+        
         //If the closest angle to setpoint is shorter
         if (Math.abs(setpointAngle) <= Math.abs(setpointAngleFlipped)) {
             driveMotor.setInverted(false);
-            rotatePIDController.setReference(currentAngle + setpointAngle, CANSparkMax.ControlType.kPosition);
+            rotatePIDController.setReference(currentAngle + setpointAngle, CANSparkMax.ControlType.kPosition, 0);
         }
 
         //If the closest angle to setpoint + 180 is shorter
         else {
             driveMotor.setInverted(true);
-            rotatePIDController.setReference(currentAngle + setpointAngleFlipped, CANSparkMax.ControlType.kPosition);
-        }*/
+            rotatePIDController.setReference(currentAngle + setpointAngleFlipped, CANSparkMax.ControlType.kPosition, 0);
+        }
 
         return currentAngle + setpointAngle;
     }
@@ -102,6 +113,8 @@ public class SwerveWheel extends SubsystemBase {
 
     //Set the relative encoder to its wheel's actual angle
     public void coordinateRelativeEncoder() {
+        rotateAbsEncoder.setPositionToAbsolute();
+
         double absAngle = rotateAbsEncoder.getAbsolutePosition();
         if(absAngle<=180) {
             rotateMotor.getEncoder().setPosition(absAngle);
