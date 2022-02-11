@@ -23,6 +23,15 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
+        Robot.drivetrain.frontLeft.rotateRelativeEncoder.setPosition(0);
+        Robot.drivetrain.frontRight.rotateRelativeEncoder.setPosition(0);
+        Robot.drivetrain.backLeft.rotateRelativeEncoder.setPosition(0);
+        Robot.drivetrain.backRight.rotateRelativeEncoder.setPosition(0);
+
+        Robot.drivetrain.frontLeft.coordinateRelativeEncoder();
+        Robot.drivetrain.frontRight.coordinateRelativeEncoder();
+        Robot.drivetrain.backLeft.coordinateRelativeEncoder();
+        Robot.drivetrain.backRight.coordinateRelativeEncoder();
 
     }
 
@@ -65,6 +74,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        Robot.drivetrain.resetAbsEncoders();
+        Robot.drivetrain.frontLeft.coordinateRelativeEncoder();
+        Robot.drivetrain.frontRight.coordinateRelativeEncoder();
+        Robot.drivetrain.backLeft.coordinateRelativeEncoder();
+        Robot.drivetrain.backRight.coordinateRelativeEncoder();
     }
 }

@@ -1,0 +1,16 @@
+{
+  "NetworkTables": {
+    "FMSInfo": {
+      "open": true
+    },
+    "SmartDashboard": {
+      "open": true
+    },
+    "types": {
+      "/FMSInfo": "FMSInfo"
+    }
+  },
+  "NetworkTables Settings": {
+    "mode": "Client"
+  }
+}

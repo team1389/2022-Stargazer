@@ -35,12 +35,21 @@ public class TeleOpDrive extends CommandBase {
             Robot.drivetrain.stopDrive();
         }
 
-        SmartDashboard.putNumber("FL Angle", Robot.drivetrain.frontLeft.getState().angle.getDegrees());
-        SmartDashboard.putNumber("FR Angle", Robot.drivetrain.frontRight.getState().angle.getDegrees());
-        SmartDashboard.putNumber("BL Angle", Robot.drivetrain.backLeft.getState().angle.getDegrees());
-        SmartDashboard.putNumber("BR Angle", Robot.drivetrain.backRight.getState().angle.getDegrees());
+        // SmartDashboard.putNumber("FL Angle", Robot.drivetrain.frontLeft.getState().angle.getDegrees());
+        // SmartDashboard.putNumber("FR Angle", Robot.drivetrain.frontRight.getState().angle.getDegrees());
+        // SmartDashboard.putNumber("BL Angle", Robot.drivetrain.backLeft.getState().angle.getDegrees());
+        // SmartDashboard.putNumber("BR Angle", Robot.drivetrain.backRight.getState().angle.getDegrees());
+        
+        SmartDashboard.putNumber("FL Angle", Robot.drivetrain.frontLeft.rotateRelativeEncoder.getPosition());
+        SmartDashboard.putNumber("FR Angle", Robot.drivetrain.frontRight.rotateRelativeEncoder.getPosition());
+        SmartDashboard.putNumber("BL Angle", Robot.drivetrain.backLeft.rotateRelativeEncoder.getPosition());
+        SmartDashboard.putNumber("BR Angle", Robot.drivetrain.backRight.rotateRelativeEncoder.getPosition());
 
         SmartDashboard.putNumber("FL Abs Angle", Robot.drivetrain.frontLeft.rotateAbsEncoder.getAbsolutePosition());
+        SmartDashboard.putNumber("FR Abs Angle", Robot.drivetrain.frontRight.rotateAbsEncoder.getAbsolutePosition());
+        SmartDashboard.putNumber("BL Abs Angle", Robot.drivetrain.backLeft.rotateAbsEncoder.getAbsolutePosition());
+        SmartDashboard.putNumber("BR Abs Angle", Robot.drivetrain.backRight.rotateAbsEncoder.getAbsolutePosition());
+
     }
 
 }
