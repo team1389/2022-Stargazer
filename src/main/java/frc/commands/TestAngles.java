@@ -19,7 +19,7 @@ public class TestAngles extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     addRequirements(Robot.drivetrain);
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new InstantCommand(() -> Robot.drivetrain.backRight.setAngle(0)),
+    addCommands(new InstantCommand(() -> Robot.drivetrain.backRight.gotoAngle(0)),
       new WaitCommand(0.1),
       new WaitCommand(45)
     );

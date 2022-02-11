@@ -82,10 +82,10 @@ public class Drivetrain extends SubsystemBase {
         double frontLeftAngle = Math.atan2 (b, d) * (180/Math.PI);
 
         //Sets the angle for all SwerveWheels from calculate angles above
-        backRight.setAngle(backRightAngle);
-        backLeft.setAngle(backLeftAngle);
-        frontRight.setAngle(frontRightAngle);
-        frontLeft.setAngle(frontLeftAngle);
+        backRight.gotoAngle(backRightAngle);
+        backLeft.gotoAngle(backLeftAngle);
+        frontRight.gotoAngle(frontRightAngle);
+        frontLeft.gotoAngle(frontLeftAngle);
 
         //Sets the speed for all SwerveWheels from calculate speeds above
         backRight.setPower(backRightSpeed / 4);

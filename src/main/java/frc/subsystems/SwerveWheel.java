@@ -83,7 +83,7 @@ public class SwerveWheel extends SubsystemBase {
     }
 
     // Angle should be measured in degrees, from -180 to 180
-    public double setAngle(double angle) {
+    public double gotoAngle(double angle) {
         double currentAngle = rotateMotor.getEncoder().getPosition();
         double setpointAngle = closestAngle(currentAngle, angle);
         double setpointAngleFlipped = closestAngle(currentAngle, angle + 180.0);
@@ -109,7 +109,7 @@ public class SwerveWheel extends SubsystemBase {
     // Set the set of the wheel with a SwerveModuleState
     public void setState(SwerveModuleState state) {
         // Reverse the angle to match default from rotation encoders
-        setAngle(-state.angle.getDegrees());
+        gotoAngle(-state.angle.getDegrees());
 
         setSpeed(state.speedMetersPerSecond);
     }
@@ -147,8 +147,8 @@ public class SwerveWheel extends SubsystemBase {
 
     public SwerveModuleState getState() {
         // Return the current module position and speed
-        return new SwerveModuleState(driveMotor.getEncoder().getVelocity() * DRIVE_VELOCITY_CONVERSION_FACTOR,
-                Rotation2d.fromDegrees(-rotateMotor.getEncoder().getPosition()));
+        return new SwerveModuleState(driveRelativeEncoder.getVelocity() * DRIVE_VELOCITY_CONVERSION_FACTOR,
+                Rotation2d.fromDegrees(-driveRelativeEncoder.getPosition()));
     }
 
     public void setPID(double kP, double kI, double kD) {

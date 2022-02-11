@@ -30,8 +30,8 @@ public class FollowPath extends CommandBase {
     private Drivetrain drivetrain = Robot.drivetrain;
     private PathPlannerTrajectory trajectory;
     private Timer timer = new Timer();
-    
-    //TODO: Tune these
+
+    // TODO: Tune these
     private double p = 6;
     private double i = 0;
     private double d = 0.06;
@@ -47,7 +47,7 @@ public class FollowPath extends CommandBase {
     private final double MAX_VELOCITY = 5;
     private final double MAX_ACCELERATION = 4;
 
-    //Input the name of the generated path in PathPlanner
+    // Input the name of the generated path in PathPlanner
     public FollowPath(String pathName) {
         trajectory = getTrajectory(pathName);
 
@@ -58,20 +58,20 @@ public class FollowPath extends CommandBase {
     @Override
     public void initialize() {
 
-        //Create necessary profiled PID controller and configure it to be used with the holonomic controller
-        ProfiledPIDController rotationController =
-        new ProfiledPIDController(
-            2.5,
-            0.0,
-            0.0,
-            new TrapezoidProfile.Constraints(MAX_VELOCITY, MAX_ACCELERATION));
+        // Create necessary profiled PID controller and configure it to be used with the
+        // holonomic controller
+        ProfiledPIDController rotationController = new ProfiledPIDController(
+                2.5,
+                0.0,
+                0.0,
+                new TrapezoidProfile.Constraints(MAX_VELOCITY, MAX_ACCELERATION));
 
-        //Create main holonomic drive controller
+        // Create main holonomic drive controller
         driveController = new HolonomicDriveController(
-            new PIDController(p, i, d), new PIDController(p, i, d), rotationController);
+                new PIDController(p, i, d), new PIDController(p, i, d), rotationController);
         driveController.setEnabled(true);
 
-        //Start timer when path begins 
+        // Start timer when path begins
         timer.reset();
         timer.start();
     }
@@ -79,17 +79,18 @@ public class FollowPath extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        //To access the desired angle at the current state, the Trajectory.State must be cast to a PathPlannerState
+        // To access the desired angle at the current state, the Trajectory.State must
+        // be cast to a PathPlannerState
         state = (PathPlannerState) trajectory.sample(timer.get());
         desiredAngle = state.holonomicRotation;
         odometryPose = drivetrain.getPose();
-        speeds = driveController.calculate(odometryPose, (Trajectory.State)state, desiredAngle);
+        speeds = driveController.calculate(odometryPose, (Trajectory.State) state, desiredAngle);
 
-        //Send the desired speeds to the drivetrain
+        // Send the desired speeds to the drivetrain
         drivetrain.setChassisSpeeds(speeds);
     }
 
-    //Read the path with the given name from the PathPlanner
+    // Read the path with the given name from the PathPlanner
     private PathPlannerTrajectory getTrajectory(String pathName) {
         PathPlannerTrajectory currentTrajectory = PathPlanner.loadPath(pathName, MAX_VELOCITY, MAX_ACCELERATION);
 
@@ -102,7 +103,7 @@ public class FollowPath extends CommandBase {
 
         Pose2d startPose = new Pose2d(points[0][0], points[0][1], Rotation2d.fromDegrees(startAngle));
         Pose2d endPose = new Pose2d(points[points.length - 1][0], points[points.length - 1][1],
-            Rotation2d.fromDegrees(endAngle));
+                Rotation2d.fromDegrees(endAngle));
 
         ArrayList<Translation2d> path = new ArrayList<>();
 

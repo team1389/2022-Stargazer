@@ -1,6 +1,5 @@
 package frc.robot;
 
-
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.subsystems.*;
@@ -15,10 +14,9 @@ public class Robot extends TimedRobot {
      * Ex: public static System system = new System();
      */
 
-
     public static Drivetrain drivetrain = new Drivetrain();
 
-    //Always create oi after all subsystems
+    // Always create oi after all subsystems
     public static OI oi = new OI();
 
     @Override
@@ -45,10 +43,9 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
     }
 
-
     @Override
     public void autonomousInit() {
-        //Example of setting auto: Scheduler.getInstance().add(YOUR AUTO);
+        // Example of setting auto: Scheduler.getInstance().add(YOUR AUTO);
     }
 
     /**
@@ -74,9 +71,20 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        Robot.drivetrain.frontLeft.coordinateRelativeEncoder();
-        Robot.drivetrain.frontRight.coordinateRelativeEncoder();
-        Robot.drivetrain.backLeft.coordinateRelativeEncoder();
-        Robot.drivetrain.backRight.coordinateRelativeEncoder();
+        SwerveWheel[] arr = {
+            Robot.drivetrain.frontLeft,
+            Robot.drivetrain.frontRight,
+            Robot.drivetrain.backLeft,
+            Robot.drivetrain.backRight
+        };
+        
+        for (SwerveWheel wheel: arr) {
+            wheel.coordinateRelativeEncoder();
+            wheel.gotoAngle(0);
+        }
+        
+        
+        
+        
     }
 }

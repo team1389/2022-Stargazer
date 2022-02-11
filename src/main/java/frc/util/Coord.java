@@ -1,2 +1,4 @@
-package frc.util;public class Coord {
+package frc.util;
+
+public class Coord {
 }
