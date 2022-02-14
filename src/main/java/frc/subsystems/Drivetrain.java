@@ -88,10 +88,10 @@ public class Drivetrain extends SubsystemBase {
         frontLeft.setAngle(frontLeftAngle);
 
         //Sets the speed for all SwerveWheels from calculate speeds above
-        backRight.setPower(backRightSpeed / 4);
-        backLeft.setPower(backLeftSpeed / 4);
-        frontRight.setPower(frontRightSpeed / 4);
-        frontLeft.setPower(frontLeftSpeed / 4); 
+        backRight.setPower(backRightSpeed);
+        backLeft.setPower(backLeftSpeed);
+        frontRight.setPower(frontRightSpeed);
+        frontLeft.setPower(frontLeftSpeed); 
         
         SmartDashboard.putNumber("BR Target", backRightAngle);
         SmartDashboard.putNumber("BL Target", backLeftAngle);
@@ -144,6 +144,13 @@ public class Drivetrain extends SubsystemBase {
         frontRight.resetAbsEncoder();
         backLeft.resetAbsEncoder();
         backRight.resetAbsEncoder();
+    }
+
+    public void cordinateAbsoluteEncoders() {
+        frontLeft.coordinateRelativeEncoder();
+        frontRight.coordinateRelativeEncoder();
+        backLeft.coordinateRelativeEncoder();
+        backRight.coordinateRelativeEncoder();
     }
 
     public void setPID(double kP, double kI, double kD) {

@@ -65,6 +65,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        Robot.drivetrain.resetAbsEncoders();
+        Robot.drivetrain.cordinateAbsoluteEncoders();
     }
 }

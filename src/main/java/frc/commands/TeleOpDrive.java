@@ -41,6 +41,10 @@ public class TeleOpDrive extends CommandBase {
         SmartDashboard.putNumber("BR Angle", Robot.drivetrain.backRight.getState().angle.getDegrees());
 
         SmartDashboard.putNumber("FL Abs Angle", Robot.drivetrain.frontLeft.rotateAbsEncoder.getAbsolutePosition());
+        SmartDashboard.putNumber("FR Abs Angle", Robot.drivetrain.frontRight.rotateAbsEncoder.getAbsolutePosition());
+        SmartDashboard.putNumber("BL Abs Angle", Robot.drivetrain.backLeft.rotateAbsEncoder.getAbsolutePosition());
+        SmartDashboard.putNumber("BR Abs Angle", Robot.drivetrain.backRight.rotateAbsEncoder.getAbsolutePosition());
+
     }
 
 }

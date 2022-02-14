@@ -113,15 +113,12 @@ public class SwerveWheel extends SubsystemBase {
 
     //Set the relative encoder to its wheel's actual angle
     public void coordinateRelativeEncoder() {
-        rotateAbsEncoder.setPositionToAbsolute();
+        //rotateAbsEncoder.setPositionToAbsolute();
 
         double absAngle = rotateAbsEncoder.getAbsolutePosition();
-        if(absAngle<=180) {
-            rotateMotor.getEncoder().setPosition(absAngle);
-        }
-        else {
-            rotateMotor.getEncoder().setPosition(-360+absAngle);
-        }
+        rotateMotor.getEncoder().setPosition(-absAngle);
+        
+
         
     }
 
