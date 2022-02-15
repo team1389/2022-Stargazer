@@ -10,6 +10,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
@@ -17,9 +18,11 @@ import frc.robot.RobotMap;
 
 public class Drivetrain extends SubsystemBase {
     public SwerveWheel frontLeft, frontRight, backLeft, backRight;
-    //private AHRS gyro = new AHRS(SerialPort.Port.kMXP);
-    private SwerveDriveKinematics kinematics;
-    private SwerveDriveOdometry odometry;
+    private AHRS gyro = new AHRS(SerialPort.Port.kMXP);
+    public SwerveDriveKinematics kinematics;
+    public SwerveDriveOdometry odometry;
+    public Field2d field = new Field2d();
+    
 
     public Drivetrain() {
         //Instantiates 4 individual SwerveWheels using all ports from RobotMap
@@ -35,7 +38,7 @@ public class Drivetrain extends SubsystemBase {
         Translation2d backRightLocation = new Translation2d(-0.381, -0.381);
 
         //Resets the angle of the gyroscope
-        //gyro.reset();
+        gyro.reset();
 
         //Instantiates the SwerveDriveKinematics object using the 4 Translation2D objects from above
         kinematics = new SwerveDriveKinematics(
@@ -47,18 +50,20 @@ public class Drivetrain extends SubsystemBase {
 
         //Instantiates the SwerveDriveOdometry object using the kinematics and Rotation2d object
         odometry = new SwerveDriveOdometry(kinematics, new Rotation2d());
+        SmartDashboard.putData("Field", field);
     }
 
     //Main TeleOp drive method
     //y is desired motion forward, x sideways, and rotation is desired clockwise rotation
     public void drive(double x, double y, double rotation) {
-        //double angle = gyro.getAngle() % 360;
-        //angle = Math.toRadians(angle);
+        double angle = gyro.getAngle() % 360;
+        angle = Math.toRadians(angle);
 
+        SmartDashboard.putNumber("Gyro angle" , angle);
         //Apply a rotation of angle radians CCW to the <x, y> vector
-        /*final double temp = y * Math.cos(angle) + x * Math.sin(angle);
-        x = x * Math.cos(angle) - y * Math.sin(angle);
-        y = temp;*/
+        final double temp = y * Math.cos(-angle) + x * Math.sin(-angle);
+        x = x * Math.cos(-angle) - y * Math.sin(-angle);
+        y = temp;
 
         //Radius from center to each wheel
         double r = Math.sqrt ((RobotMap.L * RobotMap.L) + (RobotMap.W * RobotMap.W));
@@ -102,6 +107,7 @@ public class Drivetrain extends SubsystemBase {
         SmartDashboard.putNumber("BL Power", backLeftSpeed);
         SmartDashboard.putNumber("FR Power", frontRightSpeed);
         SmartDashboard.putNumber("FL Power", frontLeftSpeed);
+
     }
 
     public void stopDrive() {
@@ -112,22 +118,22 @@ public class Drivetrain extends SubsystemBase {
     }
 
     //Called periodically in autonomous to track the robot's position
-    /*public void updateOdometry() {
-        odometry.update(Rotation2d.fromDegrees(-gyro.getAngle()),
+    public void updateOdometry() {
+        odometry.update(Rotation2d.fromDegrees(gyro.getAngle()),
             frontLeft.getState(),
             frontRight.getState(),
             backLeft.getState(),
             backRight.getState()
         );
-    }*/
+    }
 
     public Pose2d getPose() {
         return odometry.getPoseMeters();
     }
 
-    /*public void setOdometry(SwerveDriveOdometry newOdometry) {
-        odometry.resetPosition(newOdometry.getPoseMeters(), gyro.getRotation2d());
-    }*/
+    public void setPose(Pose2d newPose) {
+        odometry.resetPosition(newPose, gyro.getRotation2d());
+    }
 
     //Manually set the speed of the drivetrain
     public void setChassisSpeeds(ChassisSpeeds speeds) {
@@ -151,6 +157,11 @@ public class Drivetrain extends SubsystemBase {
         frontRight.coordinateRelativeEncoder();
         backLeft.coordinateRelativeEncoder();
         backRight.coordinateRelativeEncoder();
+    }
+
+    public void setGyro(double degrees) {
+        gyro.reset();
+        gyro.setAngleAdjustment(degrees);
     }
 
     public void setPID(double kP, double kI, double kD) {

@@ -1,8 +1,17 @@
 package frc.robot;
 
 
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.autos.OnemAuto;
+import frc.autos.TwoBallAuto;
 import frc.subsystems.*;
 
 /**
@@ -34,12 +43,23 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+        drivetrain.field.setRobotPose(drivetrain.getPose());
+        drivetrain.updateOdometry();
     }
 
 
     @Override
     public void autonomousInit() {
         //Example of setting auto: Scheduler.getInstance().add(YOUR AUTO);
+        Robot.drivetrain.cordinateAbsoluteEncoders();
+        Robot.drivetrain.setGyro(0);
+
+        CommandScheduler.getInstance().schedule(new OnemAuto());
+
+        PathPlannerTrajectory currentTrajectory = PathPlanner.loadPath("1m Auto", 1, 0.5);
+
+        drivetrain.setPose(currentTrajectory.sample(0).poseMeters);
+        drivetrain.field.getObject("traj").setTrajectory(currentTrajectory);
     }
 
     /**
@@ -47,6 +67,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
+        
     }
 
     /**
@@ -54,6 +75,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+    
     }
 
     /**
@@ -66,5 +88,10 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         Robot.drivetrain.cordinateAbsoluteEncoders();
+        Robot.drivetrain.setGyro(0);
+
+
+
+
     }
 }

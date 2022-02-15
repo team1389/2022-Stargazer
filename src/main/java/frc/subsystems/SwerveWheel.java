@@ -23,7 +23,7 @@ public class SwerveWheel extends SubsystemBase {
 
     //Factor between RPM and m/s
     //TODO: Figure out what this value is
-    private final double DRIVE_VELOCITY_CONVERSION_FACTOR = (5.25 * Math.PI*3*0.0254)/60;
+    private final double DRIVE_VELOCITY_CONVERSION_FACTOR = (3 * Math.PI * 0.0254) / (60 * 5.25);
 
 
     //Create PID coefficients
@@ -118,8 +118,6 @@ public class SwerveWheel extends SubsystemBase {
         double absAngle = rotateAbsEncoder.getAbsolutePosition();
         rotateMotor.getEncoder().setPosition(-absAngle);
         
-
-        
     }
 
     //Get the closest angle between the given angles.
@@ -143,7 +141,11 @@ public class SwerveWheel extends SubsystemBase {
 
     public SwerveModuleState getState() {
         //Return the current module position and speed
-        return new SwerveModuleState(driveMotor.getEncoder().getVelocity()*DRIVE_VELOCITY_CONVERSION_FACTOR,
+        if(driveMotor.getInverted()) {
+            return new SwerveModuleState(-driveMotor.getEncoder().getVelocity() * DRIVE_VELOCITY_CONVERSION_FACTOR,
+            Rotation2d.fromDegrees(-rotateMotor.getEncoder().getPosition()));
+        }
+        return new SwerveModuleState(driveMotor.getEncoder().getVelocity() * DRIVE_VELOCITY_CONVERSION_FACTOR,
             Rotation2d.fromDegrees(-rotateMotor.getEncoder().getPosition()));
     }
 
