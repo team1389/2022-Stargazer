@@ -32,9 +32,9 @@ public class FollowPath extends CommandBase {
     private Timer timer = new Timer();
     
     //TODO: Tune these
-    private double p = 6;
-    private double i = 0;
-    private double d = 0.06;
+    private double kP = 1;
+    private double kI = 0;
+    private double kD = 0.00;
 
     private PathPlannerState state = new PathPlannerState();
     private Pose2d odometryPose = new Pose2d();
@@ -44,8 +44,8 @@ public class FollowPath extends CommandBase {
     private HolonomicDriveController driveController;
 
     // Measured in m/s and m/s/s
-    private final double MAX_VELOCITY = 5;
-    private final double MAX_ACCELERATION = 4;
+    private final double MAX_VELOCITY = 3;
+    private final double MAX_ACCELERATION = 2.5;
 
     //Input the name of the generated path in PathPlanner
     public FollowPath(String pathName) {
@@ -61,15 +61,18 @@ public class FollowPath extends CommandBase {
         //Create necessary profiled PID controller and configure it to be used with the holonomic controller
         ProfiledPIDController rotationController =
         new ProfiledPIDController(
-            2.5,
+            1.0,
             0.0,
             0.0,
-            new TrapezoidProfile.Constraints(MAX_VELOCITY, MAX_ACCELERATION));
+            new TrapezoidProfile.Constraints(1, 1));
 
         //Create main holonomic drive controller
         driveController = new HolonomicDriveController(
-            new PIDController(p, i, d), new PIDController(p, i, d), rotationController);
+            new PIDController(kP, kI, kD), new PIDController(kP, kI, kD), rotationController);
         driveController.setEnabled(true);
+
+        //  Set robot pose to initial position
+        Robot.drivetrain.setPose(trajectory.sample(0).poseMeters);
 
         //Start timer when path begins 
         timer.reset();
@@ -131,6 +134,6 @@ public class FollowPath extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return timer.hasElapsed(trajectory.getTotalTimeSeconds());
     }
 }

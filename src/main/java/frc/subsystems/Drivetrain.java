@@ -10,14 +10,18 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Drivetrain extends SubsystemBase {
-    private SwerveWheel frontLeft, frontRight, backLeft, backRight;
+    public SwerveWheel frontLeft, frontRight, backLeft, backRight;
     private AHRS gyro = new AHRS(SerialPort.Port.kMXP);
-    private SwerveDriveKinematics kinematics;
-    private SwerveDriveOdometry odometry;
+    public SwerveDriveKinematics kinematics;
+    public SwerveDriveOdometry odometry;
+    public Field2d field = new Field2d();
+    
 
     public Drivetrain() {
         //Instantiates 4 individual SwerveWheels using all ports from RobotMap
@@ -45,6 +49,7 @@ public class Drivetrain extends SubsystemBase {
 
         //Instantiates the SwerveDriveOdometry object using the kinematics and Rotation2d object
         odometry = new SwerveDriveOdometry(kinematics, new Rotation2d());
+        SmartDashboard.putData("Field", field);
     }
 
     //Main TeleOp drive method
@@ -53,9 +58,10 @@ public class Drivetrain extends SubsystemBase {
         double angle = gyro.getAngle() % 360;
         angle = Math.toRadians(angle);
 
+        SmartDashboard.putNumber("Gyro angle" , angle);
         //Apply a rotation of angle radians CCW to the <x, y> vector
-        final double temp = y * Math.cos(angle) + x * Math.sin(angle);
-        x = x * Math.cos(angle) - y * Math.sin(angle);
+        final double temp = y * Math.cos(-angle) + x * Math.sin(-angle);
+        x = x * Math.cos(-angle) - y * Math.sin(-angle);
         y = temp;
 
         //Radius from center to each wheel
@@ -68,16 +74,16 @@ public class Drivetrain extends SubsystemBase {
         double d = y + rotation * (RobotMap.W / r);
 
         //Range from 0-1
-        double backRightSpeed = Math.sqrt ((a * a) + (d * d));
-        double backLeftSpeed = Math.sqrt ((a * a) + (c * c));
-        double frontRightSpeed = Math.sqrt ((b * b) + (d * d));
-        double frontLeftSpeed = Math.sqrt ((b * b) + (c * c));
+        double backRightSpeed = Math.sqrt ((a * a) + (c * c));
+        double backLeftSpeed = Math.sqrt ((a * a) + (d * d));
+        double frontRightSpeed = Math.sqrt ((b * b) + (c * c));
+        double frontLeftSpeed = Math.sqrt ((b * b) + (d * d));
 
         //Measured in degrees
-        double backRightAngle = Math.atan2 (a, d) * (180/Math.PI);
-        double backLeftAngle = Math.atan2 (a, c) * (180/Math.PI);
-        double frontRightAngle = Math.atan2 (b, d) * (180/Math.PI);
-        double frontLeftAngle = Math.atan2 (b, c) * (180/Math.PI);
+        double backRightAngle = Math.atan2 (a, c) * (180/Math.PI);
+        double backLeftAngle = Math.atan2 (a, d) * (180/Math.PI);
+        double frontRightAngle = Math.atan2 (b, c) * (180/Math.PI);
+        double frontLeftAngle = Math.atan2 (b, d) * (180/Math.PI);
 
         //Sets the angle for all SwerveWheels from calculate angles above
         backRight.setAngle(backRightAngle);
@@ -89,19 +95,30 @@ public class Drivetrain extends SubsystemBase {
         backRight.setPower(backRightSpeed);
         backLeft.setPower(backLeftSpeed);
         frontRight.setPower(frontRightSpeed);
-        frontLeft.setPower(frontLeftSpeed);      
+        frontLeft.setPower(frontLeftSpeed); 
+        
+        SmartDashboard.putNumber("BR Target", backRightAngle);
+        SmartDashboard.putNumber("BL Target", backLeftAngle);
+        SmartDashboard.putNumber("FR Target", frontRightAngle);
+        SmartDashboard.putNumber("FL Target", frontLeftAngle);
+
+        SmartDashboard.putNumber("BR Power", backRightSpeed);
+        SmartDashboard.putNumber("BL Power", backLeftSpeed);
+        SmartDashboard.putNumber("FR Power", frontRightSpeed);
+        SmartDashboard.putNumber("FL Power", frontLeftSpeed);
+
     }
 
     public void stopDrive() {
-        frontLeft.setSpeed(0);
-        frontRight.setSpeed(0);
-        backLeft.setSpeed(0);
-        backRight.setSpeed(0);
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
     }
 
     //Called periodically in autonomous to track the robot's position
     public void updateOdometry() {
-        odometry.update(Rotation2d.fromDegrees(-gyro.getAngle()),
+        odometry.update(Rotation2d.fromDegrees(gyro.getAngle()),
             frontLeft.getState(),
             frontRight.getState(),
             backLeft.getState(),
@@ -113,8 +130,8 @@ public class Drivetrain extends SubsystemBase {
         return odometry.getPoseMeters();
     }
 
-    public void setOdometry(SwerveDriveOdometry newOdometry) {
-        odometry.resetPosition(newOdometry.getPoseMeters(), gyro.getRotation2d());
+    public void setPose(Pose2d newPose) {
+        odometry.resetPosition(newPose, gyro.getRotation2d());
     }
 
     //Manually set the speed of the drivetrain
@@ -127,4 +144,29 @@ public class Drivetrain extends SubsystemBase {
         backRight.setState(moduleStates[3]);
     }
 
+    public void resetAbsEncoders() {
+        frontLeft.resetAbsEncoder();
+        frontRight.resetAbsEncoder();
+        backLeft.resetAbsEncoder();
+        backRight.resetAbsEncoder();
+    }
+
+    public void coordinateAbsoluteEncoders() {
+        frontLeft.coordinateRelativeEncoder();
+        frontRight.coordinateRelativeEncoder();
+        backLeft.coordinateRelativeEncoder();
+        backRight.coordinateRelativeEncoder();
+    }
+
+    public void setGyro(double degrees) {
+        gyro.reset();
+        gyro.setAngleAdjustment(degrees);
+    }
+
+    public void setPID(double kP, double kI, double kD) {
+        frontLeft.setPID(kP, kI, kD);
+        frontRight.setPID(kP, kI, kD);
+        backLeft.setPID(kP, kI, kD);
+        backRight.setPID(kP, kI, kD);
+    }
 }

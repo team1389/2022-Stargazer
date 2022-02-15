@@ -20,10 +20,10 @@ public class RobotMap {
     public static final int ROTATION_MOTOR_BACK_RIGHT = 10;
 
     //Encoders
-    public static final int DRIVE_ENCODER_FRONT_LEFT = 9;
-    public static final int DRIVE_ENCODER_FRONT_RIGHT = 10;
-    public static final int DRIVE_ENCODER_BACK_LEFT = 11;
-    public static final int DRIVE_ENCODER_BACK_RIGHT = 12;
+    public static final int DRIVE_ENCODER_FRONT_LEFT = 11;
+    public static final int DRIVE_ENCODER_FRONT_RIGHT = 12;
+    public static final int DRIVE_ENCODER_BACK_LEFT = 13;
+    public static final int DRIVE_ENCODER_BACK_RIGHT = 14;
 
     //Shooter motor
     public static final int SHOOTER_MOTOR = 13;
@@ -64,10 +64,5 @@ public class RobotMap {
     //Length and width are measured from the centers of the wheels
     public static final int L = 29;
     public static final int W = 29;
-
-
-
-
-
 
 }

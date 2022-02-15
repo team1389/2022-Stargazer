@@ -20,8 +20,6 @@ public class OI {
     public OI() {
         initControllers();
         
-
-        
         Robot.drivetrain.setDefaultCommand(new TeleOpDrive());
     }
 
