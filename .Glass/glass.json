@@ -15,6 +15,9 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/LiveWindow/SwerveWheel": "Subsystem",
+      "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[3]": "PIDController",
       "/LiveWindow/Ungrouped/navX-Sensor[1]": "Gyro",
       "/SmartDashboard/Field": "Field2d"
     },
