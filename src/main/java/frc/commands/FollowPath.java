@@ -22,6 +22,7 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.subsystems.Drivetrain;
@@ -44,8 +45,8 @@ public class FollowPath extends CommandBase {
     private HolonomicDriveController driveController;
 
     // Measured in m/s and m/s/s
-    private final double MAX_VELOCITY = 3;
-    private final double MAX_ACCELERATION = 2.5;
+    private final double MAX_VELOCITY = 1;
+    private final double MAX_ACCELERATION = 0.5;
 
     //Input the name of the generated path in PathPlanner
     public FollowPath(String pathName) {
@@ -90,6 +91,10 @@ public class FollowPath extends CommandBase {
 
         //Send the desired speeds to the drivetrain
         drivetrain.setChassisSpeeds(speeds);
+
+        SmartDashboard.putNumber("auto x", odometryPose.getX());
+        SmartDashboard.putNumber("auto y", odometryPose.getY());
+        SmartDashboard.putNumber("auto rotation", odometryPose.getRotation().getDegrees());
     }
 
     //Read the path with the given name from the PathPlanner
@@ -134,6 +139,6 @@ public class FollowPath extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return timer.hasElapsed(trajectory.getTotalTimeSeconds());
+        return timer.hasElapsed(trajectory.getTotalTimeSeconds()+6);
     }
 }

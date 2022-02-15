@@ -5,9 +5,7 @@
 package frc.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 
 public class OneWheelTest extends SequentialCommandGroup {
@@ -45,8 +43,20 @@ public class OneWheelTest extends SequentialCommandGroup {
     //Robot.drivetrain.frontRight.setAngle(90);
 
     //Robot.drivetrain.backRight.rotateMotor.set(0.2);
+    Robot.drivetrain.frontLeft.setSpeed(1);
+    Robot.drivetrain.frontRight.setSpeed(1);
+    Robot.drivetrain.backLeft.setSpeed(1);
+    Robot.drivetrain.backRight.setSpeed(1);
 
-    SmartDashboard.putNumber("FL Angle", Robot.drivetrain.frontLeft.getState().angle.getDegrees());
+    Robot.drivetrain.frontLeft.setAngle(0);
+    Robot.drivetrain.frontRight.setAngle(0);
+    Robot.drivetrain.backLeft.setAngle(0);
+    Robot.drivetrain.backRight.setAngle(0);
+    
+    SmartDashboard.putNumber("FL Speed", Robot.drivetrain.frontLeft.getState().speedMetersPerSecond);
+    SmartDashboard.putNumber("FR Speed", Robot.drivetrain.frontRight.getState().speedMetersPerSecond);
+    SmartDashboard.putNumber("BL Speed", Robot.drivetrain.backLeft.getState().speedMetersPerSecond);
+    SmartDashboard.putNumber("BR Speed", Robot.drivetrain.backRight.getState().speedMetersPerSecond);
     
     
   }

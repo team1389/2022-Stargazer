@@ -31,7 +31,7 @@ public class SwerveWheel extends SubsystemBase {
     public double rotateI = 0.0000;
     public double rotateD = 0;
 
-    public double driveP = 0.0007667;
+    public double driveP = 0.00007667;
     public double driveI = 0.0000005;
     public double driveD = 0;
 

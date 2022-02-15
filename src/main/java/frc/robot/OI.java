@@ -22,7 +22,7 @@ public class OI {
         driveController = new XboxController(0);
         manipController = new XboxController(1);
 
-        Robot.drivetrain.setDefaultCommand(new TeleOpDrive());
+        Robot.drivetrain.setDefaultCommand(new OneWheelTest());
     }
 
     public double getDriverLeftX() {
