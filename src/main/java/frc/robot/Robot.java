@@ -10,9 +10,11 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.autos.OnemAuto;
 import frc.autos.TwoBallAuto;
 import frc.subsystems.*;
+import frc.util.AutoChooser;
 
 /**
  * Don't change the name of this class since the VM is set up to run this
@@ -26,12 +28,16 @@ public class Robot extends TimedRobot {
 
 
     public static Drivetrain drivetrain = new Drivetrain();
+    
 
+    public AutoChooser autoChooser;
+    public SequentialCommandGroup autoCommand;
     //Always create oi after all subsystems
     public static OI oi = new OI();
 
     @Override
     public void robotInit() {
+        autoChooser = new AutoChooser();
 
     }
 
@@ -51,11 +57,16 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         //Example of setting auto: Scheduler.getInstance().add(YOUR AUTO);
-        Robot.drivetrain.cordinateAbsoluteEncoders();
+        Robot.drivetrain.coordinateAbsoluteEncoders();
         Robot.drivetrain.setGyro(0);
 
-        CommandScheduler.getInstance().schedule(new OnemAuto());
+        autoCommand = autoChooser.getAutoCommand();
 
+        if(autoCommand != null) {
+            CommandScheduler.getInstance().schedule(autoCommand);
+        }
+
+        
         PathPlannerTrajectory currentTrajectory = PathPlanner.loadPath("1m Auto", 1, 0.5);
 
         drivetrain.setPose(currentTrajectory.sample(0).poseMeters);
@@ -87,7 +98,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        Robot.drivetrain.cordinateAbsoluteEncoders();
+        Robot.drivetrain.coordinateAbsoluteEncoders();
         Robot.drivetrain.setGyro(0);
 
 

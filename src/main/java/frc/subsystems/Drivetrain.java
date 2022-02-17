@@ -22,6 +22,9 @@ public class Drivetrain extends SubsystemBase {
     public SwerveDriveKinematics kinematics;
     public SwerveDriveOdometry odometry;
     public Field2d field = new Field2d();
+
+    public boolean fieldOriented = true;
+    
     
 
     public Drivetrain() {
@@ -31,11 +34,10 @@ public class Drivetrain extends SubsystemBase {
         backLeft = new SwerveWheel(RobotMap.DRIVE_MOTOR_BACK_LEFT, RobotMap.ROTATION_MOTOR_BACK_LEFT, RobotMap.DRIVE_ENCODER_BACK_LEFT);
         backRight = new SwerveWheel(RobotMap.DRIVE_MOTOR_BACK_RIGHT, RobotMap.ROTATION_MOTOR_BACK_RIGHT, RobotMap.DRIVE_ENCODER_BACK_RIGHT);
 
-        //TODO: Update with actual wheel positions
-        Translation2d frontLeftLocation = new Translation2d(0.381, 0.381);
-        Translation2d frontRightLocation = new Translation2d(0.381, -0.381);
-        Translation2d backLeftLocation = new Translation2d(-0.381, 0.381);
-        Translation2d backRightLocation = new Translation2d(-0.381, -0.381);
+        Translation2d frontLeftLocation = new Translation2d(0.280, 0.280);
+        Translation2d frontRightLocation = new Translation2d(0.280, -0.280);
+        Translation2d backLeftLocation = new Translation2d(-0.280, 0.280);
+        Translation2d backRightLocation = new Translation2d(-0.280, -0.280);
 
         //Resets the angle of the gyroscope
         gyro.reset();
@@ -55,15 +57,18 @@ public class Drivetrain extends SubsystemBase {
 
     //Main TeleOp drive method
     //y is desired motion forward, x sideways, and rotation is desired clockwise rotation
-    public void drive(double x, double y, double rotation) {
+    public void drive(double x, double y, double rotation, boolean isSlowed) {
         double angle = gyro.getAngle() % 360;
         angle = Math.toRadians(angle);
 
         SmartDashboard.putNumber("Gyro angle" , angle);
-        //Apply a rotation of angle radians CCW to the <x, y> vector
-        final double temp = y * Math.cos(-angle) + x * Math.sin(-angle);
-        x = x * Math.cos(-angle) - y * Math.sin(-angle);
-        y = temp;
+
+        if(fieldOriented) {
+            //Apply a rotation of angle radians CCW to the <x, y> vector
+            final double temp = y * Math.cos(-angle) + x * Math.sin(-angle);
+            x = x * Math.cos(-angle) - y * Math.sin(-angle);
+            y = temp;
+        }
 
         //Radius from center to each wheel
         double r = Math.sqrt ((RobotMap.L * RobotMap.L) + (RobotMap.W * RobotMap.W));
@@ -93,10 +98,14 @@ public class Drivetrain extends SubsystemBase {
         frontLeft.setAngle(frontLeftAngle);
 
         //Sets the speed for all SwerveWheels from calculate speeds above
-        backRight.setPower(backRightSpeed/4);
-        backLeft.setPower(backLeftSpeed/4);
-        frontRight.setPower(frontRightSpeed/4);
-        frontLeft.setPower(frontLeftSpeed/4); 
+        double slowdownFactor = 0.5;
+        if(isSlowed) {
+            slowdownFactor = 0.25;
+        }
+        backRight.setPower(backRightSpeed * slowdownFactor);
+        backLeft.setPower(backLeftSpeed * slowdownFactor);
+        frontRight.setPower(frontRightSpeed * slowdownFactor);
+        frontLeft.setPower(frontLeftSpeed * slowdownFactor); 
         
         SmartDashboard.putNumber("BR Target", backRightAngle);
         SmartDashboard.putNumber("BL Target", backLeftAngle);
@@ -127,6 +136,18 @@ public class Drivetrain extends SubsystemBase {
         );
     }
 
+    public void setFieldOriented(boolean isFieldOriented) {
+        fieldOriented = isFieldOriented;
+    }
+    public void toggleFieldOriented() {
+        fieldOriented = !fieldOriented;
+
+        // When it switches to field oriented, reset what the robot thinks is forward
+        if(fieldOriented) {
+            setGyro(0);
+        }
+    }
+
     public Pose2d getPose() {
         return odometry.getPoseMeters();
     }
@@ -152,7 +173,7 @@ public class Drivetrain extends SubsystemBase {
         backRight.resetAbsEncoder();
     }
 
-    public void cordinateAbsoluteEncoders() {
+    public void coordinateAbsoluteEncoders() {
         frontLeft.coordinateRelativeEncoder();
         frontRight.coordinateRelativeEncoder();
         backLeft.coordinateRelativeEncoder();

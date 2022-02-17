@@ -1,5 +1,6 @@
 package frc.commands;
 
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
@@ -29,7 +30,7 @@ public class TeleOpDrive extends CommandBase {
 
         //Sets the swerve drive command using controller inputs
         if(Math.abs(x) > JOYSTICK_DEADZONE || Math.abs(y) > JOYSTICK_DEADZONE || Math.abs(rotation) > JOYSTICK_DEADZONE) {
-            Robot.drivetrain.drive(x, y, rotation);
+            Robot.drivetrain.drive(x, y, rotation, false);
         }
         else {
             Robot.drivetrain.stopDrive();
@@ -49,6 +50,12 @@ public class TeleOpDrive extends CommandBase {
         SmartDashboard.putNumber("FR Abs Angle", Robot.drivetrain.frontRight.rotateAbsEncoder.getAbsolutePosition());
         SmartDashboard.putNumber("BL Abs Angle", Robot.drivetrain.backLeft.rotateAbsEncoder.getAbsolutePosition());
         SmartDashboard.putNumber("BR Abs Angle", Robot.drivetrain.backRight.rotateAbsEncoder.getAbsolutePosition());
+
+        SmartDashboard.putBoolean("isFieldOriented", Robot.drivetrain.fieldOriented);
+
+        //SmartDashboard.putData(value);
+        Sendable sendable;
+        sendable.addDoubleProperty()
 
     }
 

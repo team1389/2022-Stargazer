@@ -33,8 +33,8 @@ public class FollowPath extends CommandBase {
     private Timer timer = new Timer();
     
     //TODO: Tune these
-    private double kP = 1;
-    private double kI = 0;
+    private double kP = 1.5;
+    private double kI = 0.25;
     private double kD = 0.00;
 
     private PathPlannerState state = new PathPlannerState();
@@ -45,8 +45,8 @@ public class FollowPath extends CommandBase {
     private HolonomicDriveController driveController;
 
     // Measured in m/s and m/s/s
-    private final double MAX_VELOCITY = 1;
-    private final double MAX_ACCELERATION = 0.5;
+    private final double MAX_VELOCITY = 1.5;
+    private final double MAX_ACCELERATION = 1;
 
     //Input the name of the generated path in PathPlanner
     public FollowPath(String pathName) {
@@ -62,10 +62,10 @@ public class FollowPath extends CommandBase {
         //Create necessary profiled PID controller and configure it to be used with the holonomic controller
         ProfiledPIDController rotationController =
         new ProfiledPIDController(
-            1.0,
+            6.5,
+            0.25,
             0.0,
-            0.0,
-            new TrapezoidProfile.Constraints(1, 1));
+            new TrapezoidProfile.Constraints(10, 7));
 
         //Create main holonomic drive controller
         driveController = new HolonomicDriveController(
@@ -133,12 +133,12 @@ public class FollowPath extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        drivetrain.drive(0.0, 0.0, 0.0);
+        drivetrain.drive(0.0, 0.0, 0.0, false);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return timer.hasElapsed(trajectory.getTotalTimeSeconds()+6);
+        return timer.hasElapsed(trajectory.getTotalTimeSeconds());
     }
 }

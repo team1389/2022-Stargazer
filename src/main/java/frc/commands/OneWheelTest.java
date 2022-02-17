@@ -43,10 +43,10 @@ public class OneWheelTest extends SequentialCommandGroup {
     //Robot.drivetrain.frontRight.setAngle(90);
 
     //Robot.drivetrain.backRight.rotateMotor.set(0.2);
-    Robot.drivetrain.frontLeft.setSpeed(1);
-    Robot.drivetrain.frontRight.setSpeed(1);
-    Robot.drivetrain.backLeft.setSpeed(1);
-    Robot.drivetrain.backRight.setSpeed(1);
+    // Robot.drivetrain.frontLeft.setSpeed(0.5);
+    // Robot.drivetrain.frontRight.setSpeed(0.5);
+    // Robot.drivetrain.backLeft.setSpeed(0.5);
+    // Robot.drivetrain.backRight.setSpeed(0.5);
 
     Robot.drivetrain.frontLeft.setAngle(0);
     Robot.drivetrain.frontRight.setAngle(0);
@@ -57,6 +57,11 @@ public class OneWheelTest extends SequentialCommandGroup {
     SmartDashboard.putNumber("FR Speed", Robot.drivetrain.frontRight.getState().speedMetersPerSecond);
     SmartDashboard.putNumber("BL Speed", Robot.drivetrain.backLeft.getState().speedMetersPerSecond);
     SmartDashboard.putNumber("BR Speed", Robot.drivetrain.backRight.getState().speedMetersPerSecond);
+
+    SmartDashboard.putNumber("FL position", Robot.drivetrain.frontLeft.driveMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("FR position", Robot.drivetrain.frontRight.driveMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("BL position", Robot.drivetrain.backLeft.driveMotor.getEncoder().getPosition());
+    SmartDashboard.putNumber("BR position", Robot.drivetrain.backRight.driveMotor.getEncoder().getPosition());
     
     
   }
