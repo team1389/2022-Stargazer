@@ -13,7 +13,7 @@ import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase {
 
-    private CANSparkMax shooterMotor; //Neo 
+    public CANSparkMax shooterMotor; //Neo 
     private CANSparkMax indexerMotor; //Falcon 500
 
     private CANSparkMax turretMotor; //NEO 550 Motor
@@ -23,7 +23,7 @@ public class Shooter extends SubsystemBase {
     private final double kI = 0;
     private final double kD = 0;
 
-    private SparkMaxPIDController flywheelPID;
+    private PIDController flywheelPID;
 
 
     public Shooter() {
@@ -38,21 +38,15 @@ public class Shooter extends SubsystemBase {
         turretPID = new PIDController(kP, kI, kD);
 
         //Flywheel PID controller
-        flywheelPID = shooterMotor.getPIDController();
-
-        flywheelPID.setP(0);
-        flywheelPID.setI(0);
-        flywheelPID.setD(0);
-
+        flywheelPID = new PIDController(0.00001, 0, 0);
     }
 
     public void setShooterPercent(double percent) {
         shooterMotor.set(percent);
     }
 
-    // speed in RPM
-    public void setFlywheelSpeed(double speed) {
-        flywheelPID.setReference(speed, CANSparkMax.ControlType.kVelocity);
+    public PIDController getFlywheelPID() {
+        return flywheelPID;
     }
 
     public void stopShooter() {

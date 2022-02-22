@@ -41,6 +41,7 @@ public class WaitUntilShooterSpeed extends CommandBase {
   @Override
   public boolean isFinished() {
     //TODO: change timeout value
-    return Math.abs(recentErrors.getAverage()) < 10 || timer.get() > 15;
+    //return Math.abs(recentErrors.getAverage()) < 10 || timer.get() > 15;
+    return false;
   }
 }

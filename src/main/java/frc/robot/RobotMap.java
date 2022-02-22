@@ -26,7 +26,7 @@ public class RobotMap {
     public static final int DRIVE_ENCODER_BACK_RIGHT = 14;
 
     //Shooter motor
-    public static final int SHOOTER_MOTOR = 13;
+    public static final int SHOOTER_MOTOR = 15;
 
     //Hood servo
     public static final int HOOD_SERVO = 13;
