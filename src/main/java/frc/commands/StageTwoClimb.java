@@ -15,16 +15,26 @@ public class StageTwoClimb extends SequentialCommandGroup {
         climber = Robot.climber;
         addRequirements(climber);
         addCommands(
-            new ParallelCommandGroup(new InstantCommand(() -> climber.pistonRetractRight()), 
-                                    new InstantCommand(() -> climber.pistonRetractLeft())),
+            new ParallelCommandGroup(
+                new InstantCommand(() -> climber.pistonRetractRight()), 
+                new InstantCommand(() -> climber.pistonRetractLeft())
+            ),
+
             new WaitCommand(2),
             new InstantCommand(() -> climber.pistonExtendLeft()),
             new WaitCommand(2),
             new ClimberLeftExtend(),
             new WaitCommand(2),
-            new ParallelCommandGroup(new ClimberLeftRetract(), 
-                                    new SequentialCommandGroup(new WaitCommand(1), 
-                                                            new InstantCommand(() -> climber.pistonExtendRight()))),
+
+            new ParallelCommandGroup(
+                new ClimberLeftRetract(), 
+                
+                new SequentialCommandGroup(
+                    new WaitCommand(1), 
+                    new InstantCommand(() -> climber.pistonExtendRight())
+                )
+            ),
+
             new ClimberRightExtend(),
             new ClimberRightRetract()
         );

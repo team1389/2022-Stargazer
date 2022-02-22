@@ -2,6 +2,7 @@ package frc.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.subsystems.Shooter;
@@ -17,7 +18,6 @@ public class TurretTracking extends CommandBase {
 
     public TurretTracking() {
         shooter = Robot.shooter;
-        addRequirements(shooter);
 
         pid = shooter.getTurretPID();
     }
@@ -51,6 +51,7 @@ public class TurretTracking extends CommandBase {
 
         //Sets the shooter to the turret power from PID
         Robot.shooter.setTurretPower(turretPower);
+        SmartDashboard.putNumber("turret power", turretPower);
     }
 
     private void fetchValues() {

@@ -1,27 +1,37 @@
 package frc.commands;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 
 public class ShootWithSensors extends ParallelCommandGroup {
     private double targetRPM;
-    private PIDController shooterPID; //idk which pid controller to use
 
-    private String distance;
-    private double indexerSpeed = 0.5;
-    private double hopperSpeed = 0.5;
-
+    private double distanceToTarget;
+    private final double[] lookupTable = {0, 100, 200, 300};
     public ShootWithSensors() {
         addRequirements(Robot.shooter, Robot.hopper);
-        double distanceToTarget = SmartDashboard.getNumber("Distance To Target", 0);
 
-        //TODO: lookup table for rpm
+        distanceToTarget = SmartDashboard.getNumber("Distance To Target", 0);
+        // TODO: lookup table for rpm
+        if (distanceToTarget > 40) {
+            targetRPM = lookupTable[lookupTable.length-1];
+        } else {
+            targetRPM = lookupTable[(int)(distanceToTarget/10)];
+        }
+        
 
-        addCommands(new ParallelCommandGroup(new TurretTracking(), new RunHopper()),  new WaitCommand(10));
+        addCommands(
+            new ParallelCommandGroup(new TurretTracking(), new WaitUntilShooterSpeed(targetRPM)),
+            new ParallelCommandGroup(new RunHopper()), new RunIndexer()
+        );
 
+    }
+
+    @Override
+    public void initialize() {
+        super.initialize();
+        Robot.shooter.setFlywheelSpeed(targetRPM);
     }
 
     @Override
@@ -32,5 +42,3 @@ public class ShootWithSensors extends ParallelCommandGroup {
 
     }
 }
-
-
