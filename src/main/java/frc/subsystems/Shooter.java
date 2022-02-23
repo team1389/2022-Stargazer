@@ -48,6 +48,10 @@ public class Shooter extends SubsystemBase {
     public PIDController getFlywheelPID() {
         return flywheelPID;
     }
+    // speed in RPM
+    public void setFlywheelSpeed(double speed) {
+        flywheelPID.setSetpoint(speed);
+    }
 
     public void stopShooter() {
         shooterMotor.set(0);

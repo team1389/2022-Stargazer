@@ -33,7 +33,7 @@ public class ShootWithSensors extends ParallelCommandGroup {
     @Override
     public void initialize() {
         super.initialize();
-        //Robot.shooter.setFlywheelSpeed(targetRPM);
+        Robot.shooter.setFlywheelSpeed(targetRPM);
     }
 
     @Override
