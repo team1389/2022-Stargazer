@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.commands.RunIntake;
+import frc.commands.Shoot;
 import frc.commands.ShootWithSensors;
 import frc.commands.StageOneClimb;
 import frc.commands.StageTwoClimb;
@@ -34,7 +35,7 @@ public class OI {
         intakeYBtn.whenHeld(new RunIntake());
 
         shootXBtn = new JoystickButton(manipController, XboxController.Button.kX.value);
-        shootXBtn.whenHeld(new ShootWithSensors());
+        shootXBtn.whenHeld(new Shoot());
 
         climbRBumper = new JoystickButton(manipController, XboxController.Button.kRightBumper.value);
         climbLBumper = new JoystickButton(manipController, XboxController.Button.kLeftBumper.value);

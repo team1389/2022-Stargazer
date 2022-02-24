@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class GetDistanceToTarget extends CommandBase {
     private double TARGET_HEIGHT_INCHES = 103;
-    private double CAMERA_ANGLE_DEGREES = 27.21212218; //REMEMBER TO CHANGE THIS EVERY MATCH IF WE ADJUST THE SHOOTER
+    private double CAMERA_ANGLE_DEGREES = 27.21212218; 
     private double CAMERA_HEIGHT_INCHES = 26;
 
     private double tv, tx, ty, ta;
@@ -26,8 +26,8 @@ public class GetDistanceToTarget extends CommandBase {
 
     @Override
     public void execute() {
-        ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(3);
-        distanceToTarget = (TARGET_HEIGHT_INCHES-CAMERA_HEIGHT_INCHES)/(Math.tan(Math.toRadians(CAMERA_ANGLE_DEGREES+ty)));
+        tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(3);
+        distanceToTarget = (TARGET_HEIGHT_INCHES-CAMERA_HEIGHT_INCHES)/(Math.tan(Math.toRadians(CAMERA_ANGLE_DEGREES+tx)));
 
         SmartDashboard.putNumber("Distance To Target", distanceToTarget);
     }

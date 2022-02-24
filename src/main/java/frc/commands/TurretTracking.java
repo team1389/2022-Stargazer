@@ -28,8 +28,8 @@ public class TurretTracking extends CommandBase {
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
 
         tv = 0; //# of Targets found
-        tx = 0; //Horizontal offset from -27 degrees to 27
-        ty = 0; //Vertical offset from 20.5 degrees to 20.5
+        tx = 0; //Vertical offset from -27 degrees to 27
+        ty = 0; //Horizontal offset from 20.5 degrees to 20.5
         ta = 0; //Target Area from 0% of image to 100% of image
 
     }
