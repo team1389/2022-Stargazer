@@ -24,8 +24,9 @@ public class ShootWithSensors extends ParallelCommandGroup {
         // To shoot, first spin up the flywheel while turning to the target
         // When facing the target and at speed, run the indexer and hopper to feed balls to the flywheel and shoot
         addCommands(
-            new ParallelCommandGroup(new SetShooterRPM(targetRPM), new TurretTracking())
+            new ParallelCommandGroup(new SetShooterRPM(targetRPM), new TurretTracking()),
             //run indexer and hopper:
+            new RunIndexer(), new RunHopper()
         );
 
     }

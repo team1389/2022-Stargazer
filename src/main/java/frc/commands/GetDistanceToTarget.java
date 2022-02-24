@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 public class GetDistanceToTarget extends CommandBase {
-    private double TARGET_HEIGHT_INCHES = 103;
-    private double CAMERA_ANGLE_DEGREES = 27.21212218; 
-    private double CAMERA_HEIGHT_INCHES = 26;
+    private double TARGET_HEIGHT_INCHES = 104;
+    private double CAMERA_ANGLE_DEGREES = 46; 
+    private double CAMERA_HEIGHT_INCHES = 31;
 
     private double tv, tx, ty, ta;
     private double distanceToTarget = 0;
