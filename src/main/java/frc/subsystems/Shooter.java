@@ -1,11 +1,9 @@
 package frc.subsystems;
 
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,6 +15,13 @@ public class Shooter extends SubsystemBase {
     private CANSparkMax indexerMotor; //Falcon 500
 
     private CANSparkMax turretMotor; //NEO 550 Motor
+    private RelativeEncoder turretEncoder;
+
+    //TODO: Set this to the actual limits
+    // The number of rotations that the turret can turn in either direction 
+    private final double TURRET_RANGE_OF_MOTION = 0.25;
+
+    private final double MAX_TURRET_POWER = 0.3;
 
     private PIDController turretPID;
     private final double kP = 0;
@@ -27,18 +32,39 @@ public class Shooter extends SubsystemBase {
 
 
     public Shooter() {
-        //Instantiate shooter and indexer motors with ports from RobotMap
+        // Instantiate shooter and indexer motors with ports from RobotMap
         shooterMotor = new CANSparkMax(RobotMap.SHOOTER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         indexerMotor = new CANSparkMax(RobotMap.INDEXER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
 
-        //Instantiate turret motor as brushless motor with port from RobotMap
+        // Instantiate turret motor as brushless motor with port from RobotMap
         turretMotor = new CANSparkMax(RobotMap.TURRET_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
+        turretMotor.setIdleMode(IdleMode.kBrake);
+        turretEncoder = turretMotor.getEncoder();
+        turretEncoder.setPosition(0);
 
-        //Instantiate turretPid with kP, kI, kD
+        // Instantiate turretPid with kP, kI, kD
         turretPID = new PIDController(kP, kI, kD);
 
-        //Flywheel PID controller
+        // Flywheel PID controller
         flywheelPID = new PIDController(0.00001, 0, 0);
+    }
+    
+    public void setTurretPower(double power) {
+        // Make sure that the turret power isn't too fast by limiting it from -MAX_TURRET_POWER to MAX_TURRET_POWER
+        power = Math.max(-MAX_TURRET_POWER, Math.min(MAX_TURRET_POWER, power));
+
+        // Only run the turret if it won't overrotate and break
+        // If the turret is too far over the range only allow negative motion, and vice versa
+        if(turretEncoder.getPosition() >= TURRET_RANGE_OF_MOTION && power > 0) {
+            turretMotor.set(0);
+            return;
+        }
+        if(turretEncoder.getPosition() <= TURRET_RANGE_OF_MOTION && power < 0) {
+            turretMotor.set(0);
+            return;
+        }
+
+        turretMotor.set(power);
     }
 
     public void setShooterPercent(double percent) {
@@ -63,10 +89,6 @@ public class Shooter extends SubsystemBase {
 
     public void stopIndexer() {
         indexerMotor.set(0);
-    }
-
-    public void setTurretPower(double percent) {
-        turretMotor.set(percent);
     }
 
     public void stopTurret() {

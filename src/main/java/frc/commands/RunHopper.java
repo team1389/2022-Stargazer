@@ -17,19 +17,12 @@ public class RunHopper extends CommandBase {
     }
 
     @Override
-    public void initialize() {
-
-    }
-
-    @Override
     public void execute() {
         hopper.setSpeed(0.5);
     }
 
     @Override
     public boolean isFinished() {
-        // TODO: Make this return true when this Command no longer needs to run execute()
-
         return false;
     }
 

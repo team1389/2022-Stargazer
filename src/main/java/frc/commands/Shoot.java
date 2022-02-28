@@ -7,9 +7,9 @@ package frc.commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class Shoot extends SequentialCommandGroup {
-  /** Creates a new Shoot. */
+  // This is the command that should be run to shoot
   public Shoot() {
-
+    // First get the distance to target, and then actually shoot 
     addCommands(new GetDistanceToTarget(), new ShootWithSensors());
   }
 }

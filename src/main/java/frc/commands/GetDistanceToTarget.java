@@ -18,7 +18,7 @@ public class GetDistanceToTarget extends CommandBase {
 
     @Override
     public void initialize() {
-        //Turn on limelight green ring
+        // Turn on limelight green ring
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
         timer.reset();
         timer.start();
@@ -34,12 +34,13 @@ public class GetDistanceToTarget extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        //Turn off limelight green ring
+        // If the limelight has found a target or it's been more than a second, end
         return distanceToTarget != 0 || timer.get() > 1;
     }
 
     @Override
     public void end(boolean interrupted) {
+        // Turn off limelight green ring
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     }
 }

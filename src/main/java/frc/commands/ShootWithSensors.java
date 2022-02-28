@@ -1,16 +1,27 @@
 package frc.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Robot;
 
 public class ShootWithSensors extends ParallelCommandGroup {
     private double targetRPM;
 
+    //TODO: Find this time
+    // Time from the indexer starting to the last ball being shot
+    private final double SHOOT_TIME = 5;
+
+    private Timer timer;
+
     private double distanceToTarget;
     private final double[] lookupTable = {0, 100, 200, 300};
     public ShootWithSensors() {
         addRequirements(Robot.shooter);
+        
+        timer = new Timer();
+        timer.reset();
 
         distanceToTarget = SmartDashboard.getNumber("Distance To Target", 0);
         // // TODO: lookup table for rpm
@@ -25,6 +36,8 @@ public class ShootWithSensors extends ParallelCommandGroup {
         // When facing the target and at speed, run the indexer and hopper to feed balls to the flywheel and shoot
         addCommands(
             new ParallelCommandGroup(new SetShooterRPM(targetRPM), new TurretTracking()),
+
+            new InstantCommand(() -> timer.start()),
             //run indexer and hopper:
             new RunIndexer(), new RunHopper()
         );
@@ -38,8 +51,12 @@ public class ShootWithSensors extends ParallelCommandGroup {
     }
 
     @Override
+    public boolean isFinished() {
+        return timer.hasElapsed(SHOOT_TIME);
+    }
+
+    @Override
     public void end(boolean interrupted) {
         Robot.shooter.stopShooter();
-
     }
 }

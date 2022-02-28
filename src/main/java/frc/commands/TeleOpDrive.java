@@ -6,7 +6,6 @@ import frc.robot.Robot;
 import frc.subsystems.Drivetrain;
 
 public class TeleOpDrive extends CommandBase {
-    //Add pid using gyro
     public Drivetrain drivetrain;
     public final double JOYSTICK_DEADZONE = 0.05;
 
@@ -18,7 +17,7 @@ public class TeleOpDrive extends CommandBase {
 
     @Override
     public void execute() {
-        //Gets the driver's controller inputs
+        // Gets the driver's controller inputs
         double x = Robot.oi.getDriverLeftX();
         double y = Robot.oi.getDriverLeftY();
         double rotation = Robot.oi.getDriverRightX();
@@ -27,7 +26,7 @@ public class TeleOpDrive extends CommandBase {
         SmartDashboard.putNumber("y", y);
         SmartDashboard.putNumber("rotation", rotation);
 
-        //Sets the swerve drive command using controller inputs
+        // Sets the swerve drive command using controller inputs
         if(Math.abs(x) > JOYSTICK_DEADZONE || Math.abs(y) > JOYSTICK_DEADZONE || Math.abs(rotation) > JOYSTICK_DEADZONE) {
             Robot.drivetrain.drive(x, y, rotation);
         }
