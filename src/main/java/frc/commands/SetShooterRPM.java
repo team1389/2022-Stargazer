@@ -12,18 +12,18 @@ import frc.robot.Robot;
 import frc.util.SizeLimitedQueue;
 
 public class SetShooterRPM extends CommandBase {
+    private final double MAX_RPM = 5640;
     private double targetRPM;
     private PIDController pidController;
-    private final double MAX_RPM = 5640;
-    private SizeLimitedQueue recentErrors = new SizeLimitedQueue(15);
-    private Timer timer = new Timer();
-
+    private SizeLimitedQueue recentErrors;
+    private Timer timer;
 
     /** Creates a new SetShooterRPM. */
     public SetShooterRPM(double targetRPM) {
         addRequirements(Robot.shooter);
         this.targetRPM = targetRPM;
-
+        this.recentErrors = new SizeLimitedQueue(15);
+        this.timer = new Timer();
         pidController = Robot.shooter.getFlywheelPID();
     }
 
@@ -60,7 +60,6 @@ public class SetShooterRPM extends CommandBase {
     @Override
     public boolean isFinished() {
         //TODO: change timeout value
-        //return Math.abs(recentErrors.getAverage()) < 10 || timer.get() > 15;
-        return false;
+        return Math.abs(recentErrors.getAverage()) < 10 || timer.get() > 5;
     }
 }
