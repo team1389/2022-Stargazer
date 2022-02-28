@@ -17,9 +17,8 @@ public class Shooter extends SubsystemBase {
     private CANSparkMax turretMotor; //NEO 550 Motor
     private RelativeEncoder turretEncoder;
 
-    //TODO: Set this to the actual limits
     // The number of rotations that the turret can turn in either direction 
-    private final double TURRET_RANGE_OF_MOTION = 0.25;
+    private final double TURRET_RANGE_OF_MOTION = 0.35;
 
     private final double MAX_TURRET_POWER = 0.3;
 
