@@ -39,7 +39,7 @@ public class ShootWithSensors extends ParallelCommandGroup {
 
             new InstantCommand(() -> timer.start()),
             //run indexer and hopper:
-            new RunIndexer(), new RunHopper()
+            new RunIndexer()
         );
 
     }
