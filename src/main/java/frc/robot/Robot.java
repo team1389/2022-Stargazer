@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
     public static Shooter shooter = new Shooter();
     public static ML ml = new ML();
     public static PneumaticHub pneumaticHub = new PneumaticHub(RobotMap.PNEUMATICS_HUB);
-    public static Compressor phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
+    public  Compressor phCompressor;
     public static PowerDistribution powerDistributionHub = new PowerDistribution();
 
     //Always create oi after all subsystems
@@ -31,7 +31,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-
+        phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
     }
 
     /**
