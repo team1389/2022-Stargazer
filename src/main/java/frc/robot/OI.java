@@ -2,6 +2,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.commands.RunIndexer;
+import frc.commands.SetShooterRPM;
 import frc.commands.Shoot;
 import frc.commands.ShootWithSensors;
 import frc.util.TwoButtonTrigger;
@@ -17,6 +19,7 @@ public class OI {
     public OI() {
         initControllers();
         
+        //Robot.shooter.setDefaultCommand(new RunIndexer());
     }
 
     /**
