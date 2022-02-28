@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.commands.RunIntake;
 import frc.commands.Shoot;
@@ -16,11 +17,15 @@ public class OI {
 
     public XboxController driveController, manipController;
     private JoystickButton shootXBtn, intakeYBtn, climbRBumper, climbLBumper, climbABtn, climbBBtn; 
+    public JoystickButton driveaButton;
 
 
     public OI() {
         initControllers();
         
+        driveaButton = new JoystickButton(driveController, XboxController.Button.kA.value);
+        driveaButton.whenPressed(new InstantCommand(() -> Robot.drivetrain.toggleFieldOriented()));
+
         Robot.drivetrain.setDefaultCommand(new TeleOpDrive());
     }
 
@@ -52,7 +57,7 @@ public class OI {
         return driveController.getLeftX();
     }
     public double getDriverLeftY() {
-        return driveController.getLeftY();
+        return -driveController.getLeftY();
     }
     public double getDriverRightX() {
         return driveController.getRightX();

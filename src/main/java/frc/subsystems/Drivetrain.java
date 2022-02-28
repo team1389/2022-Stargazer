@@ -21,6 +21,8 @@ public class Drivetrain extends SubsystemBase {
     public SwerveDriveKinematics kinematics;
     public SwerveDriveOdometry odometry;
     public Field2d field = new Field2d();
+
+    public boolean fieldOriented = true;
     
 
     public Drivetrain() {
@@ -37,7 +39,7 @@ public class Drivetrain extends SubsystemBase {
         Translation2d backRightLocation = new Translation2d(-0.381, -0.381);
 
         //Resets the angle of the gyroscope
-        gyro.reset();
+        setGyro(-90);
 
         //Instantiates the SwerveDriveKinematics object using the 4 Translation2D objects from above
         kinematics = new SwerveDriveKinematics(
@@ -168,5 +170,14 @@ public class Drivetrain extends SubsystemBase {
         frontRight.setPID(kP, kI, kD);
         backLeft.setPID(kP, kI, kD);
         backRight.setPID(kP, kI, kD);
+    }
+
+    public void toggleFieldOriented() {
+        fieldOriented = !fieldOriented;
+
+        // When it switches to field oriented, reset what the robot thinks is forward
+        if(fieldOriented) {
+            setGyro(0);
+        }
     }
 }
