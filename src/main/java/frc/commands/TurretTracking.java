@@ -50,8 +50,11 @@ public class TurretTracking extends CommandBase {
 
         if(tv >= 1) {
             // Sets the pid controller's reference point to the ty and the setpoint to 0
-            turretPower = pid.calculate(ty, 0); //Need to test offset, ty because limelight is vetical
-        } else {
+            turretPower = pid.calculate(ty-6, 0); //Need to test offset, ty because limelight is vetical
+
+        }
+        else {
+
             System.out.print("No target");
         }
 
