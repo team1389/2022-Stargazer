@@ -21,6 +21,8 @@ public class Drivetrain extends SubsystemBase {
     public SwerveDriveKinematics kinematics;
     public SwerveDriveOdometry odometry;
     public Field2d field = new Field2d();
+
+    public boolean fieldOriented = true;
     
 
     public Drivetrain() {
@@ -56,13 +58,15 @@ public class Drivetrain extends SubsystemBase {
     //y is desired motion forward, x sideways, and rotation is desired clockwise rotation
     public void drive(double x, double y, double rotation) {
         double angle = gyro.getAngle() % 360;
-        angle = Math.toRadians(angle);
+        angle = Math.toRadians(angle + 90);
 
         SmartDashboard.putNumber("Gyro angle" , angle);
-        //Apply a rotation of angle radians CCW to the <x, y> vector
-        final double temp = y * Math.cos(-angle) + x * Math.sin(-angle);
-        x = x * Math.cos(-angle) - y * Math.sin(-angle);
-        y = temp;
+        if(fieldOriented) {
+            //Apply a rotation of angle radians CCW to the <x, y> vector
+            final double temp = y * Math.cos(-angle) + x * Math.sin(-angle);
+            x = x * Math.cos(-angle) - y * Math.sin(-angle);
+            y = temp;
+        }
 
         //Radius from center to each wheel
         double r = Math.sqrt ((RobotMap.L * RobotMap.L) + (RobotMap.W * RobotMap.W));
@@ -169,4 +173,14 @@ public class Drivetrain extends SubsystemBase {
         backLeft.setPID(kP, kI, kD);
         backRight.setPID(kP, kI, kD);
     }
+
+    public void toggleFieldOriented() {
+        fieldOriented = !fieldOriented;
+
+        // When it switches to field oriented, reset what the robot thinks is forward
+        if(fieldOriented) {
+            setGyro(0);
+        }
+    }
+
 }
