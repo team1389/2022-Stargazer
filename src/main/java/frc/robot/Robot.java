@@ -16,12 +16,7 @@ public class Robot extends TimedRobot {
      */
 
 
-    public static Drivetrain drivetrain = new Drivetrain();
-    public static Intake intake = new Intake();
-    public static Hopper hopper = new Hopper();
     public static Climber climber = new Climber();
-    public static Shooter shooter = new Shooter();
-    public static ML ml = new ML();
     public static PneumaticHub pneumaticHub = new PneumaticHub(RobotMap.PNEUMATICS_HUB);
     public static Compressor phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
     public static PowerDistribution powerDistributionHub = new PowerDistribution();

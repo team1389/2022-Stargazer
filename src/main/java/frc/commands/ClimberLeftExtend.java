@@ -16,17 +16,13 @@ public class ClimberLeftExtend extends CommandBase {
 
     @Override
     public void execute() {
-        climber.winchLeftUp();
+        climber.pistonExtendLeft();
     }
 
     @Override
     public boolean isFinished() {
         // Stopper here
-        return false;
+        return true;
     }
 
-    @Override
-    public void end(boolean interrupted) {
-        climber.stopLeftClimber();
-    }
 }
