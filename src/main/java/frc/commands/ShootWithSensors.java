@@ -23,6 +23,7 @@ public class ShootWithSensors extends SequentialCommandGroup {
         
         timer = new Timer();
         timer.reset();
+        timer.start();
 
         distanceToTarget = SmartDashboard.getNumber("Distance To Target", 0);
         // // TODO: lookup table for rpm
@@ -48,7 +49,6 @@ public class ShootWithSensors extends SequentialCommandGroup {
     @Override
     public void initialize() {
         super.initialize();
-        Robot.shooter.setFlywheelSpeed(targetRPM);
     }
 
     @Override
