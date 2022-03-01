@@ -17,7 +17,7 @@ public class OI {
 
 
     public XboxController driveController, manipController;
-    private JoystickButton shootXBtn, intakeABtn, climbRBumper, climbLBumper, climbLTrigger, climbRTrigger, BIndexerUpDPad, BIntakeDownDPad; 
+    private JoystickButton manipXBtn, manipABtn, manipRBumper, manipLBumper, manipLTrigger, manipRTrigger, manipUpDPad, manipDownDPad; 
     public JoystickButton driveRBumper, driveLBumper;
 
 
@@ -44,33 +44,33 @@ public class OI {
         driveLBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.setGyro(-90)));
 
         // Hold Manip A Button --> Run Intake
-        intakeABtn = new JoystickButton(manipController, XboxController.Button.kA.value);
-        intakeABtn.whenHeld(new RunIntake(true));
+        manipABtn = new JoystickButton(manipController, XboxController.Button.kA.value);
+        manipABtn.whenHeld(new RunIntake(true));
 
         // Hold Manip X Button --> Run Shooter System
-        shootXBtn = new JoystickButton(manipController, XboxController.Button.kX.value);
-        shootXBtn.whenHeld(new Shoot());
+        manipXBtn = new JoystickButton(manipController, XboxController.Button.kX.value);
+        manipXBtn.whenHeld(new Shoot());
 
         // Hold Manip LB and RB --> Stage One Climb with 2 second wait
-        climbRBumper = new JoystickButton(manipController, XboxController.Button.kRightBumper.value);
-        climbLBumper = new JoystickButton(manipController, XboxController.Button.kLeftBumper.value);
-        TwoButtonTrigger stageOneTrigger = new TwoButtonTrigger(climbRBumper, climbLBumper);
+        manipRBumper = new JoystickButton(manipController, XboxController.Button.kRightBumper.value);
+        manipLBumper = new JoystickButton(manipController, XboxController.Button.kLeftBumper.value);
+        TwoButtonTrigger stageOneTrigger = new TwoButtonTrigger(manipLBumper, manipRBumper);
         stageOneTrigger.whenActive(new StageOneClimb(2));  //check time
 
         // Hold Manip LT and RT --> Stage Two Climb
-        climbLTrigger = new JoystickButton(manipController, XboxController.Button.kA.value);
-        climbRTrigger = new JoystickButton(manipController, XboxController.Button.kB.value);
-        TwoButtonTrigger stageTwoTrigger = new TwoButtonTrigger(climbLTrigger, climbRTrigger);
+        manipRTrigger = new JoystickButton(manipController, XboxController.Button.kA.value);
+        manipLTrigger = new JoystickButton(manipController, XboxController.Button.kB.value);
+        TwoButtonTrigger stageTwoTrigger = new TwoButtonTrigger(manipLTrigger, manipRTrigger);
         stageTwoTrigger.whenActive(new StageTwoClimb());
 
         // JoystickButton is 1 indexed
         // Hold Manip DPad Up --> Reverse Indexer
-        BIndexerUpDPad = new JoystickButton(manipController, 12 + 1); // 12 is up on the D-Pad
-        BIndexerUpDPad.whenActive(new RunIndexer(false));
-        
+        manipUpDPad = new JoystickButton(manipController, 12 + 1); // 12 is up on the D-Pad
+        manipUpDPad.whenActive(new RunIndexer(false));
+    
         // Hold Manip DPad Down --> Reverse Intake
-        BIntakeDownDPad = new JoystickButton(manipController, 13 + 1); // 13 is down on the D-Pad
-        BIntakeDownDPad.whenActive(new RunIntake(false));
+        manipDownDPad = new JoystickButton(manipController, 13 + 1); // 13 is down on the D-Pad
+        manipDownDPad.whenActive(new RunIntake(false));
         
     }
 
