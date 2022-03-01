@@ -15,10 +15,13 @@ public class Shooter extends SubsystemBase {
     private CANSparkMax indexerMotor; //Falcon 500
 
     private CANSparkMax turretMotor; //NEO 550 Motor
-    private RelativeEncoder turretEncoder;
+    public RelativeEncoder turretEncoder;
 
     // The number of rotations that the turret can turn in either direction 
     private final double TURRET_RANGE_OF_MOTION = 0.35;
+    
+    // 8 rotations of the motor is one rotation of the turret
+    private final double MOTOR_TURRET_CONVERSION_FACTOR = 1/8;
 
     private final double MAX_TURRET_POWER = 0.3;
 
@@ -39,6 +42,7 @@ public class Shooter extends SubsystemBase {
         turretMotor = new CANSparkMax(RobotMap.TURRET_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         turretMotor.setIdleMode(IdleMode.kBrake);
         turretEncoder = turretMotor.getEncoder();
+        turretEncoder.setPositionConversionFactor(MOTOR_TURRET_CONVERSION_FACTOR);
         turretEncoder.setPosition(0);
 
         // Instantiate turretPid with kP, kI, kD
@@ -82,9 +86,11 @@ public class Shooter extends SubsystemBase {
         shooterMotor.set(0);
     }
 
-    public void runIndexer() {
-        indexerMotor.set(0.8);
+    public void runIndexer(double power) {
+        indexerMotor.set(power);
     }
+
+    
 
     public void stopIndexer() {
         indexerMotor.set(0);

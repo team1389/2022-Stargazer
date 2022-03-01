@@ -2,24 +2,23 @@ package frc.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
-import frc.subsystems.Shooter;
+import frc.subsystems.Hopper;
 
 
-public class RunIndexer extends CommandBase {
-    private Shooter shooter;
+public class RunHopper extends CommandBase {
+    private Hopper hopper;
 
 
 
-    public RunIndexer() {
-        shooter = Robot.shooter;
+    public RunHopper() {
+        hopper = Robot.hopper;
 
-        addRequirements(shooter);
+        addRequirements(hopper);
     }
 
     @Override
     public void execute() {
-        shooter.runIndexer(0.75);
-
+        hopper.setSpeed(0.5);
     }
 
     @Override
@@ -29,6 +28,6 @@ public class RunIndexer extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        shooter.stopIndexer();
+        hopper.stopHopper();
     }
 }

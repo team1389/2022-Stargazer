@@ -13,25 +13,28 @@ public class OI {
 
 
     public XboxController driveController, manipController;
-    private JoystickButton shootXBtn, intakeYBtn, climbRBumper, climbLBumper, climbABtn, climbBBtn; 
+    private JoystickButton manipXBtn, manipABtn, manipRBumper, manipLBumper, manipLTrigger, manipRTrigger, manipUpDPad, manipDownDPad; 
+    public JoystickButton driveRBumper, driveLBumper;
 
 
     public OI() {
         initControllers();
         
-        //Robot.shooter.setDefaultCommand(new RunIndexer());
+        Robot.shooter.setDefaultCommand(new RunIndexer());
     }
 
     /**
      * Initialize JoystickButtons and Controllers
      */
     private void initControllers() {
-        driveController = new XboxController(0);
+        //driveController = new XboxController(0);
         manipController = new XboxController(1);
 
-
-        shootXBtn = new JoystickButton(manipController, XboxController.Button.kX.value);
-        shootXBtn.whenHeld(new Shoot());
+        // // Hold Manip A Button --> Run Intake
+        // manipABtn = new JoystickButton(manipController, XboxController.Button.kA.value);
+        // manipABtn.whenHeld(new RunIntake(true));
+        //shootXBtn = new JoystickButton(manipController, XboxController.Button.kX.value);
+        //shootXBtn.whenHeld(new Shoot());
 
     }
 

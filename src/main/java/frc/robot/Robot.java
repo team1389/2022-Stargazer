@@ -17,6 +17,8 @@ public class Robot extends TimedRobot {
 
 
     public static Shooter shooter = new Shooter();
+    public static Hopper hopper = new Hopper();
+    public static Intake intake = new Intake();
    
     //Always create oi after all subsystems
     public static OI oi = new OI();
