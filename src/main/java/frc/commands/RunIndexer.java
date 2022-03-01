@@ -4,21 +4,32 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.subsystems.Shooter;
 
-
 public class RunIndexer extends CommandBase {
     private Shooter shooter;
 
+    private boolean forwards;
 
+    public RunIndexer(boolean forwards) {
+        shooter = Robot.shooter;
+        this.forwards = forwards;
+
+        addRequirements(shooter);
+    }
 
     public RunIndexer() {
         shooter = Robot.shooter;
-
+        this.forwards = true;
+        
         addRequirements(shooter);
     }
 
     @Override
     public void execute() {
-        shooter.runIndexer();
+        if (forwards) {
+            shooter.runIndexer(0.5);
+        } else {
+            shooter.runIndexer(-0.5);
+        }
 
     }
 

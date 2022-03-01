@@ -15,8 +15,6 @@ public class Climber extends SubsystemBase {
     private DoubleSolenoid leftExtender;
     private DoubleSolenoid rightExtender;
 
-    //TODO: Add piston objects
-
 
     private double climbSpeed = 0.5;
 

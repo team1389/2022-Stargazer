@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.commands.RunIndexer;
 import frc.commands.RunIntake;
 import frc.commands.Shoot;
 import frc.commands.ShootWithSensors;
@@ -16,7 +17,7 @@ public class OI {
 
 
     public XboxController driveController, manipController;
-    private JoystickButton shootXBtn, intakeYBtn, climbRBumper, climbLBumper, climbABtn, climbBBtn; 
+    private JoystickButton shootXBtn, intakeABtn, climbRBumper, climbLBumper, climbATrigger, climbBTrigger, BIndexerUpDPad, BIntakeDownDPad; 
     public JoystickButton driveaButton;
 
 
@@ -36,8 +37,8 @@ public class OI {
         driveController = new XboxController(0);
         manipController = new XboxController(1);
 
-        intakeYBtn = new JoystickButton(manipController, XboxController.Button.kY.value);
-        intakeYBtn.whenHeld(new RunIntake());
+        intakeABtn = new JoystickButton(manipController, XboxController.Button.kA.value);
+        intakeABtn.whenHeld(new RunIntake(true));
 
         shootXBtn = new JoystickButton(manipController, XboxController.Button.kX.value);
         shootXBtn.whenHeld(new Shoot());
@@ -47,10 +48,20 @@ public class OI {
         TwoButtonTrigger stageOneTrigger = new TwoButtonTrigger(climbRBumper, climbLBumper);
         stageOneTrigger.whenActive(new StageOneClimb(2));  //check time
 
-        climbABtn = new JoystickButton(manipController, XboxController.Button.kA.value);
-        climbBBtn = new JoystickButton(manipController, XboxController.Button.kB.value);
-        TwoButtonTrigger stageTwoTrigger = new TwoButtonTrigger(climbABtn, climbBBtn);
+        climbATrigger = new JoystickButton(manipController, XboxController.Button.kA.value);
+        climbBTrigger = new JoystickButton(manipController, XboxController.Button.kB.value);
+        TwoButtonTrigger stageTwoTrigger = new TwoButtonTrigger(climbATrigger, climbBTrigger);
         stageTwoTrigger.whenActive(new StageTwoClimb());
+
+        // JoystickButton is 1 indexed
+        BIndexerUpDPad = new JoystickButton(manipController, 12 + 1); // 12 is up on the D-Pad
+        BIndexerUpDPad.whenActive(new RunIndexer(false));
+        
+
+        BIntakeDownDPad = new JoystickButton(manipController, 13 + 1); // 13 is down on the D-Pad
+        BIntakeDownDPad.whenActive(new RunIntake(false));
+
+        
     }
 
     public double getDriverLeftX() {

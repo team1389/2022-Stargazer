@@ -82,9 +82,11 @@ public class Shooter extends SubsystemBase {
         shooterMotor.set(0);
     }
 
-    public void runIndexer() {
-        indexerMotor.set(0.5);
+    public void runIndexer(double power) {
+        indexerMotor.set(power);
     }
+
+    
 
     public void stopIndexer() {
         indexerMotor.set(0);
