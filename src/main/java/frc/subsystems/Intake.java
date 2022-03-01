@@ -15,6 +15,8 @@ public class Intake extends SubsystemBase {
     DoubleSolenoid leftExtender;
     DoubleSolenoid rightExtender;
 
+    boolean pistonExtended = true;
+
     public Intake() {
         //Instantiate intake motor as brushless motor with port from RobotMap
         intakeMotor = new CANSparkMax(RobotMap.INTAKE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -35,13 +37,24 @@ public class Intake extends SubsystemBase {
     }
 
     public void extendIntake() {
+        leftExtender.set(DoubleSolenoid.Value.kReverse);
+        rightExtender.set(DoubleSolenoid.Value.kReverse);
+    }
+
+    public void retractIntake() {
         leftExtender.set(DoubleSolenoid.Value.kForward);
         rightExtender.set(DoubleSolenoid.Value.kForward);
     }
 
-    public void retractIntake() {
-        leftExtender.set(DoubleSolenoid.Value.kReverse);
-        rightExtender.set(DoubleSolenoid.Value.kReverse);
+    public void toggleIntakePiston() {
+        pistonExtended = !pistonExtended;
+        if(pistonExtended) {
+            extendIntake();
+        }
+        else if(!pistonExtended) {
+            retractIntake();
+        }
+
     }
 }
 

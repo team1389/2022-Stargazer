@@ -17,7 +17,7 @@ public class OI {
 
 
     public XboxController driveController, manipController;
-    private JoystickButton manipXBtn, manipABtn, manipRBumper, manipLBumper, manipLTrigger, manipRTrigger, manipUpDPad, manipDownDPad; 
+    private JoystickButton manipXBtn, manipABtn, manipBBtn, manipRBumper, manipLBumper, manipLTrigger, manipRTrigger, manipUpDPad, manipDownDPad; 
     public JoystickButton driveRBumper, driveLBumper;
 
 
@@ -50,6 +50,9 @@ public class OI {
         // Hold Manip X Button --> Run Shooter System
         manipXBtn = new JoystickButton(manipController, XboxController.Button.kX.value);
         manipXBtn.whenHeld(new Shoot());
+
+        manipBBtn = new JoystickButton(manipController, XboxController.Button.kB.value);
+        manipBBtn.whenPressed(new InstantCommand(() -> Robot.intake.toggleIntakePiston()));
 
         // Hold Manip LB and RB --> Stage One Climb with 2 second wait
         manipRBumper = new JoystickButton(manipController, XboxController.Button.kRightBumper.value);
