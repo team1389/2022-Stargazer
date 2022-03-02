@@ -41,7 +41,7 @@ public class Intake extends SubsystemBase {
     }
 
     public void retractIntake() {
-        //leftExtender.set(DoubleSolenoid.Value.kReverse);
-        //rightExtender.set(DoubleSolenoid.Value.kReverse);
+        leftExtender.set(DoubleSolenoid.Value.kReverse);
+        rightExtender.set(DoubleSolenoid.Value.kReverse);
     }
 }

@@ -23,12 +23,14 @@ public class Robot extends TimedRobot {
     public static Hopper hopper = new Hopper();
     public static Intake intake = new Intake();
    
+    public  Compressor phCompressor;
+
     //Always create oi after all subsystems
     public static OI oi = new OI();
 
     @Override
     public void robotInit() {
-
+        phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
     }
 
     /**
