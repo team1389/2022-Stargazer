@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.commands.ExtendIntake;
 import frc.commands.RunHopper;
 import frc.commands.RunIndexer;
 import frc.commands.RunIntake;
@@ -15,6 +16,7 @@ import frc.util.TwoButtonTrigger;
 
 
 public class OI {
+    public ExtendIntake extendIntake;
 
 
     public XboxController driveController, manipController;
@@ -36,7 +38,10 @@ public class OI {
         //Robot.shooter.setDefaultCommand(new RunIndexer());
         //Robot.intake.setDefaultCommand(new RunIntake());
         //Robot.shooter.setDefaultCommand(new TestSystem());
-        Robot.shooter.setDefaultCommand(new RunIndexer());
+        //Robot.shooter.setDefaultCommand(new RunIndexer());
+
+        extendIntake = new ExtendIntake();
+        extendIntake.schedule();
 
 
     }

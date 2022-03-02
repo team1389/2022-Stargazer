@@ -30,7 +30,7 @@ public class RobotMap {
 
 
     //Intake motors
-    public static final int INTAKE_MOTOR = 16;
+    public static final int INTAKE_MOTOR = 15;
 
     //Climb motor
     public static final int RIGHT_CLIMB_MOTOR = 0;
@@ -41,7 +41,7 @@ public class RobotMap {
     public static final int TURRET_MOTOR = 17;
 
     //Indexer Motor
-    public static final int INDEXER_MOTOR = 15;
+    public static final int INDEXER_MOTOR = 16;
 
     //Hopper Motor
     public static final int HOPPER_MOTOR = 18;
