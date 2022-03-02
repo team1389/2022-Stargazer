@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Robot;
 
 
-public class ExtendIntake extends InstantCommand {
-  public ExtendIntake() {
+public class RetractIntake extends InstantCommand {
+  public RetractIntake() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Robot.intake);
   }
@@ -18,6 +18,6 @@ public class ExtendIntake extends InstantCommand {
   @Override
   public void initialize() {
     super.initialize();
-    Robot.intake.extendIntake();
+    Robot.intake.retractIntake();
   }
 }

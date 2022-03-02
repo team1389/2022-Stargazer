@@ -26,39 +26,37 @@ public class RobotMap {
     public static final int DRIVE_ENCODER_BACK_RIGHT = 14;
 
     //Shooter motor
-    public static final int SHOOTER_MOTOR = 13;
+    public static final int SHOOTER_MOTOR = 19;
 
-    //Hood servo
-    public static final int HOOD_SERVO = 13;
 
     //Intake motors
-    public static final int INTAKE_MOTOR = 16;
+    public static final int INTAKE_MOTOR = 15;
 
     //Climb motor
-    public static final int RIGHT_CLIMB_MOTOR = 18;
-    public static final int LEFT_CLIMB_MOTOR = 18;
+    public static final int RIGHT_CLIMB_MOTOR = 0;
+    public static final int LEFT_CLIMB_MOTOR = 0;
 
 
     //Turret Motor
-    public static final int TURRET_MOTOR = 19;
+    public static final int TURRET_MOTOR = 17;
 
     //Indexer Motor
-    public static final int INDEXER_MOTOR = 20;
+    public static final int INDEXER_MOTOR = 16;
 
     //Hopper Motor
-    public static final int HOPPER_MOTOR = 21;
+    public static final int HOPPER_MOTOR = 18;
 
     //Intake Double Solenoids
-    public static final int LEFT_INTAKE_FORWARD_SOLENOID = 0;
-    public static final int LEFT_INTAKE_REVERSE_SOLENOID = 0;
-    public static final int RIGHT_INTAKE_FORWARD_SOLENOID = 0;
-    public static final int RIGHT_INTAKE_REVERSE_SOLENOID = 0;
+    public static final int LEFT_INTAKE_FORWARD_SOLENOID = 8;
+    public static final int LEFT_INTAKE_REVERSE_SOLENOID = 7;
+    public static final int RIGHT_INTAKE_FORWARD_SOLENOID = 9;
+    public static final int RIGHT_INTAKE_REVERSE_SOLENOID = 6;
 
     //Climber Double Solenoids
-    public static final int LEFT_CLIMBER_FORWARD_SOLENOID = 0;
-    public static final int LEFT_CLIMBER_REVERSE_SOLENOID = 0;
-    public static final int RIGHT_CLIMBER_FORWARD_SOLENOID = 0;
-    public static final int RIGHT_CLIMBER_REVERSE_SOLENOID = 0;
+    public static final int LEFT_CLIMBER_FORWARD_SOLENOID = 11;
+    public static final int LEFT_CLIMBER_REVERSE_SOLENOID = 4;
+    public static final int RIGHT_CLIMBER_FORWARD_SOLENOID = 10;
+    public static final int RIGHT_CLIMBER_REVERSE_SOLENOID = 5;
 
     //Robot dimensions (inches)
     //Length and width are measured from the centers of the wheels

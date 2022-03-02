@@ -27,6 +27,7 @@ public class Intake extends SlowSubsystem {
                 RobotMap.LEFT_INTAKE_REVERSE_SOLENOID);
         rightExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.RIGHT_INTAKE_FORWARD_SOLENOID,
                 RobotMap.RIGHT_INTAKE_REVERSE_SOLENOID);
+                //intakeMotor.set(0.5);
     }
 
     public void setIntakePercent(double percent) {
@@ -58,4 +59,3 @@ public class Intake extends SlowSubsystem {
 
     }
 }
-

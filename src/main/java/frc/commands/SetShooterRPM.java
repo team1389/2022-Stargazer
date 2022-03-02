@@ -43,6 +43,8 @@ public class SetShooterRPM extends CommandBase {
 
         Robot.shooter.setShooterPercent(power);
 
+        System.out.print("TEST");
+
         recentErrors.addElement(error);
         SmartDashboard.putNumber("recent average", recentErrors.getAverage());
 
