@@ -7,8 +7,9 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.util.SlowSubsystem;
 
-public class Intake extends SubsystemBase {
+public class Intake extends SlowSubsystem {
 
 
     CANSparkMax intakeMotor; //NEO 550
@@ -29,7 +30,7 @@ public class Intake extends SubsystemBase {
     }
 
     public void setIntakePercent(double percent) {
-        intakeMotor.set(percent);
+        intakeMotor.set(percent * slow);
     }
 
     public void stopIntake() {

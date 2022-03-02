@@ -12,7 +12,6 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.util.SlowSubsystem;
 
@@ -88,6 +87,10 @@ public class Drivetrain extends SlowSubsystem {
         double frontRightAngle = Math.atan2 (b, c) * (180/Math.PI);
         double frontLeftAngle = Math.atan2 (b, d) * (180/Math.PI);
 
+
+        // Slow down if power is too high
+        setSlow(slow);
+
         //Sets the angle for all SwerveWheels from calculate angles above
         backRight.setAngle(backRightAngle);
         backLeft.setAngle(backLeftAngle);
@@ -139,13 +142,14 @@ public class Drivetrain extends SlowSubsystem {
 
     public void setSlow(double slow) {
         frontLeft.setSlow(slow);
-        frontRight
+        frontRight.setSlow(slow);
+        backLeft.setSlow(slow);
+        backRight.setSlow(slow);
     }
 
     //Manually set the speed of the drivetrain
     public void setChassisSpeeds(ChassisSpeeds speeds) {
-        frontLeft.setSlow(slow);
-        frontRight.setSlow(slow);
+        setSlow(slow);
         
         SwerveModuleState[] moduleStates = kinematics.toSwerveModuleStates(speeds);
 

@@ -8,8 +8,9 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.util.SlowSubsystem;
 
-public class Shooter extends SubsystemBase {
+public class Shooter extends SlowSubsystem {
 
     public CANSparkMax shooterMotor; //Neo 
     private CANSparkMax indexerMotor; //Falcon 500
@@ -67,11 +68,11 @@ public class Shooter extends SubsystemBase {
             return;
         }
 
-        turretMotor.set(power);
+        turretMotor.set(power * slow);
     }
 
     public void setShooterPercent(double percent) {
-        shooterMotor.set(percent);
+        shooterMotor.set(percent * slow);
     }
 
     public PIDController getFlywheelPID() {
@@ -79,7 +80,7 @@ public class Shooter extends SubsystemBase {
     }
     // speed in RPM
     public void setFlywheelSpeed(double speed) {
-        flywheelPID.setSetpoint(speed);
+        flywheelPID.setSetpoint(speed * slow);
     }
 
     public void stopShooter() {
@@ -87,7 +88,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public void runIndexer(double power) {
-        indexerMotor.set(power);
+        indexerMotor.set(power * slow);
     }
 
     

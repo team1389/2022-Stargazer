@@ -2,10 +2,10 @@ package frc.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.util.SlowSubsystem;
 
-public class Hopper extends SubsystemBase {
+public class Hopper extends SlowSubsystem {
 
     private CANSparkMax hopperMotor; //NEO 550
 
@@ -16,7 +16,7 @@ public class Hopper extends SubsystemBase {
     }
 
     public void setSpeed(double percent) {
-        hopperMotor.set(percent);
+        hopperMotor.set(percent * slow);
     }
 
     public void stopHopper() {
