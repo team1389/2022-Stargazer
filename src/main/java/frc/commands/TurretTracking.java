@@ -25,6 +25,9 @@ public class TurretTracking extends CommandBase {
         recentErrors = new SizeLimitedQueue(15);
         timer = new Timer();
         pid = shooter.getTurretPID();
+
+        addRequirements(shooter);
+
     }
 
     @Override
@@ -44,23 +47,24 @@ public class TurretTracking extends CommandBase {
 
     @Override
     public void execute() {
-        // Updates the limelight values
-        fetchValues();
-        recentErrors.addElement(ty);
+        // // Updates the limelight values
+        // fetchValues();
+        // recentErrors.addElement(ty);
 
-        if(tv >= 1) {
-            // Sets the pid controller's reference point to the ty and the setpoint to 0
-            turretPower = pid.calculate(ty-6, 0); //Need to test offset, ty because limelight is vetical
+        // if(tv >= 1) {
+        //     // Sets the pid controller's reference point to the ty and the setpoint to 0
+        //     turretPower = pid.calculate(ty-6, 0); //Need to test offset, ty because limelight is vetical
 
-        }
-        else {
+        // }
+        // else {
 
-            System.out.print("No target");
-        }
+        //     System.out.print("No target");
+        // }
 
-        // Sets the shooter to the turret power from PID
-        Robot.shooter.setTurretPower(turretPower);
-        SmartDashboard.putNumber("turret power", turretPower);
+        // // Sets the shooter to the turret power from PID
+        // Robot.shooter.setTurretPower(turretPower);
+        // SmartDashboard.putNumber("turret power", turretPower);
+        Robot.shooter.setTurretPower(0.1);
     }
 
     @Override

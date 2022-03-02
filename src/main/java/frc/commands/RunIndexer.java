@@ -16,8 +16,13 @@ public class RunIndexer extends CommandBase {
         addRequirements(shooter);
     }
 
+    public void initialize() {
+        super.initialize();
+    }
+
     @Override
     public void execute() {
+        System.out.print("TEST");
         shooter.runIndexer(0.75);
 
     }
@@ -29,6 +34,6 @@ public class RunIndexer extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        shooter.stopIndexer();
+        //shooter.stopIndexer();
     }
 }

@@ -27,15 +27,17 @@ public class RunIntake extends CommandBase {
         addRequirements(intake);
 
     }
+    
 
     @Override
     public void execute() {
-        if (forwards) {
-            intake.setIntakePercent(0.75);
-        } else {
-            intake.setIntakePercent(-0.5);
-        }
-        hopper.setSpeed(0.2);
+        // if (forwards) {
+        //     intake.setIntakePercent(0.75);
+        // } else {
+        //     intake.setIntakePercent(-0.5);
+        // }
+        intake.setIntakePercent(0.5);
+        //hopper.setSpeed(0.2);
     }
 
     @Override

@@ -16,6 +16,10 @@ public class RunHopper extends CommandBase {
         addRequirements(hopper);
     }
 
+    public void initialize() {
+        super.initialize();
+    }
+
     @Override
     public void execute() {
         hopper.setSpeed(0.5);

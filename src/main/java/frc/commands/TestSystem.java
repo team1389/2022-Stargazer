@@ -17,12 +17,20 @@ public class TestSystem extends SequentialCommandGroup {
   @Override
   public void execute() {
     Robot.shooter.setTurretPower(0.2);
+    //Robot.shooter.runIndexer(0.5);
+    //Robot.intake.setIntakePercent(0.5);
 
     SmartDashboard.putNumber("Turret position", Robot.shooter.turretEncoder.getPosition());
   }
 
+
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
+
   @Override
   public void end(boolean interrupted) {
-    Robot.shooter.setTurretPower(0);
+   // Robot.shooter.setTurretPower(0);
   }
 }

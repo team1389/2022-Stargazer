@@ -58,14 +58,14 @@ public class Shooter extends SubsystemBase {
 
         // Only run the turret if it won't overrotate and break
         // If the turret is too far over the range only allow negative motion, and vice versa
-        if(turretEncoder.getPosition() >= TURRET_RANGE_OF_MOTION && power > 0) {
-            turretMotor.set(0);
-            return;
-        }
-        if(turretEncoder.getPosition() <= TURRET_RANGE_OF_MOTION && power < 0) {
-            turretMotor.set(0);
-            return;
-        }
+        // if(turretEncoder.getPosition() >= TURRET_RANGE_OF_MOTION && power > 0) {
+        //     turretMotor.set(0);
+        //     return;
+        // }
+        // if(turretEncoder.getPosition() <= TURRET_RANGE_OF_MOTION && power < 0) {
+        //     turretMotor.set(0);
+        //     return;
+        // }
 
         turretMotor.set(power);
     }

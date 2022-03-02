@@ -3,6 +3,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
+import frc.commands.RunHopper;
+import frc.commands.RunIndexer;
 import frc.subsystems.*;
 
 /**
@@ -42,7 +45,6 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         //Example of setting auto: Scheduler.getInstance().add(YOUR AUTO);
-        
     }
 
     /**
@@ -57,6 +59,12 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+        //Robot.shooter.setDefaultCommand(new RunIndexer());
+    }
+
+    @Override
+    public void teleopInit() {
+        //Robot.shooter.setDefaultCommand(new RunIndexer());
     }
 
     /**
