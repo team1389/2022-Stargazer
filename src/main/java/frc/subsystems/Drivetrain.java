@@ -14,8 +14,9 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.util.SlowSubsystem;
 
-public class Drivetrain extends SubsystemBase {
+public class Drivetrain extends SlowSubsystem {
     public SwerveWheel frontLeft, frontRight, backLeft, backRight;
     private AHRS gyro = new AHRS(SerialPort.Port.kMXP);
     public SwerveDriveKinematics kinematics;
@@ -136,8 +137,16 @@ public class Drivetrain extends SubsystemBase {
         odometry.resetPosition(newPose, gyro.getRotation2d());
     }
 
+    public void setSlow(double slow) {
+        frontLeft.setSlow(slow);
+        frontRight
+    }
+
     //Manually set the speed of the drivetrain
     public void setChassisSpeeds(ChassisSpeeds speeds) {
+        frontLeft.setSlow(slow);
+        frontRight.setSlow(slow);
+        
         SwerveModuleState[] moduleStates = kinematics.toSwerveModuleStates(speeds);
 
         frontLeft.setState(moduleStates[0]);

@@ -6,16 +6,14 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.util.SlowSubsystem;
 
-public class Climber extends SubsystemBase {
+public class Climber extends SlowSubsystem {
     private TalonFX leftClimbMotor; //Falcon 500
     private TalonFX rightClimbMotor; //Falcon 500
     private DoubleSolenoid leftExtender;
     private DoubleSolenoid rightExtender;
-
-
     private double climbSpeed = 0.5;
 
     public Climber() {
@@ -37,18 +35,18 @@ public class Climber extends SubsystemBase {
 
     public void winchLeftUp() {
         //Extends the climber upwards
-        leftClimbMotor.set(ControlMode.PercentOutput, climbSpeed);
+        leftClimbMotor.set(ControlMode.PercentOutput, climbSpeed * slow);
     }
     public void winchRightUp() {
-        rightClimbMotor.set(ControlMode.PercentOutput, climbSpeed);
+        rightClimbMotor.set(ControlMode.PercentOutput, climbSpeed * slow);
     }
 
     public void winchLeftDown() {
         //Descends the climber
-        leftClimbMotor.set(ControlMode.PercentOutput, -climbSpeed);
+        leftClimbMotor.set(ControlMode.PercentOutput, -climbSpeed * slow);
     }
     public void winchRightDown() {
-        rightClimbMotor.set(ControlMode.PercentOutput, -climbSpeed);
+        rightClimbMotor.set(ControlMode.PercentOutput, -climbSpeed * slow);
     }
 
     public void stopLeftClimber() {
