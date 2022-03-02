@@ -16,7 +16,7 @@ public class TestSystem extends SequentialCommandGroup {
 
   @Override
   public void execute() {
-    Robot.shooter.setTurretPower(0.2);
+    //Robot.shooter.setTurretPower(0.1);
     //Robot.shooter.runIndexer(0.5);
     //Robot.intake.setIntakePercent(0.5);
 

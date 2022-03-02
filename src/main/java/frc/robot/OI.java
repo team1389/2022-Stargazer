@@ -31,12 +31,12 @@ public class OI {
         //Robot.intake.setDefaultCommand(new RunIntake());
         //Robot.shooter.setDefaultCommand(new SetShooterRPM(100));
 
-        Robot.hopper.setDefaultCommand(new RunHopper()); //Good
-        //Robot.shooter.setDefaultCommand(new SetShooterRPM(1000)); //Good
+        //Robot.hopper.setDefaultCommand(new RunHopper()); //Good
+        //Robot.shooter.setDefaultCommand(new SetShooterRPM(1500)); //Good
         //Robot.shooter.setDefaultCommand(new RunIndexer());
         //Robot.intake.setDefaultCommand(new RunIntake());
         //Robot.shooter.setDefaultCommand(new TestSystem());
-        //Robot.shooter.setDefaultCommand(new RunIndexer());
+        Robot.shooter.setDefaultCommand(new RunIndexer());
 
 
     }
