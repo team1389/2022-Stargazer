@@ -28,14 +28,27 @@ public class Robot extends TimedRobot {
     public Compressor phCompressor;
     public static PowerDistribution powerDistributionHub = new PowerDistribution();
 
-    static SlowSubsystem[] slow = { drivetrain, intake, hopper, climber, shooter };
-    static final double maxCurrent = 220;
+
+    // How subsystem maps to subsystem IDs, this is also the order it will limit power in
+    // Drivetrain -> 0
+    public static final int DRIVETRAIN_ID = 0; 
+    // Intake -> 1
+    public static final int INTAKE_ID = 1; 
+    // Hopper -> 2
+    public static final int HOPPER_ID = 2; 
+    // Climber -> 3
+    public static final int CLIMBER_ID = 3; 
+    // Shooter -> 4
+    public static final int SHOOTER_ID = 4; 
+
+    static SlowSubsystem[] slow = new SlowSubsystem[5];
+    static final double MAX_CURRENT = 220;
     static double[] slowValues = {
-            1.0, // Drivetrain
-            1.0, // Intake
-            1.0, // Hopper
-            1.0, // Climber
-            1.0 // shooter
+            1.0, 
+            1.0, 
+            1.0, 
+            1.0, 
+            1.0 
     };
 
     // Always create oi after all subsystems
@@ -44,6 +57,11 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
+        slow[DRIVETRAIN_ID] = drivetrain;
+        slow[INTAKE_ID] = intake;
+        slow[HOPPER_ID] = hopper;
+        slow[CLIMBER_ID] = climber;
+        slow[SHOOTER_ID] = shooter;
     }
 
     /**
@@ -87,68 +105,67 @@ public class Robot extends TimedRobot {
     private void limitCurrent() {
         double currentCurrent = powerDistributionHub.getTotalCurrent();
 
-        if (currentCurrent < maxCurrent) {
+        if (currentCurrent < MAX_CURRENT) {
             // No need to limit power.
             return;
         }
 
-        // How subsystem maps to subsystem IDs
-        // Drivetrain -> 0
-        // Intake -> 1
-        // Hopper -> 2
-        // Climber -> 3
-        // Shooter -> 4
+
+        System.err.println("Over current limit, limiting power");
+
+        
+
         double[] currentArr = {
-                0.0, // Drivetrain
-                0.0, // Intake
-                0.0, // Hopper
-                0.0, // Climber
-                0.0 // shooter
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
         };
 
         // Group power by subsystem:
         //
         // How PDH maps to subsystem
-        // 0 -> CAN 10 -> Drivetrain -> 0
-        currentArr[0] += powerDistributionHub.getCurrent(0);
-        // 1 -> CAN 9 -> Drivetrain -> 0
-        currentArr[0] += powerDistributionHub.getCurrent(1);
-        // 2 -> CAN ? -> Climber -> 3
-        currentArr[3] += powerDistributionHub.getCurrent(2);
+        // 0 -> CAN 10 -> Drivetrain
+        currentArr[DRIVETRAIN_ID] += powerDistributionHub.getCurrent(0);
+        // 1 -> CAN 9 -> Drivetrain
+        currentArr[DRIVETRAIN_ID] += powerDistributionHub.getCurrent(1);
+        // 2 -> CAN ? -> Climber
+        currentArr[CLIMBER_ID] += powerDistributionHub.getCurrent(2);
         // 3 -> N/A
         // 4 -> N/A
         // 5 -> N/A
         // 6 -> N/A
         // 7 -> N/A
-        // 8 -> CAN 8 -> Drivetrain -> 0
-        currentArr[0] += powerDistributionHub.getCurrent(8);
-        // 9 -> CAN 7 -> Drivetrain -> 0
-        currentArr[0] += powerDistributionHub.getCurrent(9);
-        // 10 -> CAN 3 -> Drivetrain -> 0
-        currentArr[0] += powerDistributionHub.getCurrent(10);
-        // 11 -> CAN 4 -> Drivetrain -> 0
-        currentArr[0] += powerDistributionHub.getCurrent(11);
-        // 12 -> CAN 19 -> Shooter -> 4
-        currentArr[4] += powerDistributionHub.getCurrent(12);
-        // 13 -> CAN 18 -> Hopper -> 2
-        currentArr[2] += powerDistributionHub.getCurrent(13);
-        // 14 -> CAN 17 -> Shooter -> 4
-        currentArr[4] += powerDistributionHub.getCurrent(14);
-        // 15 -> CAN 16 -> Shooter -> 4
-        currentArr[4] += powerDistributionHub.getCurrent(15);
-        // 16 -> CAN 15 -> Intake -> 1
-        currentArr[1] += powerDistributionHub.getCurrent(16);
-        // 17 -> CAN 5 -> Drivetrain -> 0
-        currentArr[0] += powerDistributionHub.getCurrent(17);
-        // 18 -> CAN 6 -> Drivetrain -> 0
-        currentArr[0] += powerDistributionHub.getCurrent(18);
-        // 19 -> CAN ? -> Climber -> 3
-        currentArr[3] += powerDistributionHub.getCurrent(19);
+        // 8 -> CAN 8 -> Drivetrain
+        currentArr[DRIVETRAIN_ID] += powerDistributionHub.getCurrent(8);
+        // 9 -> CAN 7 -> Drivetrain
+        currentArr[DRIVETRAIN_ID] += powerDistributionHub.getCurrent(9);
+        // 10 -> CAN 3 -> Drivetrain
+        currentArr[DRIVETRAIN_ID] += powerDistributionHub.getCurrent(10);
+        // 11 -> CAN 4 -> Drivetrain
+        currentArr[DRIVETRAIN_ID] += powerDistributionHub.getCurrent(11);
+        // 12 -> CAN 19 -> Shooter
+        currentArr[SHOOTER_ID] += powerDistributionHub.getCurrent(12);
+        // 13 -> CAN 18 -> Hopper
+        currentArr[HOPPER_ID] += powerDistributionHub.getCurrent(13);
+        // 14 -> CAN 17 -> Shooter
+        currentArr[SHOOTER_ID] += powerDistributionHub.getCurrent(14);
+        // 15 -> CAN 16 -> Shooter
+        currentArr[SHOOTER_ID] += powerDistributionHub.getCurrent(15);
+        // 16 -> CAN 15 -> Intake
+        currentArr[INTAKE_ID] += powerDistributionHub.getCurrent(16);
+        // 17 -> CAN 5 -> Drivetrain
+        currentArr[DRIVETRAIN_ID] += powerDistributionHub.getCurrent(17);
+        // 18 -> CAN 6 -> Drivetrain
+        currentArr[DRIVETRAIN_ID] += powerDistributionHub.getCurrent(18);
+        // 19 -> CAN ? -> Climber
+        currentArr[CLIMBER_ID] += powerDistributionHub.getCurrent(19);
 
         // See extra current being consumed by other things on the robot:
         double sum = Functions.sum(currentArr);
         double extraCurrent = currentCurrent - sum;
-        if (extraCurrent > maxCurrent) {
+        if (extraCurrent > MAX_CURRENT) {
             // Somehow, the remaining unaccounted for current (should be at most 80 amps if
             // the breakers work) is making the robot dangerously close to browning out.
             System.err.println(
@@ -173,15 +190,15 @@ public class Robot extends TimedRobot {
         for (int i = 0; i < currentArr.length; i++) {
             // We want to solve the equation `sum + extraCurrent - x = maxCurrent`, for x
             // Therefore x = sum + extraCurrent - maxCurrent
-            double x = sum + extraCurrent - maxCurrent;
+            double x = sum + extraCurrent - MAX_CURRENT;
             // x is the amount of current we need to remove now
 
             // if it is more than the current we can currently remove, pass it on to the
             // next loop iteration, while removing as much as possible
             if (x > theoreticalCurrent[i]) {
-                // this is 1% and not 0% because of divide by zero errors
-                slowValues[i] = 0.01;
-                theoreticalCurrent[i] *= 0.01;
+                // this is 10% and not 0% because of divide by zero errors and the y-intercept of the motor power
+                slowValues[i] = 0.1;
+                theoreticalCurrent[i] *= 0.1;
 
             } else {
                 double current = theoreticalCurrent[i];
