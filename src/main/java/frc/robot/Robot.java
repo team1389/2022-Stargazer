@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         //phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
-        pneumaticHub.enableCompressorAnalog(110, 120);
+        pneumaticHub.enableCompressorDigital();
         CameraServer.startAutomaticCapture();
     }
 

@@ -6,7 +6,6 @@ import frc.subsystems.Climber;
 
 
 public class ClimberLeftExtend extends CommandBase {
-
     private Climber climber;
 
     public ClimberLeftExtend() {

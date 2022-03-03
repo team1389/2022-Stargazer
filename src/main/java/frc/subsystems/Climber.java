@@ -15,6 +15,9 @@ public class Climber extends SubsystemBase {
     private DoubleSolenoid leftExtender;
     private DoubleSolenoid rightExtender;
 
+    private boolean isRightExtended = false;
+    private boolean isLeftExtended = false;
+
 
     private double climbSpeed = 0.5;
 
@@ -60,27 +63,25 @@ public class Climber extends SubsystemBase {
         rightClimbMotor.set(ControlMode.PercentOutput, 0);
     }
 
-    //TODO: add the climber piston methods
-    public void pistonExtendLeft() {
-        leftExtender.set(DoubleSolenoid.Value.kForward);
-    }
-    public void pistonExtendRight() {
-        rightExtender.set(DoubleSolenoid.Value.kForward);
-    }
-
-    public void pistonRetractLeft() {
-        leftExtender.set(DoubleSolenoid.Value.kReverse);
-    }
-    public void pistonRetractRight() {
-        rightExtender.set(DoubleSolenoid.Value.kReverse);
+    public void toggleLeftPiston() {
+        if(isLeftExtended) {
+            leftExtender.set(DoubleSolenoid.Value.kReverse);
+        }
+        else {
+            leftExtender.set(DoubleSolenoid.Value.kForward);
+        }
+        isLeftExtended = !isLeftExtended;
     }
 
-
-
-
-
-
-
+    public void toggleRightPiston() {
+        if(isRightExtended) {
+            rightExtender.set(DoubleSolenoid.Value.kReverse);
+        }
+        else {
+            rightExtender.set(DoubleSolenoid.Value.kForward);
+        }
+        isRightExtended = !isRightExtended;
+    }
 
 }
 

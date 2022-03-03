@@ -17,6 +17,6 @@ public class StageOneClimb extends SequentialCommandGroup {
 }
 /**
  * 1. Extend both up
- * 2. Wait 2 seconds
+ * 2. Wait
  * 3. Retract both down
  */
