@@ -63,6 +63,8 @@ public class Climber extends SubsystemBase {
         rightClimbMotor.set(ControlMode.PercentOutput, 0);
     }
 
+    //TODO: add getLeftEncoder and getRightEncoder once we figure out what kind of encoders
+
     public void toggleLeftPiston() {
         if(isLeftExtended) {
             leftExtender.set(DoubleSolenoid.Value.kReverse);
