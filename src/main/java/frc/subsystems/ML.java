@@ -9,7 +9,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-import frc.utils.BoundingBox;
+import frc.util.BoundingBox;
 
 
 
@@ -99,25 +99,6 @@ public class ML extends SubsystemBase {
         return nums;
 
     }
-
-    double kP = 0.5;
-    double kI = 0.05;
-    double kD = 0;
-    PIDController pid;
-
-    public void turn() {
-
-        pid = new PIDController(kP, kI, kD);
-
-        double error = Robot.ml.movement();
-        double power = pid.calculate(error, 0);
-
-        SmartDashboard.putNumber("power", power);
-        SmartDashboard.putNumber("error", error);
-
-        Robot.drivetrain.set(power, -power);
-    }
-
     
 }
 
