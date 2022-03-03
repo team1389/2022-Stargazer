@@ -4,20 +4,26 @@
 
 package frc.commands;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.subsystems.Intake;
 
+public class ExtendIntake extends CommandBase {
+  private Intake intake;
 
-public class ExtendIntake extends InstantCommand {
   public ExtendIntake() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.intake);
+        intake = Robot.intake;
+        addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    super.initialize();
-    Robot.intake.extendIntake();
+    intake.extendIntake();
+  }
+
+  @Override
+  public boolean isFinished() {
+    return true;
   }
 }
