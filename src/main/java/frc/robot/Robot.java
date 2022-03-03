@@ -1,6 +1,7 @@
 package frc.robot;
 
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.subsystems.*;
@@ -31,7 +32,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-        phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
+        //phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
+        pneumaticHub.enableCompressorAnalog(110, 120);
+        CameraServer.startAutomaticCapture();
     }
 
     /**
