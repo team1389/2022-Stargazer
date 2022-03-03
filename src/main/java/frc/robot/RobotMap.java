@@ -5,7 +5,7 @@ package frc.robot;
  */
 public class RobotMap {
     //Pneumatics Hub
-    public static final int PNEUMATICS_HUB= 1;
+    public static final int PNEUMATICS_HUB= 2;
 
     //Drive motors
     public static final  int DRIVE_MOTOR_FRONT_LEFT = 3;
