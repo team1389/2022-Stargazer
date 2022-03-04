@@ -25,6 +25,8 @@ public class TurretTracking extends CommandBase {
         recentErrors = new SizeLimitedQueue(15);
         timer = new Timer();
         pid = shooter.getTurretPID();
+        
+        addRequirements();
     }
 
     @Override

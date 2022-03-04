@@ -17,6 +17,7 @@ import frc.commands.StageOneClimb;
 import frc.commands.StageTwoClimb;
 import frc.commands.TeleOpDrive;
 import frc.commands.WinchClimber;
+import frc.commands.WinchClimber.LeftOrRight;
 import frc.util.DPadButton;
 import frc.util.TwoButtonTrigger;
 import frc.util.DPadButton.Direction;
@@ -127,16 +128,16 @@ public class OI {
     public void initManualClimber() {
         // Hold Manip LT --> Extend left climber
 
-        manipLBumper.whileHeld(new WinchClimber("left", true));
+        manipLBumper.whileHeld(new WinchClimber(LeftOrRight.left, true));
 
         // Hold Manip RT --> Extend right climber
-        manipRBumper.whileHeld(new WinchClimber("right", true));
+        manipRBumper.whileHeld(new WinchClimber(LeftOrRight.right, true));
 
         // Hold Manip LB --> Retract left climber
-        manipBackBtn.whileHeld(new WinchClimber("left", false));
+        manipBackBtn.whileHeld(new WinchClimber(LeftOrRight.left, false));
 
         // Hold Manip RB --> Retract right climber
-        manipStartBtn.whileHeld(new WinchClimber("right", false));
+        manipStartBtn.whileHeld(new WinchClimber(LeftOrRight.right, false));
 
         // Press Manip Y --> Toggle left piston
         manipYBtn = new JoystickButton(manipController, XboxController.Button.kY.value);

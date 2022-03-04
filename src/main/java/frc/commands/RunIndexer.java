@@ -12,6 +12,7 @@ public class RunIndexer extends CommandBase {
     public RunIndexer(boolean forwards) {
         shooter = Robot.shooter;
         this.forwards = forwards;
+
         addRequirements(shooter);
 
     }
@@ -19,6 +20,7 @@ public class RunIndexer extends CommandBase {
     public RunIndexer() {
         shooter = Robot.shooter;
         this.forwards = true;
+        
         addRequirements(shooter);
         
     }

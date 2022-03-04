@@ -1,9 +1,5 @@
 package frc.commands;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.sensors.CANCoder;
-
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
@@ -20,25 +16,31 @@ public class WinchClimber extends CommandBase {
     private final double MAX_EXTENDED_VALUE = 1;
     private final double MAX_RETRACTED_VALUE = 0;
 
-    private String leftOrRight;
+    public enum LeftOrRight {
+        left,
+        right
+    }
+    private LeftOrRight leftOrRight;
+
     private boolean isExtending;
 
     /*
     *@param leftOrRight Should be "left" or "right"
     *@param isExtending false is retracting, true is extending
     */
-    public WinchClimber(String leftOrRight, boolean isExtending) {
+    public WinchClimber(LeftOrRight leftOrRight, boolean isExtending) {
         climber = Robot.climber;
-
-        if(leftOrRight.equals("left")) {
-            //encoder = climber.getLeftEncoder();
-        }
-        else if(leftOrRight.equals("right")) {
-            //encoder = climber.getRightEncoder();
-        }
-
         this.leftOrRight = leftOrRight;
         this.isExtending = isExtending;
+
+        switch (leftOrRight) {
+            case left: 
+                //encoder = climber.getLeftEncoder();
+                break;
+            case right:
+                //encoder = climber.getRightEncoder();
+                break;
+        }
 
         addRequirements(climber);
     }
@@ -47,21 +49,24 @@ public class WinchClimber extends CommandBase {
     public void execute() {
 
         // Do the correct thing
-        if(leftOrRight.equals("left")) {
-            if(isExtending) {
-                climber.leftWinchExtend();
-            }
-            else {
-                climber.leftWinchRetract();
-            }
-        }
-        else if(leftOrRight.equals("right")) {
-            if(isExtending) {
-                climber.rightWinchExtend();
-            }
-            else {
-                climber.rightWinchRetract();
-            }
+        switch (leftOrRight) {
+            case left: 
+                if(isExtending) {
+                    climber.leftWinchExtend();
+                }
+                else {
+                    climber.leftWinchRetract();
+                }
+                break;
+
+            case right:
+                if(isExtending) {
+                    climber.rightWinchExtend();
+                }
+                else {
+                   climber.rightWinchRetract();
+                }
+                break;
         }
 
         SmartDashboard.putNumber("left encoder position", climber.getLeftEncoderPosition());
@@ -81,11 +86,15 @@ public class WinchClimber extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        if(leftOrRight.equals("left")) {
-            climber.stopLeftClimber();
+        switch (leftOrRight) {
+            case left:
+                climber.stopLeftClimber();
+                break;
+
+            case right:
+                climber.stopRightClimber();
+                break;
         }
-        else if(leftOrRight.equals("right")) {
-            climber.stopRightClimber();
-        }
+        
     }
 }
