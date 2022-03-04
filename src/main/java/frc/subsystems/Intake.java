@@ -27,6 +27,8 @@ public class Intake extends SubsystemBase {
                 RobotMap.LEFT_INTAKE_REVERSE_SOLENOID);
         rightExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.RIGHT_INTAKE_FORWARD_SOLENOID,
                 RobotMap.RIGHT_INTAKE_REVERSE_SOLENOID);
+
+        
     }
 
     public void setIntakePercent(double percent) {

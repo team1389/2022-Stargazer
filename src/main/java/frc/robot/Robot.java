@@ -82,7 +82,9 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         SwerveTelemetry frontLeftTelemetry = new SwerveTelemetry(Robot.drivetrain.frontLeft);
-        SendableRegistry.add(frontLeftTelemetry, "Swerve");
+        //SendableRegistry.add(frontLeftTelemetry, "Swerve");
+        SendableRegistry.addLW(frontLeftTelemetry, "FL Swerve");
+
 
         //frontLeftTelemetry.initSendable(builder);
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
