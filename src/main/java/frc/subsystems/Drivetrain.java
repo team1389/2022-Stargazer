@@ -58,7 +58,7 @@ public class Drivetrain extends SlowSubsystem {
 
     //Main TeleOp drive method
     //y is desired motion forward, x sideways, and rotation is desired clockwise rotation
-    public void drive(double x, double y, double rotation, boolean slow) {
+    public void drive(double x, double y, double rotation) {
         double angle = gyro.getAngle() % 360;
         angle = Math.toRadians(angle);
 
@@ -103,18 +103,10 @@ public class Drivetrain extends SlowSubsystem {
         frontLeft.setAngle(frontLeftAngle);
 
         //Sets the speed for all SwerveWheels from calculate speeds above
-        if(Robot.isShooting || slow) {
-            backRight.setPower(backRightSpeed / 2);
-            backLeft.setPower(backLeftSpeed / 2);
-            frontRight.setPower(frontRightSpeed / 2);
-            frontLeft.setPower(frontLeftSpeed / 2); 
-        }
-        else {
-            backRight.setPower(backRightSpeed);
-            backLeft.setPower(backLeftSpeed);
-            frontRight.setPower(frontRightSpeed);
-            frontLeft.setPower(frontLeftSpeed); 
-        }
+        backRight.setPower(backRightSpeed);
+        backLeft.setPower(backLeftSpeed);
+        frontRight.setPower(frontRightSpeed);
+        frontLeft.setPower(frontLeftSpeed); 
 
         
         SmartDashboard.putNumber("BR Target", backRightAngle);
@@ -188,7 +180,7 @@ public class Drivetrain extends SlowSubsystem {
     }
 
     public void setGyro(double degrees) {
-        //Gyro offeset is changed in this method +/- 90 because intake is considered front side
+        //Gyro offset is changed in this method +/- 90 because intake is considered front side
 
         gyro.reset();
         gyro.setAngleAdjustment(degrees - 90);
