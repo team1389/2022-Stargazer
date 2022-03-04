@@ -49,7 +49,7 @@ public class Climber extends SlowSubsystem {
         //Extends the climber upwards
         leftClimbMotor.set(ControlMode.PercentOutput, climbSpeed * slow);
     }
-    public void winchRightUp() {
+    public void rightWinchExtend() {
         rightClimbMotor.set(ControlMode.PercentOutput, climbSpeed * slow);
     }
 
@@ -57,7 +57,7 @@ public class Climber extends SlowSubsystem {
         //Descends the climber
         leftClimbMotor.set(ControlMode.PercentOutput, -climbSpeed * slow);
     }
-    public void winchRightDown() {
+    public void rightWinchRetract() {
         rightClimbMotor.set(ControlMode.PercentOutput, -climbSpeed * slow);
     }
 
