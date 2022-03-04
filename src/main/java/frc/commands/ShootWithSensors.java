@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Robot;
 
-public class ShootWithSensors extends SequentialCommandGroup {
+public class ShootWithSensors extends ParallelCommandGroup {
     private double targetRPM;
 
     //TODO: Find this time
@@ -39,11 +39,16 @@ public class ShootWithSensors extends SequentialCommandGroup {
         // To shoot, first spin up the flywheel while turning to the target
         // When facing the target and at speed, run the indexer and hopper to feed balls to the flywheel and shoot
         addCommands(
-            new ParallelCommandGroup(new SetShooterRPM(targetRPM), new TurretTracking()),
-
-            new InstantCommand(() -> timer.start()),
-            //Run indexer and hopper:
-            new RunIndexer(), new RunHopper()
+            new SetShooterRPM(targetRPM),
+            new SequentialCommandGroup(
+                new TurretTracking(),
+                new InstantCommand(() -> timer.start()),
+                
+                //Run indexer and hopper:
+                new ParallelCommandGroup(
+                    new RunIndexer(), 
+                    new RunHopper())
+            )
         );
 
     }

@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.commands.ManualTurret;
 // import frc.commands.ClimberLeftExtend;
 // import frc.commands.ClimberLeftRetract;
 // import frc.commands.ClimberRightExtend;
@@ -36,10 +37,10 @@ public class OI {
        initControllers();
         
 
-        Robot.drivetrain.setDefaultCommand(new TeleOpDrive());
+        //Robot.drivetrain.setDefaultCommand(new TeleOpDrive());
         //Robot.intake.setDefaultCommand(new RunIntake());
         //Robot.climber.setDefaultCommand(new WinchClimber("right", false));
-        //Robot.shooter.setDefaultCommand(new RunIndexer());
+        Robot.shooter.setDefaultCommand(new ManualTurret());
         
         //runIndexer = new RunIndexer();
         //runIndexer.schedule();
@@ -49,7 +50,8 @@ public class OI {
     }
 
     /**
-     * Initialize JoystickButtons and Controllers
+     * Init
+     * ialize JoystickButtons and Controllers
      */
     private void initControllers() {
         //driveController = new XboxController(0);
@@ -67,7 +69,7 @@ public class OI {
 
         // Hold Manip A Button --> Run Intake
         manipABtn = new JoystickButton(manipController, XboxController.Button.kA.value);
-        manipABtn.whenHeld(new RunIndexer(true));
+        manipABtn.whenHeld(new RunIntake(true));
 
 
         // Hold Manip X Button --> Run Shooter System
@@ -95,10 +97,6 @@ public class OI {
         // Hold Manip DPad Down --> Reverse Intake
         manipDownDPadButton = new DPadButton(manipController, Direction.DOWN);
         manipDownDPadButton.whenHeld(new RunIntake(false));
-        
-
-
-
 
         // Set climber controls to either manual or automatic
         manipRBumper = new JoystickButton(manipController, XboxController.Button.kRightBumper.value);
@@ -110,6 +108,7 @@ public class OI {
     
     public double getDriverLeftX() {
         return driveController.getLeftX();
+        
     }
     public double getDriverLeftY() {
         return -driveController.getLeftY();

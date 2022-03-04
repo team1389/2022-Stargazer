@@ -42,13 +42,11 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         //phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
-        pneumaticHub.enableCompressorDigital();
-        //pneumaticHub.
+        //pneumaticHub.enableCompressorDigital();
+        pneumaticHub.enableCompressorHybrid(100, 120);
         //pneumaticHub.disableCompressor();
 
         CameraServer.startAutomaticCapture();
-
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
     }
 
     /**
@@ -88,8 +86,7 @@ public class Robot extends TimedRobot {
         //SendableRegistry.add(frontLeftTelemetry, "Swerve");
         SendableRegistry.addLW(frontLeftTelemetry, "FL Swerve");
 
-
-        //frontLeftTelemetry.initSendable(builder);
+        // Set to 1 to turn off, 3 to turn on, 2 to unleash death
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     }
 

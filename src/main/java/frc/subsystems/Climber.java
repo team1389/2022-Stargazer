@@ -32,7 +32,6 @@ public class Climber extends SubsystemBase {
         rightClimbMotor.setNeutralMode(NeutralMode.Brake);
 
         leftClimbMotor.setInverted(true);
-        //rightClimbMotor.setInverted(true);
 
         //Instantiate piston double solenoids with the Pneumatics Hub port and the solenoid ports from RobotMap
         leftExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.LEFT_CLIMBER_FORWARD_SOLENOID,
@@ -40,7 +39,7 @@ public class Climber extends SubsystemBase {
         rightExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.RIGHT_CLIMBER_FORWARD_SOLENOID,
                 RobotMap.RIGHT_CLIMBER_REVERSE_SOLENOID);
 
-        leftClimbMotor.getSelectedSensorPosition();
+        
 
 
     }
