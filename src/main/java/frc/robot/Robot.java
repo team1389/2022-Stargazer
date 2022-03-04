@@ -29,29 +29,25 @@ public class Robot extends TimedRobot {
     public Compressor phCompressor;
     public static PowerDistribution powerDistributionHub = new PowerDistribution();
 
-
-    // How subsystem maps to subsystem IDs, this is also the order it will limit power in
+    // START VARIABLES TO CHANGE
+    // How subsystem maps to subsystem IDs, this is also the order it will limit
+    // power in
     // Drivetrain -> 0
-    public static final int DRIVETRAIN_ID = 0; 
+    public static final int DRIVETRAIN_ID = 0;
     // Intake -> 1
-    public static final int INTAKE_ID = 1; 
+    public static final int INTAKE_ID = 1;
     // Hopper -> 2
-    public static final int HOPPER_ID = 2; 
+    public static final int HOPPER_ID = 2;
     // Climber -> 3
-    public static final int CLIMBER_ID = 3; 
+    public static final int CLIMBER_ID = 3;
     // Shooter -> 4
-    public static final int SHOOTER_ID = 4; 
-
+    public static final int SHOOTER_ID = 4;
     static SlowSubsystem[] slow = new SlowSubsystem[5];
     static final double MAX_CURRENT = 220;
-    static double[] slowValues = {
-            1.0, 
-            1.0, 
-            1.0, 
-            1.0, 
-            1.0 
-    };
+    // END VARIABLES TO CHANGE
 
+    static double[] allOnes = new double[slow.length];
+    static double[] slowValues = new double[slow.length];
     // Always create oi after all subsystems
     public static OI oi = new OI();
 
@@ -60,12 +56,14 @@ public class Robot extends TimedRobot {
         phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
         pneumaticHub.enableCompressorAnalog(110, 120);
         CameraServer.startAutomaticCapture();
-        
+
         slow[DRIVETRAIN_ID] = drivetrain;
         slow[INTAKE_ID] = intake;
         slow[HOPPER_ID] = hopper;
         slow[CLIMBER_ID] = climber;
         slow[SHOOTER_ID] = shooter;
+        Arrays.fill(allOnes, 1);
+        Arrays.fill(slowValues, 1);
     }
 
     /**
@@ -108,24 +106,15 @@ public class Robot extends TimedRobot {
 
     private void limitCurrent() {
         double currentCurrent = powerDistributionHub.getTotalCurrent();
-
-        if (currentCurrent < MAX_CURRENT) {
-            // No need to limit power.
+        
+        if (currentCurrent < MAX_CURRENT && slowValues.equals(allOnes)) {
+            // No need to limit power, nor return to up
             return;
         }
 
-
         System.err.println("Over current limit, limiting power");
 
-        
-
-        double[] currentArr = {
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0
-        };
+        double[] currentArr = new double[slow.length];
 
         // Group power by subsystem:
         //
@@ -178,7 +167,6 @@ public class Robot extends TimedRobot {
         }
 
         // After got the current by subsystem or something else, limit the current
-
         // calculate theoretical currents given values in `slowValues`, assuming current
         // scales linearly and further assuming none of the values in `slowValues` are 0
         double[] theoreticalCurrent = new double[currentArr.length];
@@ -191,10 +179,15 @@ public class Robot extends TimedRobot {
         // Summing currents, and if its still over max current, you have to reduce more.
         sum = Functions.sum(theoreticalCurrent) + extraCurrent;
 
+        if (sum < MAX_CURRENT) {
+            // We don't need to slow anything down anymore.
+            return;
+        }
+
         for (int i = 0; i < currentArr.length; i++) {
-            // We want to solve the equation `sum + extraCurrent - x = maxCurrent`, for x
-            // Therefore x = sum + extraCurrent - maxCurrent
-            double x = sum + extraCurrent - MAX_CURRENT;
+            // We want to solve the equation `sum - x = maxCurrent`, for x
+            // Therefore x = sum - maxCurrent
+            double x = sum - MAX_CURRENT;
             // x is the amount of current we need to remove now
 
             // if it is more than the current we can currently remove, pass it on to the
@@ -203,7 +196,6 @@ public class Robot extends TimedRobot {
                 // this is 10% and not 0% because of divide by zero errors and the y-intercept of the motor power
                 slowValues[i] = 0.1;
                 theoreticalCurrent[i] *= 0.1;
-
             } else {
                 double current = theoreticalCurrent[i];
                 // solving for percent: x - (current * percent) = 0
@@ -213,9 +205,7 @@ public class Robot extends TimedRobot {
                 theoreticalCurrent[i] *= percent;
                 // we're done because there's no more current to remove
                 break;
-
             }
-
             // Don't forget to recalculate the sum.
             sum = Functions.sum(theoreticalCurrent) + extraCurrent;
         }
