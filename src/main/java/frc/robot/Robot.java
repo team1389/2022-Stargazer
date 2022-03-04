@@ -2,9 +2,15 @@ package frc.robot;
 
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.subsystems.*;
+import frc.util.SwerveTelemetry;
+
 
 /**
  * Don't change the name of this class since the VM is set up to run this
@@ -34,7 +40,12 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         //phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
         pneumaticHub.enableCompressorDigital();
+        //pneumaticHub.
+        //pneumaticHub.disableCompressor();
+
         CameraServer.startAutomaticCapture();
+
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
     }
 
     /**
@@ -66,6 +77,15 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+    }
+
+    @Override
+    public void teleopInit() {
+        SwerveTelemetry frontLeftTelemetry = new SwerveTelemetry(Robot.drivetrain.frontLeft);
+        SendableRegistry.add(frontLeftTelemetry, "Swerve");
+
+        //frontLeftTelemetry.initSendable(builder);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     }
 
     /**

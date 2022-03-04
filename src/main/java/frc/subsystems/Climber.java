@@ -4,14 +4,16 @@ package frc.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Climber extends SubsystemBase {
-    private TalonFX leftClimbMotor; //Falcon 500
-    private TalonFX rightClimbMotor; //Falcon 500
+    private WPI_TalonFX leftClimbMotor; //Falcon 500
+    private WPI_TalonFX rightClimbMotor; //Falcon 500
     private DoubleSolenoid leftExtender;
     private DoubleSolenoid rightExtender;
 
@@ -19,15 +21,18 @@ public class Climber extends SubsystemBase {
     private boolean isLeftExtended = false;
 
 
-    private double climbSpeed = 0.5;
+    private double climbSpeed = 0.3;
 
     public Climber() {
         //Instantiate climbers motors with ports from RobotMap
-        leftClimbMotor = new TalonFX(RobotMap.LEFT_CLIMB_MOTOR);
-        rightClimbMotor = new TalonFX(RobotMap.RIGHT_CLIMB_MOTOR);
+        leftClimbMotor = new WPI_TalonFX(RobotMap.LEFT_CLIMB_MOTOR);
+        rightClimbMotor = new WPI_TalonFX(RobotMap.RIGHT_CLIMB_MOTOR);
 
         leftClimbMotor.setNeutralMode(NeutralMode.Brake);
         rightClimbMotor.setNeutralMode(NeutralMode.Brake);
+
+        leftClimbMotor.setInverted(true);
+        //rightClimbMotor.setInverted(true);
 
         //Instantiate piston double solenoids with the Pneumatics Hub port and the solenoid ports from RobotMap
         leftExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.LEFT_CLIMBER_FORWARD_SOLENOID,
@@ -35,22 +40,24 @@ public class Climber extends SubsystemBase {
         rightExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.RIGHT_CLIMBER_FORWARD_SOLENOID,
                 RobotMap.RIGHT_CLIMBER_REVERSE_SOLENOID);
 
+        leftClimbMotor.getSelectedSensorPosition();
+
 
     }
 
-    public void winchLeftUp() {
+    public void leftWinchExtend() {
         //Extends the climber upwards
         leftClimbMotor.set(ControlMode.PercentOutput, climbSpeed);
     }
-    public void winchRightUp() {
+    public void rightWinchExtend() {
         rightClimbMotor.set(ControlMode.PercentOutput, climbSpeed);
     }
 
-    public void winchLeftDown() {
+    public void leftWinchRetract() {
         //Descends the climber
         leftClimbMotor.set(ControlMode.PercentOutput, -climbSpeed);
     }
-    public void winchRightDown() {
+    public void rightWinchRetract() {
         rightClimbMotor.set(ControlMode.PercentOutput, -climbSpeed);
     }
 
@@ -64,6 +71,10 @@ public class Climber extends SubsystemBase {
     }
 
     //TODO: add getLeftEncoder and getRightEncoder once we figure out what kind of encoders
+
+    public double getLeftEncoderPosition() {
+        return leftClimbMotor.getSelectedSensorPosition();
+    }
 
     public void toggleLeftPiston() {
         if(isLeftExtended) {

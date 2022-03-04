@@ -38,6 +38,8 @@ public class Shooter extends SubsystemBase {
         shooterMotor = new CANSparkMax(RobotMap.SHOOTER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         indexerMotor = new CANSparkMax(RobotMap.INDEXER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
 
+        indexerMotor.setInverted(false);
+
         // Instantiate turret motor as brushless motor with port from RobotMap
         turretMotor = new CANSparkMax(RobotMap.TURRET_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         turretMotor.setIdleMode(IdleMode.kBrake);
@@ -68,6 +70,10 @@ public class Shooter extends SubsystemBase {
         }
 
         turretMotor.set(power);
+    }
+
+    public RelativeEncoder getTurretEncoder() {
+        return turretEncoder;
     }
 
     public void setShooterPercent(double percent) {

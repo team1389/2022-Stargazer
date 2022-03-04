@@ -39,7 +39,7 @@ public class Drivetrain extends SubsystemBase {
         Translation2d backRightLocation = new Translation2d(-0.381, -0.381);
 
         //Resets the angle of the gyroscope
-        setGyro(-90);
+        setGyro(0);
 
         //Instantiates the SwerveDriveKinematics object using the 4 Translation2D objects from above
         kinematics = new SwerveDriveKinematics(
@@ -62,9 +62,12 @@ public class Drivetrain extends SubsystemBase {
 
         SmartDashboard.putNumber("Gyro angle" , angle);
         //Apply a rotation of angle radians CCW to the <x, y> vector
-        final double temp = y * Math.cos(-angle) + x * Math.sin(-angle);
-        x = x * Math.cos(-angle) - y * Math.sin(-angle);
-        y = temp;
+
+        if(fieldOriented) {
+            final double temp = y * Math.cos(-angle) + x * Math.sin(-angle);
+            x = x * Math.cos(-angle) - y * Math.sin(-angle);
+            y = temp;
+        }
 
         //Radius from center to each wheel
         double r = Math.sqrt ((RobotMap.L * RobotMap.L) + (RobotMap.W * RobotMap.W));
@@ -177,7 +180,7 @@ public class Drivetrain extends SubsystemBase {
 
         // When it switches to field oriented, reset what the robot thinks is forward
         if(fieldOriented) {
-            setGyro(0);
+            setGyro(-90);
         }
     }
 }

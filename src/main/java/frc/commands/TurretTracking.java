@@ -67,7 +67,7 @@ public class TurretTracking extends CommandBase {
     public void end(boolean interrupted) {
         // Stop turret movement and turn off limelight
         Robot.shooter.setTurretPower(0);
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     }
 
     private void fetchValues() {

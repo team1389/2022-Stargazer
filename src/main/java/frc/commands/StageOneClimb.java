@@ -9,10 +9,10 @@ import frc.robot.Robot;
 public class StageOneClimb extends SequentialCommandGroup {
 
     public StageOneClimb(double waitTime) {
-        addRequirements(Robot.climber);
-        addCommands(new ParallelCommandGroup(new ClimberLeftExtend(), new ClimberRightExtend()), 
-                    new WaitCommand(waitTime),
-                    new ParallelCommandGroup(new ClimberRightRetract(), new ClimberLeftRetract()));
+        // addRequirements(Robot.climber);
+        // addCommands(new ParallelCommandGroup(new ClimberLeftExtend(), new ClimberRightExtend()), 
+        //             new WaitCommand(waitTime),
+        //             new ParallelCommandGroup(new ClimberRightRetract(), new ClimberLeftRetract()));
     }
 }
 /**

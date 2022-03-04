@@ -20,6 +20,7 @@ public class Intake extends SubsystemBase {
     public Intake() {
         //Instantiate intake motor as brushless motor with port from RobotMap
         intakeMotor = new CANSparkMax(RobotMap.INTAKE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
+        intakeMotor.setInverted(true);
 
         //Instantiate piston double solenoids with the Pneumatics Hub port and the solenoid ports from RobotMap
         leftExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.LEFT_INTAKE_FORWARD_SOLENOID,

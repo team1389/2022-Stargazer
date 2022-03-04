@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.subsystems.Climber;
@@ -13,7 +14,6 @@ public class WinchClimber extends CommandBase {
 
     private Climber climber;
     //TODO: What type of encoder
-    private CANCoder encoder;
 
     // The number of rotations at which the climber is fully extended and fully retractd, respectively
     //TODO: FIX THESE
@@ -49,29 +49,31 @@ public class WinchClimber extends CommandBase {
         // Do the correct thing
         if(leftOrRight.equals("left")) {
             if(isExtending) {
-                climber.winchLeftUp();
+                climber.leftWinchExtend();
             }
             else {
-                climber.winchLeftDown();
+                climber.leftWinchRetract();
             }
         }
         else if(leftOrRight.equals("right")) {
             if(isExtending) {
-                climber.winchRightUp();
+                climber.rightWinchExtend();
             }
             else {
-                climber.winchRightDown();
+                climber.rightWinchRetract();
             }
         }
+
+        SmartDashboard.putNumber("left encoder position", climber.getLeftEncoderPosition());
     }
 
     @Override
     public boolean isFinished() {
-        if((isExtending && encoder.getAbsolutePosition() >= MAX_EXTENDED_VALUE) ||
-            (!isExtending && encoder.getAbsolutePosition() <= MAX_RETRACTED_VALUE)) {
+        // if((isExtending && encoder.getAbsolutePosition() >= MAX_EXTENDED_VALUE) ||
+        //     (!isExtending && encoder.getAbsolutePosition() <= MAX_RETRACTED_VALUE)) {
                 
-            return true;
-        }
+        //     return true;
+        // }
 
 
         return false;
