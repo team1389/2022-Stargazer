@@ -28,13 +28,12 @@ public class RobotMap {
     //Shooter motor
     public static final int SHOOTER_MOTOR = 19;
 
-
     //Intake motors
     public static final int INTAKE_MOTOR = 15;
 
     //Climb motor
-    public static final int RIGHT_CLIMB_MOTOR = 0;
-    public static final int LEFT_CLIMB_MOTOR = 0;
+    public static final int RIGHT_CLIMB_MOTOR = 21;
+    public static final int LEFT_CLIMB_MOTOR = 20;
 
 
     //Turret Motor

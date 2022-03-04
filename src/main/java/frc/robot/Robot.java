@@ -8,6 +8,10 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.subsystems.*;
 import frc.util.Functions;
 import frc.util.SlowSubsystem;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.util.sendable.SendableRegistry;
+import frc.util.SwerveTelemetry;
+
 
 /**
  * Don't change the name of this class since the VM is set up to run this
@@ -53,8 +57,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-        phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
-        pneumaticHub.enableCompressorAnalog(110, 120);
+        // phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
+        pneumaticHub.enableCompressorDigital();
+        // pneumaticHub.enableCompressorAnalog(110, 120);
         CameraServer.startAutomaticCapture();
 
         slow[DRIVETRAIN_ID] = drivetrain;
@@ -64,6 +69,8 @@ public class Robot extends TimedRobot {
         slow[SHOOTER_ID] = shooter;
         Arrays.fill(allOnes, 1);
         Arrays.fill(slowValues, 1);
+
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
     }
 
     /**
@@ -95,6 +102,17 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+    }
+
+    @Override
+    public void teleopInit() {
+        SwerveTelemetry frontLeftTelemetry = new SwerveTelemetry(Robot.drivetrain.frontLeft);
+        //SendableRegistry.add(frontLeftTelemetry, "Swerve");
+        SendableRegistry.addLW(frontLeftTelemetry, "FL Swerve");
+
+
+        //frontLeftTelemetry.initSendable(builder);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     }
 
     /**

@@ -25,6 +25,8 @@ public class TurretTracking extends CommandBase {
         recentErrors = new SizeLimitedQueue(15);
         timer = new Timer();
         pid = shooter.getTurretPID();
+        
+        addRequirements();
     }
 
     @Override
@@ -50,7 +52,7 @@ public class TurretTracking extends CommandBase {
 
         if(tv >= 1) {
             // Sets the pid controller's reference point to the ty and the setpoint to 0
-            turretPower = pid.calculate(ty - 6, 0); //Need to test offset, ty because limelight is vetical
+            turretPower = pid.calculate(ty - 6, 0);
 
         }
         else {
@@ -67,7 +69,7 @@ public class TurretTracking extends CommandBase {
     public void end(boolean interrupted) {
         // Stop turret movement and turn off limelight
         Robot.shooter.setTurretPower(0);
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     }
 
     private void fetchValues() {

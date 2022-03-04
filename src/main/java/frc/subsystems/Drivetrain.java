@@ -12,6 +12,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.util.SlowSubsystem;
 
@@ -39,7 +41,7 @@ public class Drivetrain extends SlowSubsystem {
         Translation2d backRightLocation = new Translation2d(-0.381, -0.381);
 
         //Resets the angle of the gyroscope
-        setGyro(-90);
+        setGyro(0);
 
         //Instantiates the SwerveDriveKinematics object using the 4 Translation2D objects from above
         kinematics = new SwerveDriveKinematics(
@@ -56,15 +58,18 @@ public class Drivetrain extends SlowSubsystem {
 
     //Main TeleOp drive method
     //y is desired motion forward, x sideways, and rotation is desired clockwise rotation
-    public void drive(double x, double y, double rotation) {
+    public void drive(double x, double y, double rotation, boolean slow) {
         double angle = gyro.getAngle() % 360;
         angle = Math.toRadians(angle);
 
         SmartDashboard.putNumber("Gyro angle" , angle);
         //Apply a rotation of angle radians CCW to the <x, y> vector
-        final double temp = y * Math.cos(-angle) + x * Math.sin(-angle);
-        x = x * Math.cos(-angle) - y * Math.sin(-angle);
-        y = temp;
+
+        if(fieldOriented) {
+            final double temp = y * Math.cos(-angle) + x * Math.sin(-angle);
+            x = x * Math.cos(-angle) - y * Math.sin(-angle);
+            y = temp;
+        }
 
         //Radius from center to each wheel
         double r = Math.sqrt ((RobotMap.L * RobotMap.L) + (RobotMap.W * RobotMap.W));
@@ -98,10 +103,19 @@ public class Drivetrain extends SlowSubsystem {
         frontLeft.setAngle(frontLeftAngle);
 
         //Sets the speed for all SwerveWheels from calculate speeds above
-        backRight.setPower(backRightSpeed);
-        backLeft.setPower(backLeftSpeed);
-        frontRight.setPower(frontRightSpeed);
-        frontLeft.setPower(frontLeftSpeed); 
+        if(Robot.isShooting || slow) {
+            backRight.setPower(backRightSpeed / 2);
+            backLeft.setPower(backLeftSpeed / 2);
+            frontRight.setPower(frontRightSpeed / 2);
+            frontLeft.setPower(frontLeftSpeed / 2); 
+        }
+        else {
+            backRight.setPower(backRightSpeed);
+            backLeft.setPower(backLeftSpeed);
+            frontRight.setPower(frontRightSpeed);
+            frontLeft.setPower(frontLeftSpeed); 
+        }
+
         
         SmartDashboard.putNumber("BR Target", backRightAngle);
         SmartDashboard.putNumber("BL Target", backLeftAngle);
@@ -174,8 +188,10 @@ public class Drivetrain extends SlowSubsystem {
     }
 
     public void setGyro(double degrees) {
+        //Gyro offeset is changed in this method +/- 90 because intake is considered front side
+
         gyro.reset();
-        gyro.setAngleAdjustment(degrees);
+        gyro.setAngleAdjustment(degrees - 90);
     }
 
     public void setPID(double kP, double kI, double kD) {

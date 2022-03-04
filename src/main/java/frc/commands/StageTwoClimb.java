@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.commands.WinchClimber.LeftOrRight;
 import frc.robot.Robot;
 import frc.subsystems.Climber;
 
@@ -16,27 +17,27 @@ public class StageTwoClimb extends SequentialCommandGroup {
         addRequirements(climber);
         addCommands(
             new ParallelCommandGroup(
-                new InstantCommand(() -> climber.pistonRetractRight()), 
-                new InstantCommand(() -> climber.pistonRetractLeft())
+                new InstantCommand(() -> climber.toggleRightPiston()), 
+                new InstantCommand(() -> climber.toggleLeftPiston())
             ),
 
             new WaitCommand(2),
-            new InstantCommand(() -> climber.pistonExtendLeft()),
+            new InstantCommand(() -> climber.toggleLeftPiston()),
             new WaitCommand(2),
-            new ClimberLeftExtend(),
+            new WinchClimber(LeftOrRight.left, true),
             new WaitCommand(2),
 
             new ParallelCommandGroup(
-                new ClimberLeftRetract(), 
+                new WinchClimber(LeftOrRight.left, false), 
                 
                 new SequentialCommandGroup(
                     new WaitCommand(1), 
-                    new InstantCommand(() -> climber.pistonExtendRight())
+                    new InstantCommand(() -> climber.toggleLeftPiston())
                 )
             ),
 
-            new ClimberRightExtend(),
-            new ClimberRightRetract()
+            new WinchClimber(LeftOrRight.right, true),
+            new WinchClimber(LeftOrRight.right, false)
         );
     }
 }

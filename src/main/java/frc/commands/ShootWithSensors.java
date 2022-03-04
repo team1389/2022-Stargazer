@@ -12,7 +12,7 @@ public class ShootWithSensors extends SequentialCommandGroup {
 
     //TODO: Find this time
     // Time from the indexer starting to the last ball being shot
-    private final double SHOOT_TIME = 5;
+    private final double SHOOT_TIME = 3;
 
     private Timer timer;
 
@@ -25,6 +25,8 @@ public class ShootWithSensors extends SequentialCommandGroup {
         timer.reset();
         timer.start();
 
+        //TODO: more reasonable default value than 0
+        
         distanceToTarget = SmartDashboard.getNumber("Distance To Target", 0);
         // // TODO: lookup table for rpm
         // if (distanceToTarget > 40) {
@@ -40,7 +42,7 @@ public class ShootWithSensors extends SequentialCommandGroup {
             new ParallelCommandGroup(new SetShooterRPM(targetRPM), new TurretTracking()),
 
             new InstantCommand(() -> timer.start()),
-            //run indexer and hopper:
+            //Run indexer and hopper:
             new RunIndexer(), new RunHopper()
         );
 

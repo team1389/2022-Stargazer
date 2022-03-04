@@ -13,6 +13,7 @@ public class Hopper extends SlowSubsystem {
     public Hopper() {
         //Instantiate hopper motor as brushless motor with port from RobotMap
         hopperMotor = new CANSparkMax(RobotMap.HOPPER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
+        hopperMotor.setInverted(true);
     }
 
     public void setSpeed(double percent) {

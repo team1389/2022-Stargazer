@@ -14,6 +14,7 @@ public class RunIndexer extends CommandBase {
         this.forwards = forwards;
 
         addRequirements(shooter);
+
     }
 
     public RunIndexer() {
@@ -21,6 +22,7 @@ public class RunIndexer extends CommandBase {
         this.forwards = true;
         
         addRequirements(shooter);
+        
     }
 
     @Override
