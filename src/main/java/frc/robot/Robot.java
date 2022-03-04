@@ -33,6 +33,9 @@ public class Robot extends TimedRobot {
     public  Compressor phCompressor;
     public static PowerDistribution powerDistributionHub = new PowerDistribution();
 
+    //For current limiting
+    public static boolean isShooting = false;
+
     //Always create oi after all subsystems
     public static OI oi = new OI();
 

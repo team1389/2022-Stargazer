@@ -38,6 +38,7 @@ public class SetShooterRPM extends CommandBase {
 
     @Override
     public void execute() {
+        Robot.isShooting = true;
         double power = pidController.calculate(Robot.shooter.getRPM()) + (targetRPM/MAX_RPM);
         double error = targetRPM - Robot.shooter.getRPM();
 
@@ -54,6 +55,7 @@ public class SetShooterRPM extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        Robot.isShooting = false;
     }
 
     // Returns true when the command should end.

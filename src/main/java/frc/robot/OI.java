@@ -26,10 +26,9 @@ public class OI {
 
 
     public XboxController driveController, manipController;
-    private JoystickButton manipXBtn, manipABtn, manipBBtn, manipRBumper, manipLBumper, manipBackBtn, manipStartBtn, manipDownDPad;
+    private JoystickButton manipXBtn, manipABtn, manipBBtn, manipRBumper, manipLBumper, manipBackBtn, manipStartBtn;
     public JoystickButton driveRBumper, driveLBumper, manipYBtn;
     public DPadButton manipUpDPadButton, manipDownDPadButton;
-    RunIndexer runIndexer;
 
 
     public OI() {
@@ -59,9 +58,11 @@ public class OI {
         //driveRBumper = new JoystickButton(driveController, XboxController.Button.kRightBumper.value);
         //driveRBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.toggleFieldOriented()));
 
-        // Driver  Button --> Reset field oriented angle
+        // Driver Left Bumper Button --> Reset field oriented angle
         //driveLBumper = new JoystickButton(driveController, XboxController.Button.kLeftBumper.value);
-        //driveLBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.setGyro(-90)));
+        //driveLBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.setGyro(0)));
+
+
 
         // Hold Manip A Button --> Run Intake
         manipABtn = new JoystickButton(manipController, XboxController.Button.kA.value);
@@ -86,9 +87,11 @@ public class OI {
         // manipDownDPad = new JoystickButton(manipController, 13 + 1); // 13 is down on the D-Pad
         // manipDownDPad.whenActive(new RunIntake(false));
 
+        // Hold Manip DPad Up --> Reverse Indexer
         manipUpDPadButton = new DPadButton(manipController, Direction.UP);
         manipUpDPadButton.whenHeld(new RunIndexer(false));
 
+        // Hold Manip DPad Down --> Reverse Intake
         manipDownDPadButton = new DPadButton(manipController, Direction.DOWN);
         manipDownDPadButton.whenHeld(new RunIntake(false));
         
@@ -115,6 +118,10 @@ public class OI {
     }
     public double getManipLeftX() {
         return manipController.getLeftX();
+    }
+
+    public boolean getDriverLeftBumper() {
+        return driveController.getLeftBumper();
     }
 
     public void initManualClimber() {

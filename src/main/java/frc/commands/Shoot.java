@@ -5,6 +5,7 @@
 package frc.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Robot;
 
 public class Shoot extends SequentialCommandGroup {
   // This is the command that should be run to shoot

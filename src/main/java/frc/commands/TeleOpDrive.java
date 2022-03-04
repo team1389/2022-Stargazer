@@ -21,6 +21,7 @@ public class TeleOpDrive extends CommandBase {
         double x = Robot.oi.getDriverLeftX();
         double y = Robot.oi.getDriverLeftY();
         double rotation = Robot.oi.getDriverRightX();
+        boolean isSlow = Robot.oi.getDriverLeftBumper();
 
         SmartDashboard.putNumber("x", x);
         SmartDashboard.putNumber("y", y);
@@ -28,7 +29,7 @@ public class TeleOpDrive extends CommandBase {
 
         // Sets the swerve drive command using controller inputs
         if(Math.abs(x) > JOYSTICK_DEADZONE || Math.abs(y) > JOYSTICK_DEADZONE || Math.abs(rotation) > JOYSTICK_DEADZONE) {
-            Robot.drivetrain.drive(x, y, rotation);
+            Robot.drivetrain.drive(x, y, rotation, isSlow);
         }
         else {
             Robot.drivetrain.stopDrive();
@@ -48,6 +49,8 @@ public class TeleOpDrive extends CommandBase {
         SmartDashboard.putNumber("FR Abs Angle", Robot.drivetrain.frontRight.rotateAbsEncoder.getAbsolutePosition());
         SmartDashboard.putNumber("BL Abs Angle", Robot.drivetrain.backLeft.rotateAbsEncoder.getAbsolutePosition());
         SmartDashboard.putNumber("BR Abs Angle", Robot.drivetrain.backRight.rotateAbsEncoder.getAbsolutePosition());
+
+        SmartDashboard.putBoolean("Field Oriented", Robot.drivetrain.fieldOriented);
 
     }
 

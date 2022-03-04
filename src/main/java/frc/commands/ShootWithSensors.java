@@ -40,7 +40,7 @@ public class ShootWithSensors extends SequentialCommandGroup {
             new ParallelCommandGroup(new SetShooterRPM(targetRPM), new TurretTracking()),
 
             new InstantCommand(() -> timer.start()),
-            //run indexer and hopper:
+            //Run indexer and hopper:
             new RunIndexer(), new RunHopper()
         );
 
