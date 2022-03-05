@@ -21,15 +21,22 @@ public class TeleOpDrive extends CommandBase {
         double x = Robot.oi.getDriverLeftX();
         double y = Robot.oi.getDriverLeftY();
         double rotation = Robot.oi.getDriverRightX();
-        boolean isSlow = Robot.oi.getDriverLeftBumper();
+        double triggerValue = Robot.oi.getDriverLeftTrigger();
+        double slowFactor = 1;
 
         SmartDashboard.putNumber("x", x);
         SmartDashboard.putNumber("y", y);
         SmartDashboard.putNumber("rotation", rotation);
 
+        if(triggerValue > 0.05) {
+            if(triggerValue > 0.5) {
+
+            }
+        }
+
         // Sets the swerve drive command using controller inputs
         if(Math.abs(x) > JOYSTICK_DEADZONE || Math.abs(y) > JOYSTICK_DEADZONE || Math.abs(rotation) > JOYSTICK_DEADZONE) {
-            Robot.drivetrain.drive(x, y, rotation, isSlow);
+            Robot.drivetrain.drive(x, y, rotation, slowFactor);
         }
         else {
             Robot.drivetrain.stopDrive();

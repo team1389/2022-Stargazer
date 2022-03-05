@@ -57,7 +57,7 @@ public class Drivetrain extends SubsystemBase {
 
     //Main TeleOp drive method
     //y is desired motion forward, x sideways, and rotation is desired clockwise rotation
-    public void drive(double x, double y, double rotation, boolean slow) {
+    public void drive(double x, double y, double rotation, double slowFactor) {
         double angle = gyro.getAngle() % 360;
         angle = Math.toRadians(angle);
 
@@ -97,21 +97,21 @@ public class Drivetrain extends SubsystemBase {
         frontRight.setAngle(frontRightAngle);
         frontLeft.setAngle(frontLeftAngle);
 
-        //Sets the speed for all SwerveWheels from calculate speeds above
-        if(Robot.isShooting || slow) {
-            backRight.setPower(backRightSpeed / 2);
-            backLeft.setPower(backLeftSpeed / 2);
-            frontRight.setPower(frontRightSpeed / 2);
-            frontLeft.setPower(frontLeftSpeed / 2); 
+        // Sets the speed for all SwerveWheels from calculate speeds above
+        if(Robot.isShooting) {
+            backRight.setPower((backRightSpeed*slowFactor) / 2);
+            backLeft.setPower((backLeftSpeed*slowFactor) / 2);
+            frontRight.setPower((frontRightSpeed*slowFactor) / 2);
+            frontLeft.setPower((frontLeftSpeed*slowFactor) / 2); 
         }
         else {
-            backRight.setPower(backRightSpeed);
-            backLeft.setPower(backLeftSpeed);
-            frontRight.setPower(frontRightSpeed);
-            frontLeft.setPower(frontLeftSpeed); 
+            backRight.setPower(backRightSpeed*slowFactor);
+            backLeft.setPower(backLeftSpeed*slowFactor);
+            frontRight.setPower(frontRightSpeed*slowFactor);
+            frontLeft.setPower(frontLeftSpeed*slowFactor); 
         }
 
-        SmartDashboard.putBoolean("driving slowed", Robot.isShooting || slow);
+        SmartDashboard.putBoolean("driving slowed", Robot.isShooting);
 
         SmartDashboard.putNumber("BR Power", backRightSpeed);
         SmartDashboard.putNumber("BL Power", backLeftSpeed);

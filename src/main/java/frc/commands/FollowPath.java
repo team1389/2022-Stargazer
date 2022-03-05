@@ -128,7 +128,7 @@ public class FollowPath extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        drivetrain.drive(0.0, 0.0, 0.0, false);
+        drivetrain.drive(0.0, 0.0, 0.0, 1);
     }
 
     // Returns true when the command should end.

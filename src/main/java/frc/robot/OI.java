@@ -65,8 +65,8 @@ public class OI {
         driveRBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.toggleFieldOriented()));
 
         // Driver Left Bumper Button --> Reset field oriented angle
-        // driveLBumper = new JoystickButton(driveController, XboxController.Button.kLeftBumper.value);
-        // driveLBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.setGyro(0)));
+        driveLBumper = new JoystickButton(driveController, XboxController.Button.kLeftBumper.value);
+        driveLBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.setGyro(0)));
 
 
 
@@ -81,7 +81,7 @@ public class OI {
         manipXBtn = new JoystickButton(manipController, XboxController.Button.kX.value);
         manipXBtn.whenHeld(new Shoot()); 
 
-        // Press Manip B buttopn --> Extend or retract intake
+        // Press Manip B button --> Extend or retract intake
         manipBBtn = new JoystickButton(manipController, XboxController.Button.kB.value);
         manipBBtn.whenPressed(new ToggleIntakePistons());
 
@@ -108,14 +108,21 @@ public class OI {
         return driveController.getLeftX();
         
     }
+
     public double getDriverLeftY() {
         return -driveController.getLeftY();
     }
+
     public double getDriverRightX() {
         return driveController.getRightX();
     }
+
     public double getManipLeftX() {
         return manipController.getLeftX();
+    }
+
+    public double getDriverLeftTrigger() {
+        return driveController.getLeftTriggerAxis();
     }
 
     public boolean getDriverLeftBumper() {

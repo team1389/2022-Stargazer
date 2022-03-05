@@ -34,7 +34,7 @@ public class ShootWithSensors extends ParallelCommandGroup {
         // } else {
         //     targetRPM = lookupTable[(int)(distanceToTarget/10)];
         // }
-        targetRPM = 1000;
+        targetRPM = 5000;
         
         // To shoot, first spin up the flywheel while turning to the target
         // When facing the target and at speed, run the indexer and hopper to feed balls to the flywheel and shoot
