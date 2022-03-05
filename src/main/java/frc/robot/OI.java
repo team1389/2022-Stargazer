@@ -39,14 +39,16 @@ public class OI {
 
         //Robot.drivetrain.setDefaultCommand(new TeleOpDrive());
         //Robot.intake.setDefaultCommand(new RunIntake());
-        //Robot.climber.setDefaultCommand(new WinchClimber("right", false));
-        Robot.shooter.setDefaultCommand(new ManualTurret());
+        // Robot.climber.setDefaultCommand(new WinchClimber("right", false));
+        // Robot.shooter.setDefaultCommand(new ManualTurret());
         
         //runIndexer = new RunIndexer();
         //runIndexer.schedule();
         
-
+        //Robot.intake.retractIntake();
         //Robot.shooter.setDefaultCommand(new SetShooterRPM(1000));
+        // Robot.shooter.setDefaultCommand(new RunIndexer());
+        (new InstantCommand(() ->  Robot.intake.extendIntake())).schedule();
     }
 
     /**
@@ -67,9 +69,11 @@ public class OI {
 
 
 
+
         // Hold Manip A Button --> Run Intake
         manipABtn = new JoystickButton(manipController, XboxController.Button.kA.value);
-        manipABtn.whenHeld(new RunIntake(true));
+        //manipABtn.whenHeld(new RunIntake(true));
+        manipABtn.whenPressed(new InstantCommand(() ->  Robot.intake.extendIntake()));
 
 
         // Hold Manip X Button --> Run Shooter System
@@ -140,7 +144,7 @@ public class OI {
 
         // Press Manip Y --> Toggle left piston
         manipYBtn = new JoystickButton(manipController, XboxController.Button.kY.value);
-        manipYBtn.whenPressed(new InstantCommand(() -> Robot.climber.toggleLeftPiston()));
+        manipYBtn.whenPressed(new InstantCommand(() -> Robot.climber.toggleRightPiston()));
 
 
 
@@ -154,6 +158,7 @@ public class OI {
         // Hold Manip LT and RT --> Stage Two Climb
         //TwoButtonTrigger stageTwoTrigger = new TwoButtonTrigger(manipLTrigger, manipRTrigger);
         //stageTwoTrigger.whenActive(new StageTwoClimb());
+
     }
     
 

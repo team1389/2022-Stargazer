@@ -86,8 +86,38 @@ public class Robot extends TimedRobot {
         //SendableRegistry.add(frontLeftTelemetry, "Swerve");
         SendableRegistry.addLW(frontLeftTelemetry, "FL Swerve");
 
-        // Set to 1 to turn off, 3 to turn on, 2 to unleash death
+        // Set to 1 to turn off, 3 to turn on, 2 to ~~unleash death~~ blink
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+
+        // Climber
+        // pneumaticHub.setSolenoids(1 << 4 | 1 << 11, 1 << 4);
+        // pneumaticHub.setSolenoids(
+        //     1 << 4 | 1 << 5 |  | 1 << 10 | 1 << 11, 
+        //     // 1 << 8 | 1 << 9 | 1 << 10 | 1 << 11
+        //     // 1 << 4 | 1 << 5 | 1 << 6 | 1 << 7
+        // );
+        // 10 is climber ? a
+        // 11 is climber ? a
+        // 5 is climber ? b
+        // 4 is climber ? b 
+        
+
+        // 4  top            B back left climber forward
+        // 5  second highest B right intake forward
+        // 6  second lowest  B front right climber forward
+        // 7  lowest         B left  intake forward
+        // 8  lowest         A left  intake reverse
+        // 9  second lowest  A front right climber reverse
+        // 10 second highest A right intake reverse
+        // 11 top            A back left climber reverse
+
+        // System.err.println("HELLO THIS IS A PNEUMATIC HUB: " + pneumaticHub.getSolenoids());
+        // pneumaticHub.setSolenoids(
+        //     1 << 7 | 1 << 8,
+        //     1 << 7
+        // );
+        // pneumaticHub.disableCompressor();
+
     }
 
     /**

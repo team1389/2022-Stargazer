@@ -46,16 +46,16 @@ public class RobotMap {
     public static final int HOPPER_MOTOR = 18;
 
     //Intake Double Solenoids
-    public static final int LEFT_INTAKE_FORWARD_SOLENOID = 8;
-    public static final int LEFT_INTAKE_REVERSE_SOLENOID = 7;
-    public static final int RIGHT_INTAKE_FORWARD_SOLENOID = 9;
-    public static final int RIGHT_INTAKE_REVERSE_SOLENOID = 6;
+    public static final int LEFT_INTAKE_FORWARD_SOLENOID = 7;
+    public static final int LEFT_INTAKE_REVERSE_SOLENOID = 8;
+    public static final int RIGHT_INTAKE_FORWARD_SOLENOID = 5;
+    public static final int RIGHT_INTAKE_REVERSE_SOLENOID = 10;
 
     //Climber Double Solenoids
-    public static final int LEFT_CLIMBER_FORWARD_SOLENOID = 11;
-    public static final int LEFT_CLIMBER_REVERSE_SOLENOID = 4;
-    public static final int RIGHT_CLIMBER_FORWARD_SOLENOID = 10;
-    public static final int RIGHT_CLIMBER_REVERSE_SOLENOID = 5;
+    public static final int LEFT_CLIMBER_FORWARD_SOLENOID = 4;
+    public static final int LEFT_CLIMBER_REVERSE_SOLENOID = 11;
+    public static final int RIGHT_CLIMBER_FORWARD_SOLENOID = 6;
+    public static final int RIGHT_CLIMBER_REVERSE_SOLENOID = 9;
 
     //Robot dimensions (inches)
     //Length and width are measured from the centers of the wheels
