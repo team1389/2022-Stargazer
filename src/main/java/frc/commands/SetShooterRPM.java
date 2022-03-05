@@ -20,7 +20,7 @@ public class SetShooterRPM extends CommandBase {
 
     /** Creates a new SetShooterRPM. */
     public SetShooterRPM(double targetRPM) {
-        addRequirements(Robot.shooter);
+        addRequirements();
         this.targetRPM = targetRPM;
         this.recentErrors = new SizeLimitedQueue(15);
         this.timer = new Timer();
@@ -61,7 +61,6 @@ public class SetShooterRPM extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        //TODO: change timeout value
         return Math.abs(recentErrors.getAverage()) < 10 || timer.get() > 5;
     }
 }

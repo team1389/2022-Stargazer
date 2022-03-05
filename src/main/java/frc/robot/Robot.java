@@ -45,7 +45,8 @@ public class Robot extends TimedRobot {
         //pneumaticHub.enableCompressorDigital();
         pneumaticHub.enableCompressorHybrid(100, 120);
         //pneumaticHub.disableCompressor();
-
+        // pneumaticHub.setSolenoids(1 << RobotMap.LEFT_CLIMBER_FORWARD_SOLENOID | 1 << RobotMap.LEFT_CLIMBER_REVERSE_SOLENOID | 1 << RobotMap.RIGHT_CLIMBER_FORWARD_SOLENOID | 1 << RobotMap.RIGHT_CLIMBER_REVERSE_SOLENOID |
+        // 1 << RobotMap.RIGHT_INTAKE_FORWARD_SOLENOID | 1 << RobotMap., values);
         CameraServer.startAutomaticCapture();
     }
 
@@ -63,6 +64,8 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         //Example of setting auto: Scheduler.getInstance().add(YOUR AUTO);
+        Robot.drivetrain.coordinateAbsoluteEncoders();
+        Robot.drivetrain.setGyro(0);
         
     }
 
@@ -82,6 +85,11 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        Robot.drivetrain.coordinateAbsoluteEncoders();
+        Robot.drivetrain.setGyro(0);
+
+        Robot.drivetrain.fieldOriented = false;
+
         SwerveTelemetry frontLeftTelemetry = new SwerveTelemetry(Robot.drivetrain.frontLeft);
         //SendableRegistry.add(frontLeftTelemetry, "Swerve");
         SendableRegistry.addLW(frontLeftTelemetry, "FL Swerve");
@@ -102,20 +110,20 @@ public class Robot extends TimedRobot {
         // 4 is climber ? b 
         
 
-        // 4  top            B back left climber forward
+        // 4  top            B left climber forward
         // 5  second highest B right intake forward
-        // 6  second lowest  B front right climber forward
+        // 6  second lowest  B right climber forward
         // 7  lowest         B left  intake forward
         // 8  lowest         A left  intake reverse
-        // 9  second lowest  A front right climber reverse
+        // 9  second lowest  A right climber reverse
         // 10 second highest A right intake reverse
-        // 11 top            A back left climber reverse
+        // 11 top            A left climber reverse
 
         // System.err.println("HELLO THIS IS A PNEUMATIC HUB: " + pneumaticHub.getSolenoids());
-        // pneumaticHub.setSolenoids(
-        //     1 << 7 | 1 << 8,
-        //     1 << 7
-        // );
+        pneumaticHub.setSolenoids(
+            1 << 4 | 1 << 5 |1 << 6 | 1 << 7 | 1 << 8 | 1 << 9 | 1 << 10 | 1 << 11,
+            1 << 11 | 1 << 9 | 1 << 5 | 1 << 7
+        );
         // pneumaticHub.disableCompressor();
 
     }

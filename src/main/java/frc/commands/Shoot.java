@@ -13,4 +13,9 @@ public class Shoot extends SequentialCommandGroup {
     // First get the distance to target, and then actually shoot 
     addCommands(new GetDistanceToTarget(), new ShootWithSensors());
   }
+
+  @Override
+    public void end(boolean interrupted) {
+        Robot.shooter.stopShooter();
+    }
 }

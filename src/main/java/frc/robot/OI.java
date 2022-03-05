@@ -17,6 +17,7 @@ import frc.commands.Shoot;
 import frc.commands.StageOneClimb;
 import frc.commands.StageTwoClimb;
 import frc.commands.TeleOpDrive;
+import frc.commands.ToggleIntakePistons;
 import frc.commands.WinchClimber;
 import frc.commands.WinchClimber.LeftOrRight;
 import frc.util.DPadButton;
@@ -30,14 +31,14 @@ public class OI {
     public XboxController driveController, manipController;
     private JoystickButton manipXBtn, manipABtn, manipBBtn, manipRBumper, manipLBumper, manipBackBtn, manipStartBtn;
     public JoystickButton driveRBumper, driveLBumper, manipYBtn;
-    public DPadButton manipUpDPadButton, manipDownDPadButton;
+    public DPadButton manipUpDPadButton, manipDownDPadButton, manipLeftDPadButton, manipRightDPadButton;
 
 
     public OI() {
        initControllers();
         
 
-        //Robot.drivetrain.setDefaultCommand(new TeleOpDrive());
+        Robot.drivetrain.setDefaultCommand(new TeleOpDrive());
         //Robot.intake.setDefaultCommand(new RunIntake());
         // Robot.climber.setDefaultCommand(new WinchClimber("right", false));
         // Robot.shooter.setDefaultCommand(new ManualTurret());
@@ -48,7 +49,7 @@ public class OI {
         //Robot.intake.retractIntake();
         //Robot.shooter.setDefaultCommand(new SetShooterRPM(1000));
         // Robot.shooter.setDefaultCommand(new RunIndexer());
-        (new InstantCommand(() ->  Robot.intake.extendIntake())).schedule();
+        //(new InstantCommand(() ->  Robot.intake.extendIntake())).schedule();
     }
 
     /**
@@ -56,16 +57,16 @@ public class OI {
      * ialize JoystickButtons and Controllers
      */
     private void initControllers() {
-        //driveController = new XboxController(0);
+        driveController = new XboxController(0);
         manipController = new XboxController(1);
 
         // Driver RBumper Button --> Toggle Field Oriented
-        //driveRBumper = new JoystickButton(driveController, XboxController.Button.kRightBumper.value);
-        //driveRBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.toggleFieldOriented()));
+        driveRBumper = new JoystickButton(driveController, XboxController.Button.kRightBumper.value);
+        driveRBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.toggleFieldOriented()));
 
         // Driver Left Bumper Button --> Reset field oriented angle
-        //driveLBumper = new JoystickButton(driveController, XboxController.Button.kLeftBumper.value);
-        //driveLBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.setGyro(0)));
+        // driveLBumper = new JoystickButton(driveController, XboxController.Button.kLeftBumper.value);
+        // driveLBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.setGyro(0)));
 
 
 
@@ -78,22 +79,15 @@ public class OI {
 
         // Hold Manip X Button --> Run Shooter System
         manipXBtn = new JoystickButton(manipController, XboxController.Button.kX.value);
-        manipXBtn.whenHeld(new SetShooterRPM(3000)); //needs to be swithced to shoot
+        manipXBtn.whenHeld(new Shoot()); 
 
         // Press Manip B buttopn --> Extend or retract intake
         manipBBtn = new JoystickButton(manipController, XboxController.Button.kB.value);
-        manipBBtn.whenPressed(new InstantCommand(() -> Robot.intake.toggleIntakePiston()));
+        manipBBtn.whenPressed(new ToggleIntakePistons());
+
+        //new InstantCommand(() -> Robot.intake.toggleIntakePistons())
         
         //TODO: test the dpad controls
-        // JoystickButton is 1 indexed
-        // Hold Manip DPad Up --> Reverse Indexer
-        // manipUpDPad = new JoystickButton(manipController, 12 + 1); // 12 is up on the D-Pad
-        // manipUpDPad.whenActive(new RunIndexer(false));
-    
-        // // Hold Manip DPad Down --> Reverse Intake
-        // manipDownDPad = new JoystickButton(manipController, 13 + 1); // 13 is down on the D-Pad
-        // manipDownDPad.whenActive(new RunIntake(false));
-
         // Hold Manip DPad Up --> Reverse Indexer
         manipUpDPadButton = new DPadButton(manipController, Direction.UP);
         manipUpDPadButton.whenHeld(new RunIndexer(false));
@@ -129,23 +123,27 @@ public class OI {
     }
 
     public void initManualClimber() {
-        // Hold Manip LT --> Extend left climber
-
+        // Hold Manip LB --> Extend left climber
         manipLBumper.whileHeld(new WinchClimber(LeftOrRight.left, true));
 
-        // Hold Manip RT --> Extend right climber
+        // Hold Manip RB --> Extend right climber
         manipRBumper.whileHeld(new WinchClimber(LeftOrRight.right, true));
 
-        // Hold Manip LB --> Retract left climber
+        // Hold Manip back button --> Retract left climber
         manipBackBtn.whileHeld(new WinchClimber(LeftOrRight.left, false));
 
-        // Hold Manip RB --> Retract right climber
+        // Hold Manip start button --> Retract right climber
         manipStartBtn.whileHeld(new WinchClimber(LeftOrRight.right, false));
 
-        // Press Manip Y --> Toggle left piston
-        manipYBtn = new JoystickButton(manipController, XboxController.Button.kY.value);
-        manipYBtn.whenPressed(new InstantCommand(() -> Robot.climber.toggleRightPiston()));
+        // Press DPad left --> Toggle left piston
+        manipLeftDPadButton = new DPadButton(manipController, Direction.LEFT);
+        manipLeftDPadButton.whenPressed(new InstantCommand(() -> Robot.climber.toggleLeftPiston()));
 
+        // Press DPad left --> Toggle left piston
+        manipRightDPadButton = new DPadButton(manipController, Direction.RIGHT);
+        manipRightDPadButton.whenPressed(new InstantCommand(() -> Robot.climber.toggleRightPiston()));
+
+        //new JoystickButton(manipController, XboxController.Button.k.value);
 
 
     }

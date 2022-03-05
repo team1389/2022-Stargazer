@@ -17,7 +17,7 @@ public class ShootWithSensors extends ParallelCommandGroup {
     private Timer timer;
 
     private double distanceToTarget;
-    private final double[] lookupTable = {0, 100, 200, 300};
+    //private final double[] lookupTable = {0, 100, 200, 300};
     public ShootWithSensors() {
         addRequirements(Robot.shooter);
         
@@ -34,7 +34,7 @@ public class ShootWithSensors extends ParallelCommandGroup {
         // } else {
         //     targetRPM = lookupTable[(int)(distanceToTarget/10)];
         // }
-        targetRPM = 500;
+        targetRPM = 1000;
         
         // To shoot, first spin up the flywheel while turning to the target
         // When facing the target and at speed, run the indexer and hopper to feed balls to the flywheel and shoot

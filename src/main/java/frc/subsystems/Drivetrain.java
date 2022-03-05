@@ -23,7 +23,7 @@ public class Drivetrain extends SubsystemBase {
     public SwerveDriveOdometry odometry;
     public Field2d field = new Field2d();
 
-    public boolean fieldOriented = true;
+    public boolean fieldOriented = false;
     
 
     public Drivetrain() {
@@ -111,11 +111,7 @@ public class Drivetrain extends SubsystemBase {
             frontLeft.setPower(frontLeftSpeed); 
         }
 
-        
-        SmartDashboard.putNumber("BR Target", backRightAngle);
-        SmartDashboard.putNumber("BL Target", backLeftAngle);
-        SmartDashboard.putNumber("FR Target", frontRightAngle);
-        SmartDashboard.putNumber("FL Target", frontLeftAngle);
+        SmartDashboard.putBoolean("driving slowed", Robot.isShooting || slow);
 
         SmartDashboard.putNumber("BR Power", backRightSpeed);
         SmartDashboard.putNumber("BL Power", backLeftSpeed);
@@ -177,7 +173,7 @@ public class Drivetrain extends SubsystemBase {
         //Gyro offeset is changed in this method +/- 90 because intake is considered front side
 
         gyro.reset();
-        gyro.setAngleAdjustment(degrees - 90);
+        gyro.setAngleAdjustment(degrees + 90);
     }
 
     public void setPID(double kP, double kI, double kD) {

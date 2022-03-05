@@ -42,7 +42,7 @@ public class WinchClimber extends CommandBase {
                 break;
         }
 
-        addRequirements(climber);
+        addRequirements();
     }
 
     @Override

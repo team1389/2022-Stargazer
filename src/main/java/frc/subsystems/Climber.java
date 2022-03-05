@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -17,8 +18,8 @@ public class Climber extends SubsystemBase {
     // private DoubleSolenoid leftExtender;
     // private DoubleSolenoid rightExtender;
 
-    // private boolean isRightExtended = false;
-    // private boolean isLeftExtended = false;
+    private boolean isRightExtended = false;
+    private boolean isLeftExtended = false;
 
     private double climbSpeed = 0.3;
 
@@ -40,6 +41,8 @@ public class Climber extends SubsystemBase {
         // rightExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH,
         // RobotMap.RIGHT_CLIMBER_FORWARD_SOLENOID,
         // RobotMap.RIGHT_CLIMBER_REVERSE_SOLENOID);
+        // retractRightPiston();
+        // retractLeftPiston();
 
     }
 
@@ -77,22 +80,48 @@ public class Climber extends SubsystemBase {
         return leftClimbMotor.getSelectedSensorPosition();
     }
 
-    public void toggleLeftPiston() {
-        // Get the solenoid state and invert it
-        // `~` does a bit not
-        // << moves the `1` into the correct place in the number and the `|` combines them
+    public void extendLeftPiston() {
         Robot.pneumaticHub.setSolenoids(
                 1 << RobotMap.LEFT_CLIMBER_FORWARD_SOLENOID | 1 << RobotMap.LEFT_CLIMBER_REVERSE_SOLENOID,
-                ~Robot.pneumaticHub.getSolenoids());
+                1 << RobotMap.LEFT_CLIMBER_FORWARD_SOLENOID);
+        isLeftExtended = true;
+    }
+
+    public void retractLeftPiston() {
+        Robot.pneumaticHub.setSolenoids(
+                1 << RobotMap.LEFT_CLIMBER_FORWARD_SOLENOID | 1 << RobotMap.LEFT_CLIMBER_REVERSE_SOLENOID,
+                1 << RobotMap.LEFT_CLIMBER_REVERSE_SOLENOID);
+        isLeftExtended = false;
+    }
+
+    public void toggleLeftPiston() {
+        if (isLeftExtended) {
+            retractLeftPiston();
+        } else {
+            extendLeftPiston();
+        }
+    }
+
+    public void extendRightPiston() {
+        Robot.pneumaticHub.setSolenoids(
+                1 << RobotMap.RIGHT_CLIMBER_FORWARD_SOLENOID | 1 << RobotMap.RIGHT_CLIMBER_REVERSE_SOLENOID,
+                1 << RobotMap.RIGHT_CLIMBER_FORWARD_SOLENOID);
+        isRightExtended = true;
+    }
+
+    public void retractRightPiston() {
+        Robot.pneumaticHub.setSolenoids(
+                1 << RobotMap.RIGHT_CLIMBER_FORWARD_SOLENOID | 1 << RobotMap.RIGHT_CLIMBER_REVERSE_SOLENOID,
+                1 << RobotMap.RIGHT_CLIMBER_REVERSE_SOLENOID);
+        isRightExtended = false;
     }
 
     public void toggleRightPiston() {
-        // Get the solenoid state and invert it
-        // `~` does a bit not
-        // << moves the `1` into the correct place in the number and the `|` combines them
-        Robot.pneumaticHub.setSolenoids(
-                1 << RobotMap.RIGHT_CLIMBER_FORWARD_SOLENOID | 1 << RobotMap.RIGHT_CLIMBER_REVERSE_SOLENOID,
-                ~Robot.pneumaticHub.getSolenoids());
+        if (isRightExtended) {
+            retractRightPiston();
+        } else {
+            extendRightPiston();
+        }
     }
 
 }
