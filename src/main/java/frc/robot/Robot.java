@@ -51,6 +51,11 @@ public class Robot extends TimedRobot {
         // pneumaticHub.setSolenoids(1 << RobotMap.LEFT_CLIMBER_FORWARD_SOLENOID | 1 << RobotMap.LEFT_CLIMBER_REVERSE_SOLENOID | 1 << RobotMap.RIGHT_CLIMBER_FORWARD_SOLENOID | 1 << RobotMap.RIGHT_CLIMBER_REVERSE_SOLENOID |
         // 1 << RobotMap.RIGHT_INTAKE_FORWARD_SOLENOID | 1 << RobotMap., values);
         CameraServer.startAutomaticCapture();
+
+        pneumaticHub.setSolenoids(
+            1 << 4 | 1 << 5 |1 << 6 | 1 << 7 | 1 << 8 | 1 << 9 | 1 << 10 | 1 << 11,
+            1 << 11 | 1 << 9 | 1 << 5 | 1 << 7
+        );
     }
 
     /**
@@ -128,10 +133,7 @@ public class Robot extends TimedRobot {
         // 11 top            A left climber reverse
 
         // System.err.println("HELLO THIS IS A PNEUMATIC HUB: " + pneumaticHub.getSolenoids());
-        pneumaticHub.setSolenoids(
-            1 << 4 | 1 << 5 |1 << 6 | 1 << 7 | 1 << 8 | 1 << 9 | 1 << 10 | 1 << 11,
-            1 << 11 | 1 << 9 //| //1 << 5 | 1 << 7
-        );
+        
         // pneumaticHub.disableCompressor();
 
     }
