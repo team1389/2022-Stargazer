@@ -73,8 +73,8 @@ public class OI {
 
         // Hold Manip A Button --> Run Intake
         manipABtn = new JoystickButton(manipController, XboxController.Button.kA.value);
-        //manipABtn.whenHeld(new RunIntake(true));
-        manipABtn.whenPressed(new InstantCommand(() ->  Robot.intake.extendIntake()));
+        manipABtn.whenHeld(new RunIntake(true));
+        // manipABtn.whenPressed(new InstantCommand(() ->  Robot.intake.extendIntake()));
 
 
         // Hold Manip X Button --> Run Shooter System
