@@ -32,6 +32,7 @@ public class GetDistanceToTarget extends CommandBase {
         distanceToTarget = (TARGET_HEIGHT_INCHES-CAMERA_HEIGHT_INCHES) / (Math.tan(Math.toRadians(CAMERA_ANGLE_DEGREES+tx)));
 
         SmartDashboard.putNumber("Distance To Target", distanceToTarget);
+        SmartDashboard.putString("Shoot status", "gettng distance");
     }
 
     @Override

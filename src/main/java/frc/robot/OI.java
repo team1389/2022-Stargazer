@@ -14,6 +14,7 @@ import frc.commands.RunIndexer;
 import frc.commands.RunIntake;
 import frc.commands.SetShooterRPM;
 import frc.commands.Shoot;
+import frc.commands.ShootWithSensors;
 import frc.commands.StageOneClimb;
 import frc.commands.StageTwoClimb;
 import frc.commands.TeleOpDrive;
@@ -73,13 +74,13 @@ public class OI {
 
         // Hold Manip A Button --> Run Intake
         manipABtn = new JoystickButton(manipController, XboxController.Button.kA.value);
-        manipABtn.whenHeld(new RunIntake(true));
+        //manipABtn.whenHeld(new RunIntake(true));
         // manipABtn.whenPressed(new InstantCommand(() ->  Robot.intake.extendIntake()));
 
 
         // Hold Manip X Button --> Run Shooter System
         manipXBtn = new JoystickButton(manipController, XboxController.Button.kX.value);
-        manipXBtn.whenHeld(new Shoot()); 
+        manipXBtn.whenHeld(new ShootWithSensors()); 
 
         // Press Manip B button --> Extend or retract intake
         manipBBtn = new JoystickButton(manipController, XboxController.Button.kB.value);

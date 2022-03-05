@@ -45,7 +45,6 @@ public class SetShooterRPM extends CommandBase {
         Robot.shooter.setShooterPercent(power);
 
         recentErrors.addElement(error);
-        SmartDashboard.putNumber("recent average", recentErrors.getAverage());
 
         SmartDashboard.putNumber("power", power);
         SmartDashboard.putNumber("RPM", Robot.shooter.shooterMotor.getEncoder().getVelocity());
@@ -61,6 +60,7 @@ public class SetShooterRPM extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return Math.abs(recentErrors.getAverage()) < 10 || timer.get() > 5;
+        // return Math.abs(recentErrors.getAverage()) < 10 || timer.get() > 5;
+        return false;
     }
 }

@@ -129,7 +129,7 @@ public class FollowPath extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         drivetrain.drive(0.0, 0.0, 0.0, 1);
-    }
+      }
 
     // Returns true when the command should end.
     @Override

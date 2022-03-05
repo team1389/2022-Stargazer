@@ -118,6 +118,11 @@ public class Drivetrain extends SubsystemBase {
         SmartDashboard.putNumber("FR Power", frontRightSpeed);
         SmartDashboard.putNumber("FL Power", frontLeftSpeed);
 
+        SmartDashboard.putNumber("BR TARGET", backRightAngle);
+        SmartDashboard.putNumber("BL TARGET", backLeftAngle);
+        SmartDashboard.putNumber("FR TARGET", frontRightAngle);
+        SmartDashboard.putNumber("FL TARGET", frontLeftAngle);
+
     }
 
     public void stopDrive() {

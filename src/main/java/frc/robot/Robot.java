@@ -8,6 +8,8 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.autos.OneBallAuto;
 import frc.subsystems.*;
 import frc.util.SwerveTelemetry;
 
@@ -32,6 +34,7 @@ public class Robot extends TimedRobot {
     public static PneumaticHub pneumaticHub = new PneumaticHub(RobotMap.PNEUMATICS_HUB);
     public  Compressor phCompressor;
     public static PowerDistribution powerDistributionHub = new PowerDistribution();
+    public SequentialCommandGroup autoCommand;
 
     //For current limiting
     public static boolean isShooting = false;
@@ -58,12 +61,16 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+        drivetrain.updateOdometry();
     }
 
 
     @Override
     public void autonomousInit() {
         //Example of setting auto: Scheduler.getInstance().add(YOUR AUTO);
+        autoCommand = new OneBallAuto();
+        CommandScheduler.getInstance().schedule(autoCommand);
+
         Robot.drivetrain.coordinateAbsoluteEncoders();
         Robot.drivetrain.setGyro(0);
         
@@ -81,6 +88,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+        Robot.drivetrain.coordinateAbsoluteEncoders();
     }
 
     @Override
@@ -122,7 +130,7 @@ public class Robot extends TimedRobot {
         // System.err.println("HELLO THIS IS A PNEUMATIC HUB: " + pneumaticHub.getSolenoids());
         pneumaticHub.setSolenoids(
             1 << 4 | 1 << 5 |1 << 6 | 1 << 7 | 1 << 8 | 1 << 9 | 1 << 10 | 1 << 11,
-            1 << 11 | 1 << 9 | 1 << 5 | 1 << 7
+            1 << 11 | 1 << 9 //| //1 << 5 | 1 << 7
         );
         // pneumaticHub.disableCompressor();
 
