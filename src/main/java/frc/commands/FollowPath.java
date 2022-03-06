@@ -44,8 +44,8 @@ public class FollowPath extends CommandBase {
     private HolonomicDriveController driveController;
 
     // Measured in m/s and m/s/s
-    private final double MAX_VELOCITY = 3;
-    private final double MAX_ACCELERATION = 2.5;
+    private final double MAX_VELOCITY = 1;
+    private final double MAX_ACCELERATION = 0.75;
 
     //Input the name of the generated path in PathPlanner
     public FollowPath(String pathName) {
