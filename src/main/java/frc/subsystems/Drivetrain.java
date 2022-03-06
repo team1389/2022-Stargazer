@@ -154,10 +154,10 @@ public class Drivetrain extends SubsystemBase {
     public void setChassisSpeeds(ChassisSpeeds speeds) {
         SwerveModuleState[] moduleStates = kinematics.toSwerveModuleStates(speeds);
 
-        frontLeft.setState(moduleStates[0]);
-        frontRight.setState(moduleStates[1]);
-        backLeft.setState(moduleStates[2]);
-        backRight.setState(moduleStates[3]);
+        frontLeft.setState(new SwerveModuleState(-moduleStates[0].speedMetersPerSecond, moduleStates[0].angle));
+        frontRight.setState(new SwerveModuleState(-moduleStates[1].speedMetersPerSecond, moduleStates[1].angle));
+        backLeft.setState(new SwerveModuleState(-moduleStates[2].speedMetersPerSecond, moduleStates[2].angle));
+        backRight.setState(new SwerveModuleState(-moduleStates[3].speedMetersPerSecond, moduleStates[3].angle));
     }
 
     public void resetAbsEncoders() {

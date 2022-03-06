@@ -40,6 +40,7 @@ public class OI {
         
 
         Robot.drivetrain.setDefaultCommand(new TeleOpDrive());
+        Robot.shooter.setDefaultCommand(new ManualTurret());
         //Robot.intake.setDefaultCommand(new RunIntake());
         // Robot.climber.setDefaultCommand(new WinchClimber("right", false));
         // Robot.shooter.setDefaultCommand(new ManualTurret());

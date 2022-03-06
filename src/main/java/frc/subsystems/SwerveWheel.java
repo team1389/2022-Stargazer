@@ -25,7 +25,7 @@ public class SwerveWheel extends SubsystemBase {
 
 
     //Create PID coefficients
-    public double rotateP = 0.007; //0.025
+    public double rotateP = 0.0055; //0.025
     public double rotateI = 0.0000;
     public double rotateD = 0;
 

@@ -149,8 +149,7 @@ public class Robot extends TimedRobot {
 
         // System.err.println("HELLO THIS IS A PNEUMATIC HUB: " + pneumaticHub.getSolenoids());
         
-        // pneumaticHub.disableCompressor();
-
+        // pneumaticHub.disableCompressor();        
     }
 
     /**
@@ -158,5 +157,12 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void testPeriodic() {
+    }
+
+    @Override
+    public void testInit() {
+        Robot.intake.retractIntake();
+        Robot.climber.retractLeftPiston();
+        Robot.climber.retractRightPiston();
     }
 }

@@ -29,10 +29,7 @@ public class TeleOpDrive extends CommandBase {
         SmartDashboard.putNumber("rotation", rotation);
 
         if(triggerValue > 0.05) {
-            slowFactor = 0.75;
-            if(triggerValue > 0.5) {
-                slowFactor = 0.5;
-            }
+            slowFactor = 0.5;
         }
 
         // Sets the swerve drive command using controller inputs
