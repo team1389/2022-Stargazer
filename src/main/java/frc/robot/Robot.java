@@ -1,6 +1,9 @@
 package frc.robot;
 
 
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.util.sendable.Sendable;
@@ -10,6 +13,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.autos.OneBallAuto;
+import frc.autos.TwoBallAuto;
 import frc.subsystems.*;
 import frc.util.SwerveTelemetry;
 
@@ -52,10 +56,10 @@ public class Robot extends TimedRobot {
         // 1 << RobotMap.RIGHT_INTAKE_FORWARD_SOLENOID | 1 << RobotMap., values);
         CameraServer.startAutomaticCapture();
 
-        pneumaticHub.setSolenoids(
-            1 << 4 | 1 << 5 |1 << 6 | 1 << 7 | 1 << 8 | 1 << 9 | 1 << 10 | 1 << 11,
-            1 << 11 | 1 << 9 | 1 << 5 | 1 << 7
-        );
+        // pneumaticHub.setSolenoids(
+        //     1 << 4 | 1 << 5 |1 << 6 | 1 << 7 | 1 << 8 | 1 << 9 | 1 << 10 | 1 << 11,
+        //     1 << 11 | 1 << 9 | 1 << 5 | 1 << 7
+        // );
     }
 
     /**
@@ -73,12 +77,14 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         //Example of setting auto: Scheduler.getInstance().add(YOUR AUTO);
-        autoCommand = new OneBallAuto();
-        CommandScheduler.getInstance().schedule(autoCommand);
-
         Robot.drivetrain.coordinateAbsoluteEncoders();
         Robot.drivetrain.setGyro(0);
-        
+
+        autoCommand = new TwoBallAuto();
+        CommandScheduler.getInstance().schedule(autoCommand);
+
+        PathPlannerTrajectory currentTrajectory = PathPlanner.loadPath("TwoBallAuto", 3, 2.5);
+        //drivetrain.setPose(currentTrajectory.sample(0).poseMeters);
     }
 
     /**
@@ -104,8 +110,17 @@ public class Robot extends TimedRobot {
         Robot.drivetrain.fieldOriented = false;
 
         SwerveTelemetry frontLeftTelemetry = new SwerveTelemetry(Robot.drivetrain.frontLeft);
+        SwerveTelemetry backLeftTelemetry = new SwerveTelemetry(Robot.drivetrain.backLeft);
+        SwerveTelemetry frontRightTelemetry = new SwerveTelemetry(Robot.drivetrain.frontRight);
+        SwerveTelemetry backRightTelemetry = new SwerveTelemetry(Robot.drivetrain.backRight);
         //SendableRegistry.add(frontLeftTelemetry, "Swerve");
         SendableRegistry.addLW(frontLeftTelemetry, "FL Swerve");
+        SendableRegistry.addLW(backLeftTelemetry, "BL Swerve");
+        SendableRegistry.addLW(frontRightTelemetry, "FR Swerve");
+        SendableRegistry.addLW(backRightTelemetry, "BR Swerve");
+
+
+
 
         // Set to 1 to turn off, 3 to turn on, 2 to ~~unleash death~~ blink
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
