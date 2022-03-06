@@ -81,7 +81,7 @@ public class OI {
 
         // Hold Manip X Button --> Run Shooter System
         manipXBtn = new JoystickButton(manipController, XboxController.Button.kX.value);
-        manipXBtn.whenHeld(new ShootWithSensors()); 
+        manipXBtn.whenHeld(new ShootWithSensors(5000)); 
 
         // Press Manip B button --> Extend or retract intake
         manipBBtn = new JoystickButton(manipController, XboxController.Button.kB.value);

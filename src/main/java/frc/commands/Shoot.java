@@ -11,7 +11,7 @@ public class Shoot extends SequentialCommandGroup {
   // This is the command that should be run to shoot
   public Shoot() {
     // First get the distance to target, and then actually shoot 
-    addCommands(new GetDistanceToTarget(), new ShootWithSensors());
+    addCommands(new GetDistanceToTarget(), new ShootWithSensors(5000));
   }
 
   @Override

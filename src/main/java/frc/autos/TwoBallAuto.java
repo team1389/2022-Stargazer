@@ -21,7 +21,7 @@ public class TwoBallAuto extends SequentialCommandGroup{
             new InstantCommand(() -> Robot.climber.extendLeftPiston()),
             new InstantCommand(() -> Robot.climber.extendRightPiston()),
             new ParallelCommandGroup(new RunIntake(5.2), new FollowPath("TwoBallAuto")),
-            new ShootWithSensors()
+            new ShootWithSensors(5640)
         );
     }
 }
