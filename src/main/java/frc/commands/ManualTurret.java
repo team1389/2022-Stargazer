@@ -24,7 +24,7 @@ public class ManualTurret extends CommandBase {
   @Override
   public void execute() {
     SmartDashboard.putNumber("Turret Position", shooter.getTurretEncoder().getPosition());
-    shooter.setTurretPower(Math.max(-0.2, Math.min(Robot.oi.getManipLeftX(), 0.2)));
+    shooter.setTurretPower(Robot.oi.getManipLeftX()/6);
   }
 
   // Called once the command ends or is interrupted.

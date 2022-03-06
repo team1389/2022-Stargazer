@@ -45,7 +45,7 @@ public class FollowPath extends CommandBase {
 
     // Measured in m/s and m/s/s
     private final double MAX_VELOCITY = 1;
-    private final double MAX_ACCELERATION = 0.75;
+    private final double MAX_ACCELERATION = 0.5;
 
     //Input the name of the generated path in PathPlanner
     public FollowPath(String pathName) {

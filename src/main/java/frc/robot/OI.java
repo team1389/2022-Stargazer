@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.commands.ManualTurret;
+import frc.commands.RunHopper;
 // import frc.commands.ClimberLeftExtend;
 // import frc.commands.ClimberLeftRetract;
 // import frc.commands.ClimberRightExtend;
@@ -70,7 +71,9 @@ public class OI {
         driveLBumper = new JoystickButton(driveController, XboxController.Button.kLeftBumper.value);
         driveLBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.setGyro(0)));
 
-
+        //Hold Manip Y --> run hopper
+        manipYBtn = new JoystickButton(manipController, XboxController.Button.kY.value);
+        manipYBtn.whenHeld(new RunHopper());
 
 
         // Hold Manip A Button --> Run Intake
