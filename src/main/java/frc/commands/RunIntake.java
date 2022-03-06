@@ -58,7 +58,7 @@ public class RunIntake extends CommandBase {
     @Override
     public void execute() {
         if (forwards) {
-            intake.setIntakePercent(0.75);
+            intake.setIntakePercent(0.5);
         } else {
             intake.setIntakePercent(-0.5);
         }
