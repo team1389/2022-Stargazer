@@ -24,7 +24,7 @@ public class Drivetrain extends SlowSubsystem {
     public SwerveDriveOdometry odometry;
     public Field2d field = new Field2d();
 
-    public boolean fieldOriented = true;
+    public boolean fieldOriented = false;
     
 
     public Drivetrain() {
@@ -58,7 +58,7 @@ public class Drivetrain extends SlowSubsystem {
 
     //Main TeleOp drive method
     //y is desired motion forward, x sideways, and rotation is desired clockwise rotation
-    public void drive(double x, double y, double rotation) {
+    public void drive(double x, double y, double rotation, double slowFactor) {
         double angle = gyro.getAngle() % 360;
         angle = Math.toRadians(angle);
 
@@ -119,6 +119,11 @@ public class Drivetrain extends SlowSubsystem {
         SmartDashboard.putNumber("FR Power", frontRightSpeed);
         SmartDashboard.putNumber("FL Power", frontLeftSpeed);
 
+        SmartDashboard.putNumber("BR TARGET", backRightAngle);
+        SmartDashboard.putNumber("BL TARGET", backLeftAngle);
+        SmartDashboard.putNumber("FR TARGET", frontRightAngle);
+        SmartDashboard.putNumber("FL TARGET", frontLeftAngle);
+
     }
 
     public void stopDrive() {
@@ -159,10 +164,10 @@ public class Drivetrain extends SlowSubsystem {
         
         SwerveModuleState[] moduleStates = kinematics.toSwerveModuleStates(speeds);
 
-        frontLeft.setState(moduleStates[0]);
-        frontRight.setState(moduleStates[1]);
-        backLeft.setState(moduleStates[2]);
-        backRight.setState(moduleStates[3]);
+        frontLeft.setState(new SwerveModuleState(-moduleStates[0].speedMetersPerSecond, moduleStates[0].angle));
+        frontRight.setState(new SwerveModuleState(-moduleStates[1].speedMetersPerSecond, moduleStates[1].angle));
+        backLeft.setState(new SwerveModuleState(-moduleStates[2].speedMetersPerSecond, moduleStates[2].angle));
+        backRight.setState(new SwerveModuleState(-moduleStates[3].speedMetersPerSecond, moduleStates[3].angle));
     }
 
     public void resetAbsEncoders() {
@@ -180,10 +185,10 @@ public class Drivetrain extends SlowSubsystem {
     }
 
     public void setGyro(double degrees) {
-        //Gyro offset is changed in this method +/- 90 because intake is considered front side
+        //Gyro offeset is changed in this method +/- 90 because intake is considered front side
 
         gyro.reset();
-        gyro.setAngleAdjustment(degrees - 90);
+        gyro.setAngleAdjustment(degrees + 90);
     }
 
     public void setPID(double kP, double kI, double kD) {

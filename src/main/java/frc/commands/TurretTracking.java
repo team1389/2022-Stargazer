@@ -48,12 +48,12 @@ public class TurretTracking extends CommandBase {
     public void execute() {
         // Updates the limelight values
         fetchValues();
-        recentErrors.addElement(ty);
+        
 
         if(tv >= 1) {
             // Sets the pid controller's reference point to the ty and the setpoint to 0
             turretPower = pid.calculate(ty - 6, 0);
-
+            recentErrors.addElement(ty);
         }
         else {
 
@@ -61,8 +61,9 @@ public class TurretTracking extends CommandBase {
         }
 
         // Sets the shooter to the turret power from PID
-        Robot.shooter.setTurretPower(turretPower);
+        //Robot.shooter.setTurretPower(turretPower);
         SmartDashboard.putNumber("turret power", turretPower);
+        SmartDashboard.putString("Shoot status", "turret tracking");
     }
 
     @Override
@@ -82,6 +83,6 @@ public class TurretTracking extends CommandBase {
     @Override
     public boolean isFinished() {
         //TODO: change timeout value
-        return Math.abs(recentErrors.getAverage()) < 0.5 || timer.get() > 5;
+        return Math.abs(recentErrors.getAverage()) < 0.5 || timer.get() > 2;
     }
 }

@@ -20,7 +20,7 @@ public class SetShooterRPM extends CommandBase {
 
     /** Creates a new SetShooterRPM. */
     public SetShooterRPM(double targetRPM) {
-        addRequirements(Robot.shooter);
+        addRequirements();
         this.targetRPM = targetRPM;
         this.recentErrors = new SizeLimitedQueue(15);
         this.timer = new Timer();
@@ -38,13 +38,13 @@ public class SetShooterRPM extends CommandBase {
 
     @Override
     public void execute() {
+        Robot.isShooting = true;
         double power = pidController.calculate(Robot.shooter.getRPM()) + (targetRPM/MAX_RPM);
         double error = targetRPM - Robot.shooter.getRPM();
 
         Robot.shooter.setShooterPercent(power);
 
         recentErrors.addElement(error);
-        SmartDashboard.putNumber("recent average", recentErrors.getAverage());
 
         SmartDashboard.putNumber("power", power);
         SmartDashboard.putNumber("RPM", Robot.shooter.shooterMotor.getEncoder().getVelocity());
@@ -54,12 +54,13 @@ public class SetShooterRPM extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        Robot.isShooting = false;
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        //TODO: change timeout value
-        return Math.abs(recentErrors.getAverage()) < 10 || timer.get() > 5;
+        // return Math.abs(recentErrors.getAverage()) < 10 || timer.get() > 5;
+        return false;
     }
 }

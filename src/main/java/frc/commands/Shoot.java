@@ -5,6 +5,7 @@
 package frc.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Robot;
 
 public class Shoot extends SequentialCommandGroup {
   // This is the command that should be run to shoot
@@ -12,4 +13,9 @@ public class Shoot extends SequentialCommandGroup {
     // First get the distance to target, and then actually shoot 
     addCommands(new GetDistanceToTarget(), new ShootWithSensors());
   }
+
+  @Override
+    public void end(boolean interrupted) {
+        Robot.shooter.stopShooter();
+    }
 }

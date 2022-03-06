@@ -24,8 +24,9 @@ public class SwerveWheel extends SubsystemBase {
     private final double DRIVE_VELOCITY_CONVERSION_FACTOR = (3 * Math.PI * 0.0254) / (60 * 5.25);
     private double slow = 1.0;
 
-    // Create PID coefficients
-    public double rotateP = 0.005; // 0.025
+
+    //Create PID coefficients
+    public double rotateP = 0.0055; //0.025
     public double rotateI = 0.0000;
     public double rotateD = 0;
 
