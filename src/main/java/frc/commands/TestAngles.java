@@ -4,13 +4,24 @@
 
 package frc.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.subsystems.SwerveWheel;
 
 public class TestAngles extends CommandBase {
-  /** Creates a new TestAngles. */
+  private double kP, kI, kD;
+  private SwerveWheel wheel;
+  private double[] initialPID;
+  
   public TestAngles() {
-    // Use addRequirements() here to declare subsystem dependencies.
+    wheel = Robot.drivetrain.frontRight;
+    initialPID = wheel.getPID();
+
+    SmartDashboard.putNumber("kP", initialPID[0]);
+    SmartDashboard.putNumber("kI", initialPID[1]);
+    SmartDashboard.putNumber("kD", initialPID[2]);
+
     addRequirements(Robot.drivetrain);
   }
 
@@ -18,6 +29,13 @@ public class TestAngles extends CommandBase {
   @Override
   public void initialize() {
     super.initialize();
+
+    kP = SmartDashboard.getNumber("kP", initialPID[0]);
+    kI = SmartDashboard.getNumber("kI", initialPID[1]);
+    kD = SmartDashboard.getNumber("kD", initialPID[2]);
+
+    Robot.drivetrain.setPID(kP, kI, kD);
+
     Robot.drivetrain.frontRight.setAngle(Robot.drivetrain.frontRight.rotateMotor.getEncoder().getPosition()+90);
   }
   @Override

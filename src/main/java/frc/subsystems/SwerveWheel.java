@@ -33,6 +33,8 @@ public class SwerveWheel extends SubsystemBase {
     public double driveI = 0.0000005;
     public double driveD = 0;
 
+    private double currentTarget;
+
     public SwerveWheel(int driveMotorPort, int rotateMotorPort, int rotateEncoderPort) {
         //Instantiate motors/sensors
         driveMotor = new CANSparkMax(driveMotorPort, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -82,9 +84,6 @@ public class SwerveWheel extends SubsystemBase {
         double currentAngle = rotateMotor.getEncoder().getPosition();
         double setpointAngle = closestAngle(currentAngle, angle);
         double setpointAngleFlipped = closestAngle(currentAngle, angle + 180.0);
-
-        //rotatePIDController.setReference(currentAngle + setpointAngle, CANSparkMax.ControlType.kPosition, 0);
-
         
         //If the closest angle to setpoint is shorter
         if (Math.abs(setpointAngle) <= Math.abs(setpointAngleFlipped)) {
@@ -98,7 +97,8 @@ public class SwerveWheel extends SubsystemBase {
             rotatePIDController.setReference(currentAngle + setpointAngleFlipped, CANSparkMax.ControlType.kPosition, 0);
         }
 
-        return currentAngle + setpointAngle;
+        currentTarget = currentAngle + setpointAngle;
+        return currentTarget;
     }
 
     //Set the set of the wheel with a SwerveModuleState
@@ -153,5 +153,13 @@ public class SwerveWheel extends SubsystemBase {
         rotatePIDController.setD(kD);
     }
 
+    public double[] getPID() {
+        double[] pidConstants = {rotateP, rotateI, rotateD};
+        return pidConstants;
+    }
+
+    public double getTargetAngle() {
+        return currentTarget;
+    }
 
 }

@@ -11,8 +11,11 @@ public class GetDistanceToTarget extends CommandBase {
     private double CAMERA_ANGLE_DEGREES = 50; 
     private double CAMERA_HEIGHT_INCHES = 22.5;
 
+    //private final double[] lookupTable = {0, 100, 200, 300};
+
     private double tv, tx, ty, ta;
     private double distanceToTarget = 0;
+    private double targetRPM;
 
     private Timer timer = new Timer();
 
@@ -28,10 +31,19 @@ public class GetDistanceToTarget extends CommandBase {
 
     @Override
     public void execute() {
+        // Read the target's position from NetworkTables and calculate the distance
         tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(3);
         distanceToTarget = (TARGET_HEIGHT_INCHES-CAMERA_HEIGHT_INCHES) / (Math.tan(Math.toRadians(CAMERA_ANGLE_DEGREES+tx)));
 
+        // // TODO: lookup table for rpm
+        // if (distanceToTarget > 40) {
+        //     targetRPM = lookupTable[lookupTable.length-1];
+        // } else {
+        //     targetRPM = lookupTable[(int)(distanceToTarget/10)];
+        // }
+
         SmartDashboard.putNumber("Distance To Target", distanceToTarget);
+        SmartDashboard.putNumber("Target RPM", targetRPM);
         SmartDashboard.putString("Shoot status", "gettng distance");
     }
 
@@ -43,6 +55,7 @@ public class GetDistanceToTarget extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        
         // Turn off limelight green ring
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     }

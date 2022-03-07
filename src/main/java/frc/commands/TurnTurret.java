@@ -32,7 +32,7 @@ public class TurnTurret extends CommandBase {
 
   @Override
   public void execute() {
-    Robot.shooter.setTurretPower(-0.13);
+    Robot.shooter.setTurretPower(-0.176);
   }
 
   @Override

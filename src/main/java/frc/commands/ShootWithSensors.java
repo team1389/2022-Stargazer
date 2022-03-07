@@ -16,30 +16,15 @@ public class ShootWithSensors extends ParallelCommandGroup {
     private final double SHOOT_TIME = 2;
 
     private Timer timer;
-
-    private double distanceToTarget;
-    //private final double[] lookupTable = {0, 100, 200, 300};
-    public ShootWithSensors(double targetSpeed) {
+    public ShootWithSensors(double targetRPM) {
         addRequirements(Robot.shooter);
         
         timer = new Timer();
         
-        //timer.start();
-
-        //TODO: more reasonable default value than 0
-        
-        distanceToTarget = SmartDashboard.getNumber("Distance To Target", 0);
-        // // TODO: lookup table for rpm
-        // if (distanceToTarget > 40) {
-        //     targetRPM = lookupTable[lookupTable.length-1];
-        // } else {
-        //     targetRPM = lookupTable[(int)(distanceToTarget/10)];
-        // }
-        targetRPM = targetSpeed;
-        SmartDashboard.putNumber("Shooter RPM", targetRPM);
+        this.targetRPM = targetRPM;
         
         // To shoot, first spin up the flywheel while turning to the target
-        // When facing the target and at speed, run the indexer and hopper to feed balls to the flywheel and shoot
+        // When facing the target, run the indexer and hopper to feed balls to the flywheel and shoot
         addCommands(
             new SetShooterRPM(targetRPM),
             new SequentialCommandGroup(
@@ -53,23 +38,23 @@ public class ShootWithSensors extends ParallelCommandGroup {
                     new RunHopper())
             )
         );
-
     }
 
     @Override
     public void initialize() {
         super.initialize();
 
-        targetRPM = SmartDashboard.getNumber("Shooter RPM", 5000);
-
+        targetRPM = SmartDashboard.getNumber("Target RPM", 5000);
+        
         timer.reset();
+        timer.start();
+
         SmartDashboard.putString("Shooting", "yep");
     }
 
     @Override
     public boolean isFinished() {
         return timer.hasElapsed(SHOOT_TIME);
-        //return false;
     }
 
     @Override

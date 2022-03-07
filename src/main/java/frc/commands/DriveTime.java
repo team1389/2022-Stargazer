@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.autos;
+package frc.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -12,14 +12,17 @@ import frc.robot.Robot;
 public class DriveTime extends CommandBase {
   /** Creates a new ManualAuto. */
   Timer timer;
-  double timeout;
+  double x, y, angle, timeout;
 
-  public DriveTime(double timeout) {
+  public DriveTime(double timeout, double x, double y, double angle) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
     timer = new Timer();
     this.timeout = timeout;
+    this.x = x;
+    this.y = y;
+    this.angle = angle;
 
     addRequirements(Robot.drivetrain);
   }
@@ -32,7 +35,7 @@ public class DriveTime extends CommandBase {
 
   @Override
   public void execute() {
-    Robot.drivetrain.drive(0, 0.3, 0, 1);
+    Robot.drivetrain.drive(x, y, angle, 1);
   }
 
   @Override

@@ -19,6 +19,7 @@ public class SwerveTelemetry implements Sendable {
       builder.addDoubleProperty("Speed", () -> getSpeed(), null);
       builder.addDoubleProperty("Angle", () -> getAngle(), null);
       builder.addDoubleProperty("Absolute Angle", () -> getAngle(), null);
+      builder.addDoubleProperty("Target Angle", () -> getTargetAngle(), null);
       builder.addBooleanProperty("Inverted", () -> getInverted(), null);
     }
 
@@ -31,6 +32,10 @@ public class SwerveTelemetry implements Sendable {
     }
     public double getAbsAngle() {
         return swerveWheel.rotateAbsEncoder.getAbsolutePosition();
+    }
+
+    public double getTargetAngle() {
+        return swerveWheel.getTargetAngle();
     }
     public boolean getInverted() {
         //return swerveWheel.isInverted();

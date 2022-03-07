@@ -61,7 +61,7 @@ public class TurretTracking extends CommandBase {
         }
 
         // Sets the shooter to the turret power from PID
-        //Robot.shooter.setTurretPower(turretPower);
+        Robot.shooter.setTurretPower(turretPower);
         SmartDashboard.putNumber("turret power", turretPower);
         SmartDashboard.putString("Shoot status", "turret tracking");
     }
