@@ -13,7 +13,7 @@ public class ShootWithSensors extends ParallelCommandGroup {
 
     //TODO: Find this time
     // Time from the indexer starting to the last ball being shot
-    private final double SHOOT_TIME = 2;
+    private final double SHOOT_TIME = 10000;
 
     private Timer timer;
     public ShootWithSensors(double targetRPM) {
@@ -26,10 +26,10 @@ public class ShootWithSensors extends ParallelCommandGroup {
         // To shoot, first spin up the flywheel while turning to the target
         // When facing the target, run the indexer and hopper to feed balls to the flywheel and shoot
         addCommands(
-            new SetShooterRPM(targetRPM),
+            new SetShooterRPM(),
             new SequentialCommandGroup(
                 //new TurretTracking(),
-                new WaitCommand(1),
+                new WaitCommand(3),
                 new InstantCommand(() -> timer.start()),
                 
                 //Run indexer and hopper:
@@ -44,7 +44,6 @@ public class ShootWithSensors extends ParallelCommandGroup {
     public void initialize() {
         super.initialize();
 
-        targetRPM = SmartDashboard.getNumber("Target RPM", 5000);
         
         timer.reset();
         timer.start();

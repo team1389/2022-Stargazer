@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.commands.GetDistanceToTarget;
 import frc.commands.ManualTurret;
 import frc.commands.RunHopper;
 // import frc.commands.ClimberLeftExtend;
@@ -41,11 +42,12 @@ public class OI {
        initControllers();
         
 
-        Robot.drivetrain.setDefaultCommand(new TeleOpDrive());
-        Robot.shooter.setDefaultCommand(new ManualTurret());
+        //Robot.drivetrain.setDefaultCommand(new TeleOpDrive());
+        // Robot.shooter.setDefaultCommand(new ShootWithSensors(3700));
+        Robot.shooter.setDefaultCommand(new Shoot());
         //Robot.intake.setDefaultCommand(new RunIntake());
         // Robot.climber.setDefaultCommand(new WinchClimber("right", false));
-        // Robot.shooter.setDefaultCommand(new ManualTurret());
+        //Robot.shooter.setDefaultCommand(new ManualTurret());
         
         //runIndexer = new RunIndexer();
         //runIndexer.schedule();

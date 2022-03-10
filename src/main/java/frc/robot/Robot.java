@@ -100,7 +100,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-        Robot.drivetrain.coordinateAbsoluteEncoders();
     }
 
     @Override
@@ -124,7 +123,7 @@ public class Robot extends TimedRobot {
 
 
         // Set to 1 to turn off, 3 to turn on, 2 to ~~unleash death~~ blink
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
 
         // Climber
         // pneumaticHub.setSolenoids(1 << 4 | 1 << 11, 1 << 4);

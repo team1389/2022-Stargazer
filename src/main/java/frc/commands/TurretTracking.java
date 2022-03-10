@@ -52,8 +52,8 @@ public class TurretTracking extends CommandBase {
 
         if(tv >= 1) {
             // Sets the pid controller's reference point to the ty and the setpoint to 0
-            turretPower = pid.calculate(ty - 6, 0);
-            recentErrors.addElement(ty);
+            turretPower = pid.calculate(tx - 6, 0);
+            recentErrors.addElement(tx);
         }
         else {
 
@@ -83,6 +83,7 @@ public class TurretTracking extends CommandBase {
     @Override
     public boolean isFinished() {
         //TODO: change timeout value
-        return Math.abs(recentErrors.getAverage()) < 0.5 || timer.get() > 2;
+        //return Math.abs(recentErrors.getAverage()) < 0.5 || timer.get() > 2;
+        return false;
     }
 }
