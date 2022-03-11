@@ -11,14 +11,16 @@ import frc.robot.Robot;
 public class Shoot extends SequentialCommandGroup {
   // This is the command that should be run to shoot
   public Shoot() {
-    // First get the distance to target, and then actually shoot 
-    addCommands(new GetDistanceToTarget(), new ShootWithSensors(SmartDashboard.getNumber("Target RPM", 5000)));
+    // First get the distance to target, and then actually shoot
+    addCommands(
+        new GetDistanceToTarget(),
+        new ShootWithSensors());
   }
 
   @Override
-    public void end(boolean interrupted) {
-        Robot.shooter.stopShooter();
-        Robot.shooter.stopIndexer();
-        Robot.hopper.stopHopper();
-    }
+  public void end(boolean interrupted) {
+    Robot.shooter.stopShooter();
+    Robot.shooter.stopIndexer();
+    Robot.hopper.stopHopper();
+  }
 }

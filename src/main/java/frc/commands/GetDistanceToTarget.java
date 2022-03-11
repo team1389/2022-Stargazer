@@ -15,7 +15,6 @@ public class GetDistanceToTarget extends CommandBase {
 
     private double tv, tx, ty, ta;
     private double distanceToTarget = 0;
-    private double targetRPM;
 
     private Timer timer = new Timer();
 
@@ -70,12 +69,12 @@ public class GetDistanceToTarget extends CommandBase {
         //exp
         //targetRPM = 2177.05*Math.exp(0.00706342*distanceToTarget);
 
-        targetRPM = (Math.pow(distanceToTarget, 3)*0.0291221) + (Math.pow(distanceToTarget, 2)*(-8.73884)) + (distanceToTarget*888.738)-26201.7;
+        // targetRPM = (Math.pow(distanceToTarget, 3)*0.0291221) + (Math.pow(distanceToTarget, 2)*(-8.73884)) + (distanceToTarget*888.738)-26201.7;
 
         SmartDashboard.putNumber("Distance To Target", distanceToTarget);
-        SmartDashboard.putNumber("ty", ty);
-        SmartDashboard.putNumber("Target RPM", targetRPM);
-        SmartDashboard.putString("Shoot status", "gettng distance");
+        // SmartDashboard.putNumber("ty", ty);
+        // SmartDashboard.putNumber("Measured Target RPM", targetRPM);
+        // SmartDashboard.putString("Shoot status", "gettng distance");
     }
 
     @Override

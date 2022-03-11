@@ -12,29 +12,20 @@ import frc.robot.Robot;
 import frc.util.SizeLimitedQueue;
 
 public class SetShooterRPM extends CommandBase {
-    private final double MAX_RPM = 5640;
-    private double targetRPM;
-    private PIDController pidController;
     private SizeLimitedQueue recentErrors;
     private Timer timer;
 
     /** Creates a new SetShooterRPM. */
     public SetShooterRPM() {
         addRequirements();
-        this.targetRPM = SmartDashboard.getNumber("TargetRPM", targetRPM);
-        // this.targetRPM = 5640;
         this.recentErrors = new SizeLimitedQueue(15);
         this.timer = new Timer();
-        pidController = Robot.shooter.getFlywheelPID();
     }
 
     @Override
     public void initialize() {
         super.initialize();
-
-        targetRPM = SmartDashboard.getNumber("Target RPM", targetRPM);
-        // targetRPM = 5640;
-        pidController.setSetpoint(targetRPM);
+        Robot.shooter.setFlywheelSpeed(Robot.shooter.targetRPM);
         timer.reset();
         timer.start();
     }
@@ -42,20 +33,18 @@ public class SetShooterRPM extends CommandBase {
     @Override
     public void execute() {
         Robot.isShooting = true;
-        // targetRPM = SmartDashboard.getNumber("Target RPM", targetRPM);
+        Robot.shooter.targetRPM = SmartDashboard.getNumber("TargetRPM", Robot.shooter.targetRPM);
         // pidController.setSetpoint(targetRPM);
 
-        double power = pidController.calculate(Robot.shooter.getRPM()) + (targetRPM/MAX_RPM);
-        double error = targetRPM - Robot.shooter.getRPM();
+        // double power = pidController.calculate(Robot.shooter.getRPM()) + (Robot.shooter.targetRPM/MAX_RPM);
+        double error = Robot.shooter.targetRPM - Robot.shooter.getRPM();
 
-        Robot.shooter.setShooterPercent(power);
-
+        Robot.shooter.setFlywheelSpeed(Robot.shooter.targetRPM);
         recentErrors.addElement(error);
 
-        targetRPM = SmartDashboard.getNumber("Target RPM", targetRPM);
         // targetRPM = 5640;
 
-        SmartDashboard.putNumber("power", power);
+        // SmartDashboard.putNumber("power", Robot.shooter.getRPM());
         SmartDashboard.putNumber("RPM", Robot.shooter.getRPM());
         SmartDashboard.putNumber("recent average", recentErrors.getAverage());
         SmartDashboard.putNumber("current error", error);
@@ -65,6 +54,7 @@ public class SetShooterRPM extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        Robot.shooter.setFlywheelSpeed(0);
         Robot.isShooting = false;
     }
 

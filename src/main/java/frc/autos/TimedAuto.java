@@ -26,7 +26,7 @@ public class TimedAuto extends SequentialCommandGroup {
             new InstantCommand(() -> Robot.climber.extendLeftPiston()),
             new InstantCommand(() -> Robot.climber.extendRightPiston()),
             new ParallelCommandGroup(new RunIntake(4.2), new DriveTime(0.75, 0, 0.3, 0), new TurnTurret(1.5)),
-            new ShootWithSensors(5640),
+            new ShootWithSensors(),
             new ParallelCommandGroup(new DriveTime(0.8, 0, 0.3, 0), new RunIntake(1))
         );
   }

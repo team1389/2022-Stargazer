@@ -10,6 +10,7 @@ import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.autos.OneBallAuto;
@@ -51,11 +52,12 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         //phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
         //pneumaticHub.enableCompressorDigital();
-        pneumaticHub.enableCompressorHybrid(100, 120);
+        // pneumaticHub.enableCompressorHybrid(100, 120);
         //pneumaticHub.disableCompressor();
         // pneumaticHub.setSolenoids(1 << RobotMap.LEFT_CLIMBER_FORWARD_SOLENOID | 1 << RobotMap.LEFT_CLIMBER_REVERSE_SOLENOID | 1 << RobotMap.RIGHT_CLIMBER_FORWARD_SOLENOID | 1 << RobotMap.RIGHT_CLIMBER_REVERSE_SOLENOID |
         // 1 << RobotMap.RIGHT_INTAKE_FORWARD_SOLENOID | 1 << RobotMap., values);
         CameraServer.startAutomaticCapture();
+        
 
         // pneumaticHub.setSolenoids(
         //     1 << 4 | 1 << 5 |1 << 6 | 1 << 7 | 1 << 8 | 1 << 9 | 1 << 10 | 1 << 11,
@@ -119,7 +121,7 @@ public class Robot extends TimedRobot {
         SendableRegistry.addLW(frontRightTelemetry, "FR Swerve");
         SendableRegistry.addLW(backRightTelemetry, "BR Swerve");
 
-
+        SmartDashboard.putNumber("TargetRPM", 5000);
 
 
         // Set to 1 to turn off, 3 to turn on, 2 to ~~unleash death~~ blink

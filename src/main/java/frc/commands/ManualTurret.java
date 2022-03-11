@@ -23,7 +23,7 @@ public class ManualTurret extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("Turret Position", shooter.getTurretEncoder().getPosition());
+    // SmartDashboard.putNumber("Turret Position", shooter.getTurretEncoder().getPosition());
     shooter.setTurretPower(Robot.oi.getManipLeftX()/6);
   }
 

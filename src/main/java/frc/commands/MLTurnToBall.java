@@ -20,7 +20,7 @@ public class MLTurnToBall extends CommandBase {
     public void execute() {
         double error = Robot.ml.movement();
         double power = pid.calculate(error,0);
-        SmartDashboard.putNumber("ML error", error);
+        // SmartDashboard.putNumber("ML error", error);
         Robot.drivetrain.drive(0, 0, power, 1);
     }
 

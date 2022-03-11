@@ -3,16 +3,19 @@ package frc.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase {
 
-    public CANSparkMax shooterMotor; //Neo 
+    public CANSparkMax flywheelMotor; //Neo 
     public CANSparkMax indexerMotor; //Falcon 500
 
     private CANSparkMax turretMotor; //NEO 550 Motor
@@ -31,12 +34,14 @@ public class Shooter extends SubsystemBase {
     private final double kI = 0;
     private final double kD = 0;
 
-    private PIDController flywheelPID;
+    public double targetRPM = 5000;
+
+    private SparkMaxPIDController flywheelPID;
 
 
     public Shooter() {
         // Instantiate shooter and indexer motors with ports from RobotMap
-        shooterMotor = new CANSparkMax(RobotMap.SHOOTER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
+        flywheelMotor = new CANSparkMax(RobotMap.SHOOTER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         indexerMotor = new CANSparkMax(RobotMap.INDEXER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
 
         indexerMotor.setInverted(false);
@@ -51,8 +56,12 @@ public class Shooter extends SubsystemBase {
         // Instantiate turretPid with kP, kI, kD
         turretPID = new PIDController(kP, kI, kD);
 
+        flywheelPID = flywheelMotor.getPIDController();
+        flywheelPID.setP(0.0004);
+        flywheelPID.setI(0.0001);
+        flywheelPID.setD(0.00003);
         // Flywheel PID controller
-        flywheelPID = new PIDController(0.00001, 0.00001, 0);
+        // flywheelPID = new PIDController(0.00001, 0.00002, 0);
     }
     
     public void setTurretPower(double power) {
@@ -70,7 +79,7 @@ public class Shooter extends SubsystemBase {
         //     return;
         // }
 
-        SmartDashboard.putNumber("Turret power", power);
+        // SmartDashboard.putNumber("Turret power", power);
 
         turretMotor.set(power);
     }
@@ -80,19 +89,19 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setShooterPercent(double percent) {
-        shooterMotor.set(percent);
+        flywheelMotor.set(percent);
     }
 
-    public PIDController getFlywheelPID() {
-        return flywheelPID;
-    }
+    // public PIDController getFlywheelPID() {
+    //     return flywheelPID;
+    // }
     // speed in RPM
     public void setFlywheelSpeed(double speed) {
-        flywheelPID.setSetpoint(speed);
+        flywheelPID.setReference(speed, ControlType.kVelocity);
     }
 
     public void stopShooter() {
-        shooterMotor.set(0);
+        flywheelMotor.set(0);
     }
 
     public void runIndexer(double power) {
@@ -114,6 +123,10 @@ public class Shooter extends SubsystemBase {
     }
 
     public double getRPM() {
-        return shooterMotor.getEncoder().getVelocity();
+        return flywheelMotor.getEncoder().getVelocity();
     }
+    // public double getFlywheelPower() {
+    //     // flywheelMotor
+    //     return 0;
+    // }
 }

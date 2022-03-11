@@ -69,7 +69,7 @@ public class WinchClimber extends CommandBase {
                 break;
         }
 
-        SmartDashboard.putNumber("left encoder position", climber.getLeftEncoderPosition());
+        // SmartDashboard.putNumber("left encoder position", climber.getLeftEncoderPosition());
     }
 
     @Override

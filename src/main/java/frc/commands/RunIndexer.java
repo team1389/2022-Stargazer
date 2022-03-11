@@ -28,10 +28,10 @@ public class RunIndexer extends CommandBase {
     @Override
     public void execute() {
         if (forwards) {
-            shooter.runIndexer(1);
+            shooter.runIndexer(0.35);
         } 
         else {
-            shooter.runIndexer(-1);
+            shooter.runIndexer(-0.35);
         }
 
     }

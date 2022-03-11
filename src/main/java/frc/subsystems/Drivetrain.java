@@ -52,7 +52,7 @@ public class Drivetrain extends SubsystemBase {
 
         //Instantiates the SwerveDriveOdometry object using the kinematics and Rotation2d object
         odometry = new SwerveDriveOdometry(kinematics, new Rotation2d());
-        SmartDashboard.putData("Field", field);
+        // SmartDashboard.putData("Field", field);
     }
 
     //Main TeleOp drive method
@@ -61,7 +61,7 @@ public class Drivetrain extends SubsystemBase {
         double angle = gyro.getAngle() % 360;
         angle = Math.toRadians(angle);
 
-        SmartDashboard.putNumber("Gyro angle" , angle);
+        // SmartDashboard.putNumber("Gyro angle" , angle);
         //Apply a rotation of angle radians CCW to the <x, y> vector
 
         if(fieldOriented) {
@@ -111,17 +111,17 @@ public class Drivetrain extends SubsystemBase {
             frontLeft.setPower(frontLeftSpeed*slowFactor); 
         }
 
-        SmartDashboard.putBoolean("driving slowed", Robot.isShooting);
+        // SmartDashboard.putBoolean("driving slowed", Robot.isShooting);
 
-        SmartDashboard.putNumber("BR Power", backRightSpeed);
-        SmartDashboard.putNumber("BL Power", backLeftSpeed);
-        SmartDashboard.putNumber("FR Power", frontRightSpeed);
-        SmartDashboard.putNumber("FL Power", frontLeftSpeed);
+        // SmartDashboard.putNumber("BR Power", backRightSpeed);
+        // SmartDashboard.putNumber("BL Power", backLeftSpeed);
+        // SmartDashboard.putNumber("FR Power", frontRightSpeed);
+        // SmartDashboard.putNumber("FL Power", frontLeftSpeed);
 
-        SmartDashboard.putNumber("BR TARGET", backRightAngle);
-        SmartDashboard.putNumber("BL TARGET", backLeftAngle);
-        SmartDashboard.putNumber("FR TARGET", frontRightAngle);
-        SmartDashboard.putNumber("FL TARGET", frontLeftAngle);
+        // SmartDashboard.putNumber("BR TARGET", backRightAngle);
+        // SmartDashboard.putNumber("BL TARGET", backLeftAngle);
+        // SmartDashboard.putNumber("FR TARGET", frontRightAngle);
+        // SmartDashboard.putNumber("FL TARGET", frontLeftAngle);
 
     }
 
