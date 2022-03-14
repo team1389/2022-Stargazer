@@ -60,8 +60,7 @@ public class Shooter extends SubsystemBase {
         flywheelPID.setP(0.0004);
         flywheelPID.setI(0.0001);
         flywheelPID.setD(0.00003);
-        // Flywheel PID controller
-        // flywheelPID = new PIDController(0.00001, 0.00002, 0);
+        flywheelMotor.setIdleMode(IdleMode.kCoast);
     }
     
     public void setTurretPower(double power) {
@@ -92,9 +91,6 @@ public class Shooter extends SubsystemBase {
         flywheelMotor.set(percent);
     }
 
-    // public PIDController getFlywheelPID() {
-    //     return flywheelPID;
-    // }
     // speed in RPM
     public void setFlywheelSpeed(double speed) {
         flywheelPID.setReference(speed, ControlType.kVelocity);
@@ -125,8 +121,4 @@ public class Shooter extends SubsystemBase {
     public double getRPM() {
         return flywheelMotor.getEncoder().getVelocity();
     }
-    // public double getFlywheelPower() {
-    //     // flywheelMotor
-    //     return 0;
-    // }
 }
