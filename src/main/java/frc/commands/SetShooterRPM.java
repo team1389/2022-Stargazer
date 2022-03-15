@@ -14,18 +14,23 @@ import frc.util.SizeLimitedQueue;
 public class SetShooterRPM extends CommandBase {
     private SizeLimitedQueue recentErrors;
     private Timer timer;
+    private final double MAX_RPM = 5640;
+    private PIDController pidController;
 
     /** Creates a new SetShooterRPM. */
     public SetShooterRPM() {
         addRequirements();
         this.recentErrors = new SizeLimitedQueue(15);
         this.timer = new Timer();
+
+        pidController = Robot.shooter.getFlywheelPID();
+        SmartDashboard.putNumber("Target RPM", 5000);
     }
 
     @Override
     public void initialize() {
         super.initialize();
-        Robot.shooter.setFlywheelSpeed(Robot.shooter.targetRPM);
+        // Robot.shooter.setFlywheelSpeed(Robot.shooter.targetRPM);
         timer.reset();
         timer.start();
     }
@@ -34,12 +39,14 @@ public class SetShooterRPM extends CommandBase {
     public void execute() {
         Robot.isShooting = true;
         Robot.shooter.targetRPM = SmartDashboard.getNumber("TargetRPM", Robot.shooter.targetRPM);
-        // pidController.setSetpoint(targetRPM);
+        pidController.setSetpoint(Robot.shooter.targetRPM);
 
-        // double power = pidController.calculate(Robot.shooter.getRPM()) + (Robot.shooter.targetRPM/MAX_RPM);
+        double power = pidController.calculate(Robot.shooter.getRPM()) + (Robot.shooter.targetRPM/MAX_RPM);
         double error = Robot.shooter.targetRPM - Robot.shooter.getRPM();
 
-        Robot.shooter.setFlywheelSpeed(Robot.shooter.targetRPM);
+        //Robot.shooter.setFlywheelSpeed(Robot.shooter.targetRPM);
+        //double power = 1;
+        Robot.shooter.setShooterPercent(power);
         recentErrors.addElement(error);
 
         // targetRPM = 5640;
@@ -54,7 +61,7 @@ public class SetShooterRPM extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        Robot.shooter.setFlywheelSpeed(0);
+        Robot.shooter.setShooterPercent(0);
         Robot.isShooting = false;
     }
 

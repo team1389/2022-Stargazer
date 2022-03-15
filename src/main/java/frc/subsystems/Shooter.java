@@ -36,7 +36,7 @@ public class Shooter extends SubsystemBase {
 
     public double targetRPM = 5000;
 
-    private SparkMaxPIDController flywheelPID;
+    private PIDController flywheelPID;
 
 
     public Shooter() {
@@ -56,10 +56,11 @@ public class Shooter extends SubsystemBase {
         // Instantiate turretPid with kP, kI, kD
         turretPID = new PIDController(kP, kI, kD);
 
-        flywheelPID = flywheelMotor.getPIDController();
-        flywheelPID.setP(0.0004);
-        flywheelPID.setI(0.0001);
-        flywheelPID.setD(0.00003);
+        flywheelPID = new PIDController(0, 0, 0);
+
+        flywheelPID.setP(0.00003);
+        flywheelPID.setI(0.00000);
+        flywheelPID.setD(0.00000);
         flywheelMotor.setIdleMode(IdleMode.kCoast);
     }
     
@@ -91,10 +92,10 @@ public class Shooter extends SubsystemBase {
         flywheelMotor.set(percent);
     }
 
-    // speed in RPM
-    public void setFlywheelSpeed(double speed) {
-        flywheelPID.setReference(speed, ControlType.kVelocity);
-    }
+    // // speed in RPM
+    // public void setFlywheelSpeed(double speed) {
+    //     flywheelPID.setReference(speed, ControlType.kVelocity);
+    // }
 
     public void stopShooter() {
         flywheelMotor.set(0);
@@ -116,6 +117,10 @@ public class Shooter extends SubsystemBase {
 
     public PIDController getTurretPID() {
         return turretPID;
+    }
+
+    public PIDController getFlywheelPID() {
+        return flywheelPID;
     }
 
     public double getRPM() {

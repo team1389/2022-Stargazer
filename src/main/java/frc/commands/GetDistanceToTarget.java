@@ -88,6 +88,6 @@ public class GetDistanceToTarget extends CommandBase {
     public void end(boolean interrupted) {
 
         // Turn off limelight green ring
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+        //NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     }
 }

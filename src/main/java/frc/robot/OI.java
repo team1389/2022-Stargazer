@@ -41,9 +41,9 @@ public class OI {
        initControllers();
         
 
-        Robot.drivetrain.setDefaultCommand(new TeleOpDrive());
-        // Robot.shooter.setDefaultCommand(new ShootWithSensors(3700));
-        // Robot.shooter.setDefaultCommand(new Shoot());
+        //Robot.drivetrain.setDefaultCommand(new TeleOpDrive());
+        // Robot.shooter.setDefaultCommand(new ShootWithSensors());
+        Robot.shooter.setDefaultCommand(new Shoot());
         //Robot.intake.setDefaultCommand(new RunIntake());
         // Robot.climber.setDefaultCommand(new WinchClimber("right", false));
         // Robot.shooter.setDefaultCommand(new ManualTurret());
@@ -71,7 +71,7 @@ public class OI {
 
         // Driver Left Bumper Button --> Reset field oriented angle
         driveLBumper = new JoystickButton(driveController, XboxController.Button.kLeftBumper.value);
-        driveLBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.setGyro(0)));
+        driveLBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.setGyro(-90)));
 
         //Hold Manip Y --> run hopper
         manipYBtn = new JoystickButton(manipController, XboxController.Button.kY.value);

@@ -28,12 +28,13 @@ public class ShootWithSensors extends ParallelCommandGroup {
             new SequentialCommandGroup(
                 //new TurretTracking(),
                 new WaitCommand(3),
-                new InstantCommand(() -> timer.start())
+                new InstantCommand(() -> timer.start()),
                 
                 //Run indexer and hopper:
-                // new ParallelCommandGroup(
-                //     new RunIndexer(), 
-                //     new RunHopper())
+                new ParallelCommandGroup(
+                    new RunIndexer(), 
+                    new RunHopper()
+                )
             )
         );
     }
