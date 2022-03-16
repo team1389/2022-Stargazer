@@ -54,8 +54,11 @@ public class RobotMap {
     //Climber Double Solenoids
     public static final int LEFT_CLIMBER_FORWARD_SOLENOID = 4;
     public static final int LEFT_CLIMBER_REVERSE_SOLENOID = 11;
-    public static final int RIGHT_CLIMBER_FORWARD_SOLENOID = 6;
-    public static final int RIGHT_CLIMBER_REVERSE_SOLENOID = 9;
+    public static final int RIGHT_CLIMBER_FORWARD_SOLENOID = 9;
+    public static final int RIGHT_CLIMBER_REVERSE_SOLENOID = 6;
+    
+
+
 
     //Robot dimensions (inches)
     //Length and width are measured from the centers of the wheels

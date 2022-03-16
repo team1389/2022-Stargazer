@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
         //phCompressor = new Compressor(RobotMap.PNEUMATICS_HUB, PneumaticsModuleType.REVPH);
         //pneumaticHub.enableCompressorDigital();
         // pneumaticHub.enableCompressorHybrid(100, 120);
-        pneumaticHub.disableCompressor();
+        //pneumaticHub.disableCompressor();
         // pneumaticHub.setSolenoids(1 << RobotMap.LEFT_CLIMBER_FORWARD_SOLENOID | 1 << RobotMap.LEFT_CLIMBER_REVERSE_SOLENOID | 1 << RobotMap.RIGHT_CLIMBER_FORWARD_SOLENOID | 1 << RobotMap.RIGHT_CLIMBER_REVERSE_SOLENOID |
         // 1 << RobotMap.RIGHT_INTAKE_FORWARD_SOLENOID | 1 << RobotMap., values);
         CameraServer.startAutomaticCapture();
