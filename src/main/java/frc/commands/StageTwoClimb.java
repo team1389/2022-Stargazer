@@ -17,8 +17,8 @@ public class StageTwoClimb extends SequentialCommandGroup {
         addRequirements(climber);
         addCommands(
             new ParallelCommandGroup(
-                new InstantCommand(() -> climber.toggleRightPiston()), 
-                new InstantCommand(() -> climber.toggleLeftPiston())
+                new InstantCommand(() -> climber.retractRightPiston()), 
+                new InstantCommand(() -> climber.retractLeftPiston())
             ),
 
             new WaitCommand(2),
