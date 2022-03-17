@@ -18,7 +18,7 @@ public class SwerveTelemetry implements Sendable {
       builder.setSmartDashboardType("SwerveTelemetry");
       builder.addDoubleProperty("Speed", () -> getSpeed(), null);
       builder.addDoubleProperty("Angle", () -> getAngle(), null);
-      builder.addDoubleProperty("Absolute Angle", () -> getAngle(), null);
+      builder.addDoubleProperty("Absolute Angle", () -> getAbsAngle(), null);
       builder.addDoubleProperty("Target Angle", () -> getTargetAngle(), null);
       builder.addBooleanProperty("Inverted", () -> getInverted(), null);
     }

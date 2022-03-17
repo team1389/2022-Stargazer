@@ -11,7 +11,7 @@ public class GetDistanceToTarget extends CommandBase {
     private double CAMERA_ANGLE_DEGREES = 40;
     private double CAMERA_HEIGHT_INCHES = 25.5;
 
-    // private final double[] lookupTable = {0, 100, 200, 300};
+    private double targetRPM;
 
     private double tv, tx, ty, ta;
     private double distanceToTarget = 0;
@@ -39,49 +39,24 @@ public class GetDistanceToTarget extends CommandBase {
         distanceToTarget = (TARGET_HEIGHT_INCHES - CAMERA_HEIGHT_INCHES)
                 / (Math.tan(Math.toRadians(CAMERA_ANGLE_DEGREES + ty)));
 
-        // // TODO: lookup table for rpm
-        // if (distanceToTarget > 40) {
-        // targetRPM = lookupTable[lookupTable.length-1];
-        // } else {
-        // targetRPM = lookupTable[(int)(distanceToTarget/10)];
-        // }
 
-        // int[][] array = new int[][] { { 1, 0 }, { 1, 0 } };
-        // int x = 0, y = 0;
-        // Integer m = null;
-        // for (int i = 1; i < array.length; i++) {
-        //     if (array[i - 1][0] > distanceToTarget) {
-        //         m = (array[i][1] - array[i - 1][1]) / (array[i][0] - array[i - 1][0]);
-        //         x = array[i-1][0];
-        //         y = array[i-1][1];
-        //         break;
-        //     }
-        // }
+        // Calculate the targetRPM based off of the distance
+        targetRPM = 0.183455*Math.pow(Math.E, 0.0689839*distanceToTarget)+4304.84;
 
-        // if (m == null) {
-        //     m = (array[array.length - 1][1] - array[array.length - 2][1])
-        //             / (array[array.length - 1][0] - array[array.length - 2][0]);
-        // }
+        // Limit it to the shooter's actual range
+        targetRPM = Math.min(targetRPM, 5640);
 
-        
-        // targetRPM = m*(distanceToTarget - x) + y;
-
-        //exp
-        //targetRPM = 2177.05*Math.exp(0.00706342*distanceToTarget);
-
-        // targetRPM = (Math.pow(distanceToTarget, 3)*0.0291221) + (Math.pow(distanceToTarget, 2)*(-8.73884)) + (distanceToTarget*888.738)-26201.7;
 
         SmartDashboard.putNumber("Distance To Target", distanceToTarget);
-        // SmartDashboard.putNumber("ty", ty);
-        // SmartDashboard.putNumber("Measured Target RPM", targetRPM);
-        // SmartDashboard.putString("Shoot status", "gettng distance");
+        Robot.shooter.targetRPM = targetRPM;
+        SmartDashboard.putNumber("Target_RPM", targetRPM);
     }
 
     @Override
     public boolean isFinished() {
         // If the limelight has found a target or it's been more than a second, end
-        // return distanceToTarget != 0 || timer.get() > 1;
-        return timer.get()>1;
+        return distanceToTarget != 0 || timer.get() > 1;
+        // return timer.get()>1;
     }
 
     @Override

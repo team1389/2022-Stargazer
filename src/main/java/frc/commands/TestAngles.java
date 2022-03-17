@@ -1,57 +1,51 @@
-// // Copyright (c) FIRST and other WPILib contributors.
-// // Open Source Software; you can modify and/or share it under the terms of
-// // the WPILib BSD license file in the root directory of this project.
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
 
-// package frc.commands;
+package frc.commands;
 
-// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import edu.wpi.first.wpilibj2.command.CommandBase;
-// import frc.robot.Robot;
-// import frc.subsystems.SwerveWheel;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
+import frc.subsystems.SwerveWheel;
 
-// public class TestAngles extends CommandBase {
-//   private double kP, kI, kD;
-//   private SwerveWheel wheel;
-//   private double[] initialPID;
+public class TestAngles extends CommandBase {
+  private double kP, kI, kD;
+  private SwerveWheel wheel;
+  private double[] initialPID;
   
-//   public TestAngles() {
-//     wheel = Robot.drivetrain.frontRight;
-//     initialPID = wheel.getPID();
+  public TestAngles() {
+    wheel = Robot.drivetrain.frontRight;
+    initialPID = wheel.getPID();
 
-//     // SmartDashboard.putNumber("kP", initialPID[0]);
-//     // SmartDashboard.putNumber("kI", initialPID[1]);
-//     // SmartDashboard.putNumber("kD", initialPID[2]);
+    // SmartDashboard.putNumber("kP", initialPID[0]);
+    // SmartDashboard.putNumber("kI", initialPID[1]);
+    // SmartDashboard.putNumber("kD", initialPID[2]);
 
-//     addRequirements(Robot.drivetrain);
-//   }
+    addRequirements(Robot.drivetrain);
+  }
 
-//   // Called when the command is initially scheduled.
-//   @Override
-//   public void initialize() {
-//     super.initialize();
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+    super.initialize();
 
-//     kP = SmartDashboard.getNumber("kP", initialPID[0]);
-//     kI = SmartDashboard.getNumber("kI", initialPID[1]);
-//     kD = SmartDashboard.getNumber("kD", initialPID[2]);
 
-//     Robot.drivetrain.setPID(kP, kI, kD);
-
-//     Robot.drivetrain.frontRight.setAngle(Robot.drivetrain.frontRight.rotateMotor.getEncoder().getPosition()+90);
-//   }
-//   @Override
-//   public void execute() {
+  }
+  @Override
+  public void execute() {
     
-//   }
+  }
 
-//   // Called once the command ends or is interrupted.
-//   @Override
-//   public void end(boolean interrupted) {
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
 
-//   }
+  }
 
-//   // Returns true when the command should end.
-//   @Override
-//   public boolean isFinished() {
-//     return false;
-//   }
-// }
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
+}

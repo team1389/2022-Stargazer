@@ -24,13 +24,11 @@ public class SetShooterRPM extends CommandBase {
         this.timer = new Timer();
 
         pidController = Robot.shooter.getFlywheelPID();
-        SmartDashboard.putNumber("Target RPM", 5000);
     }
 
     @Override
     public void initialize() {
         super.initialize();
-        // Robot.shooter.setFlywheelSpeed(Robot.shooter.targetRPM);
         timer.reset();
         timer.start();
     }
@@ -38,7 +36,7 @@ public class SetShooterRPM extends CommandBase {
     @Override
     public void execute() {
         Robot.isShooting = true;
-        Robot.shooter.targetRPM = SmartDashboard.getNumber("TargetRPM", Robot.shooter.targetRPM);
+
         pidController.setSetpoint(Robot.shooter.targetRPM);
 
         double power = pidController.calculate(Robot.shooter.getRPM()) + (Robot.shooter.targetRPM/MAX_RPM);

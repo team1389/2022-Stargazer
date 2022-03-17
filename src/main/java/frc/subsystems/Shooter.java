@@ -22,7 +22,7 @@ public class Shooter extends SubsystemBase {
     private RelativeEncoder turretEncoder;
 
     // The number of rotations that the turret can turn in either direction 
-    private final double TURRET_RANGE_OF_MOTION = 0.35;
+    private final double TURRET_RANGE_OF_MOTION = -100;
     
     // 8 rotations of the motor is one rotation of the turret
     private final double MOTOR_TURRET_CONVERSION_FACTOR = 1/8;
@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase {
     private final double MAX_TURRET_POWER = 0.3;
 
     private PIDController turretPID;
-    private final double kP = 0.001;
+    private final double kP = 0.025;
     private final double kI = 0;
     private final double kD = 0;
 
@@ -70,14 +70,14 @@ public class Shooter extends SubsystemBase {
 
         // Only run the turret if it won't overrotate and break
         // If the turret is too far over the range only allow negative motion, and vice versa
-        // if(turretEncoder.getPosition() >= TURRET_RANGE_OF_MOTION && power > 0) {
-        //     turretMotor.set(0);
-        //     return;
-        // }
-        // if(turretEncoder.getPosition() <= TURRET_RANGE_OF_MOTION && power < 0) {
-        //     turretMotor.set(0);
-        //     return;
-        // }
+        if(turretEncoder.getPosition() >= 0 && power > 0) {
+            turretMotor.set(0);
+            return;
+        }
+        if(turretEncoder.getPosition() <= TURRET_RANGE_OF_MOTION && power < 0) {
+            turretMotor.set(0);
+            return;
+        }
 
         // SmartDashboard.putNumber("Turret power", power);
 

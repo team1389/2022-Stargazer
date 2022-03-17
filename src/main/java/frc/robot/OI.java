@@ -20,7 +20,9 @@ import frc.commands.ShootWithSensors;
 import frc.commands.StageOneClimb;
 import frc.commands.StageTwoClimb;
 import frc.commands.TeleOpDrive;
+import frc.commands.TestAngles;
 import frc.commands.ToggleIntakePistons;
+import frc.commands.TurretTracking;
 import frc.commands.WinchClimber;
 import frc.commands.WinchClimber.LeftOrRight;
 import frc.util.DPadButton;
@@ -41,12 +43,12 @@ public class OI {
        initControllers();
         
 
-        Robot.drivetrain.setDefaultCommand(new TeleOpDrive());
+        Robot.drivetrain.setDefaultCommand(new TestAngles());
         // Robot.shooter.setDefaultCommand(new ShootWithSensors());
         //Robot.shooter.setDefaultCommand(new Shoot());
         //Robot.intake.setDefaultCommand(new RunIntake());
         // Robot.climber.setDefaultCommand(new WinchClimber("right", false));
-        // Robot.shooter.setDefaultCommand(new ManualTurret());
+        Robot.shooter.setDefaultCommand(new ManualTurret());
         
         //runIndexer = new RunIndexer();
         //runIndexer.schedule();
@@ -75,7 +77,8 @@ public class OI {
 
         //Hold Manip Y --> run hopper
         manipYBtn = new JoystickButton(manipController, XboxController.Button.kY.value);
-        manipYBtn.whenHeld(new RunHopper());
+        // manipYBtn.whenHeld(new RunHopper());
+        manipYBtn.whenHeld(new TurretTracking());
 
 
         // Hold Manip A Button --> Run Intake
@@ -86,7 +89,7 @@ public class OI {
 
         // Hold Manip X Button --> Run Shooter System
         manipXBtn = new JoystickButton(manipController, XboxController.Button.kX.value);
-        manipXBtn.whenHeld(new ShootWithSensors()); 
+        manipXBtn.whenHeld(new Shoot()); 
 
         // Press Manip B button --> Extend or retract intake
         manipBBtn = new JoystickButton(manipController, XboxController.Button.kB.value);
