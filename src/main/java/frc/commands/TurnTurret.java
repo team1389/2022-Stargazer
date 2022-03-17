@@ -5,6 +5,7 @@
 package frc.commands;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Robot;
@@ -33,6 +34,7 @@ public class TurnTurret extends CommandBase {
   @Override
   public void execute() {
     Robot.shooter.setTurretPower(-0.176);
+    SmartDashboard.putNumber("Turret Position", Robot.shooter.getTurretEncoder().getPosition());
   }
 
   @Override
@@ -40,4 +42,8 @@ public class TurnTurret extends CommandBase {
     return timer.hasElapsed(timeout);
   }
   
+  @Override
+  public void end(boolean interrupted) {
+    Robot.shooter.setTurretPower(0);
+  }
 }

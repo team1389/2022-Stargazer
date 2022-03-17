@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.commands.DriveTime;
 import frc.commands.RunIntake;
+import frc.commands.Shoot;
 import frc.commands.ShootWithSensors;
 import frc.commands.TurnTurret;
 import frc.robot.Robot;
@@ -23,10 +24,11 @@ public class TimedAuto extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
             new InstantCommand(() -> Robot.intake.extendIntake()),
-            new InstantCommand(() -> Robot.climber.extendLeftPiston()),
-            new InstantCommand(() -> Robot.climber.extendRightPiston()),
-            new ParallelCommandGroup(new RunIntake(4.2), new DriveTime(0.75, 0, 0.3, 0), new TurnTurret(1.5)),
-            new ShootWithSensors(),
+            // new InstantCommand(() -> Robot.climber.extendLeftPiston()),
+            // new InstantCommand(() -> Robot.climber.extendRightPiston()),
+            new ParallelCommandGroup(new RunIntake(2.2), new DriveTime(1.483666, 0, 0.3, 0), new TurnTurret(1.5)),
+            new DriveTime(0.7, 0, -0.3, 0),
+            new Shoot(),
             new ParallelCommandGroup(new DriveTime(0.8, 0, 0.3, 0), new RunIntake(1))
         );
   }

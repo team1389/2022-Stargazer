@@ -21,7 +21,7 @@ public class Climber extends SubsystemBase {
     private boolean isRightExtended = false;
     private boolean isLeftExtended = false;
 
-    private double climbSpeed = 0.3;
+    private double climbSpeed = 0.6;
 
     public Climber() {
         // Instantiate climbers motors with ports from RobotMap
