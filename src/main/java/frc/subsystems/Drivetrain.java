@@ -196,4 +196,8 @@ public class Drivetrain extends SubsystemBase {
             setGyro(0);
         }
     }
+
+    public double getAngle() {
+        return gyro.getAngle();
+    }
 }

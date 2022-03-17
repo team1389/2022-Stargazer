@@ -32,7 +32,7 @@ public class FollowPath extends CommandBase {
     private Timer timer = new Timer();
     
     //TODO: Tune these
-    private double kP = 1;
+    private double kP = 0.5;
     private double kI = 0;
     private double kD = 0.00;
 
@@ -44,8 +44,8 @@ public class FollowPath extends CommandBase {
     private HolonomicDriveController driveController;
 
     // Measured in m/s and m/s/s
-    private final double MAX_VELOCITY = 1;
-    private final double MAX_ACCELERATION = 0.5;
+    private final double MAX_VELOCITY = 0.5;
+    private final double MAX_ACCELERATION = 0.2;
 
     //Input the name of the generated path in PathPlanner
     public FollowPath(String pathName) {

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.autos.OneBallAuto;
+import frc.autos.ThreeBallAuto;
 import frc.autos.TimedAuto;
 import frc.autos.TwoBallAuto;
 import frc.subsystems.*;
@@ -83,7 +84,7 @@ public class Robot extends TimedRobot {
         Robot.drivetrain.coordinateAbsoluteEncoders();
         Robot.drivetrain.setGyro(0);
 
-        autoCommand = new TimedAuto();
+        autoCommand = new ThreeBallAuto();
         CommandScheduler.getInstance().schedule(autoCommand);
 
         PathPlannerTrajectory currentTrajectory = PathPlanner.loadPath("TwoBallAuto", 3, 2.5);
