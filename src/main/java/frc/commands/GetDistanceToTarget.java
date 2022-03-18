@@ -19,7 +19,7 @@ public class GetDistanceToTarget extends CommandBase {
     private Timer timer = new Timer();
 
     public GetDistanceToTarget() {
-        addRequirements(Robot.shooter);
+        addRequirements();
     }
 
     @Override

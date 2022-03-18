@@ -26,7 +26,7 @@ public class TurretTracking extends CommandBase {
         timer = new Timer();
         pid = shooter.getTurretPID();
         
-        addRequirements();
+        addRequirements(Robot.shooter);
     }
 
     @Override
@@ -61,7 +61,13 @@ public class TurretTracking extends CommandBase {
         }
 
         // Sets the shooter to the turret power from PID
-        Robot.shooter.setTurretPower(-turretPower);
+        if(Math.abs(Robot.oi.getManipLeftX()) < 0.07) {
+            Robot.shooter.setTurretPower(-turretPower);
+        }
+        else {
+            shooter.setTurretPower(Robot.oi.getManipLeftX()/6);
+        }
+        
         SmartDashboard.putNumber("turret power", turretPower);
         SmartDashboard.putString("Shoot status", "turret tracking");
     }
@@ -83,7 +89,7 @@ public class TurretTracking extends CommandBase {
     @Override
     public boolean isFinished() {
         //TODO: change timeout value
-        return Math.abs(recentErrors.getAverage()) < 0.5 || timer.get() > 1;
-        //return false;
+        // return Math.abs(recentErrors.getAverage()) < 0.5 || timer.get() > 1;
+        return false;
     }
 }

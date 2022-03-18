@@ -9,22 +9,27 @@ import frc.commands.RunIntake;
 import frc.commands.Shoot;
 import frc.commands.TurnAngle;
 import frc.commands.TurnTurret;
+import frc.commands.TurretTracking;
 import frc.robot.Robot;
 
 public class ThreeBallAuto extends SequentialCommandGroup{
     public ThreeBallAuto() {
-        addRequirements(Robot.drivetrain, Robot.shooter,Robot.intake);
+        addRequirements();
         addCommands(
-            // new InstantCommand(() -> Robot.intake.extendIntake()),
-            // // new InstantCommand(() -> Robot.climber.extendLeftPiston()),
-            // // new InstantCommand(() -> Robot.climber.extendRightPiston()),
-            // new ParallelCommandGroup(new RunIntake(2.2), new DriveTime(1.483666, 0, 0.3, 0), new TurnTurret(1.5)),
-            // new DriveTime(0.7, 0, -0.3, 0),
-            // new Shoot(),
+            new ParallelCommandGroup(new TurretTracking(), 
+            new SequentialCommandGroup(
+                new InstantCommand(() -> Robot.intake.extendIntake()),
             
-            // new TurnAngle(5, 100),
-            // new ParallelCommandGroup(new RunIntake(4.0001), new DriveTime(4.00001, 0, 0.3, 0)),
-            new TurnAngle(5, 100)
+                new ParallelCommandGroup(new RunIntake(2.2), new DriveTime(1.483666, 0, 0.3, 0), new TurnTurret(1.5)),
+                new DriveTime(0.7, 0, -0.3, 0),
+                new Shoot(),
+            
+                new TurnAngle(3, -120.001),
+                new ParallelCommandGroup(new RunIntake(3.888), new DriveTime(3.888, 0, 0.3, 0), new TurnTurret(1)),
+                new TurnAngle(3, 50),
+                new Shoot()
+            )
+            )
 
         );
     }

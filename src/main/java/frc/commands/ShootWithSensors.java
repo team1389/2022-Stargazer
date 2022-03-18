@@ -16,7 +16,8 @@ public class ShootWithSensors extends ParallelCommandGroup {
 
     private Timer timer;
     public ShootWithSensors() {
-        addRequirements(Robot.shooter);
+        // addRequirements(Robot.shooter);
+        addRequirements();
         
         timer = new Timer();
         
@@ -26,8 +27,8 @@ public class ShootWithSensors extends ParallelCommandGroup {
         addCommands(
             new SetShooterRPM(),
             new SequentialCommandGroup(
-                new TurretTracking(),
-                new WaitCommand(0.15),
+                // new TurretTracking(),
+                new WaitCommand(1),
                 new InstantCommand(() -> timer.start()),
                 
                 //Run indexer and hopper:

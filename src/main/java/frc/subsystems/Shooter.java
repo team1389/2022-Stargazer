@@ -70,11 +70,11 @@ public class Shooter extends SubsystemBase {
 
         // Only run the turret if it won't overrotate and break
         // If the turret is too far over the range only allow negative motion, and vice versa
-        if(turretEncoder.getPosition() >= 47 && power > 0) {
+        if(turretEncoder.getPosition() >= 65 && power > 0) {
             turretMotor.set(0);
             return;
         }
-        if(turretEncoder.getPosition() <= -56 && power < 0) {
+        if(turretEncoder.getPosition() <= -73 && power < 0) {
             turretMotor.set(0);
             return;
         }
@@ -125,5 +125,9 @@ public class Shooter extends SubsystemBase {
 
     public double getRPM() {
         return flywheelMotor.getEncoder().getVelocity();
+    }
+
+    public void resetTurretPosition() {
+        turretEncoder.setPosition(0);
     }
 }

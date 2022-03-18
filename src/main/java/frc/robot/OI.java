@@ -50,7 +50,7 @@ public class OI {
         //Robot.shooter.setDefaultCommand(new Shoot());
         //Robot.intake.setDefaultCommand(new RunIntake());
         // Robot.climber.setDefaultCommand(new WinchClimber("right", false));
-        Robot.shooter.setDefaultCommand(new ManualTurret());
+        Robot.shooter.setDefaultCommand(new TurretTracking());
         
         //runIndexer = new RunIndexer();
         //runIndexer.schedule();

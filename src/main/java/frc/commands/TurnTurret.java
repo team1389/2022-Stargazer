@@ -22,7 +22,7 @@ public class TurnTurret extends CommandBase {
     timer = new Timer();
     this.timeout = timeout;
 
-    addRequirements(Robot.shooter);
+    addRequirements();
   }
 
   @Override
