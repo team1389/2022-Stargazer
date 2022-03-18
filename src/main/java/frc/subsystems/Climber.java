@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -15,11 +16,13 @@ import frc.robot.RobotMap;
 public class Climber extends SubsystemBase {
     private WPI_TalonFX leftClimbMotor; // Falcon 500
     private WPI_TalonFX rightClimbMotor; // Falcon 500
-    // private DoubleSolenoid leftExtender;
-    // private DoubleSolenoid rightExtender;
+
 
     private boolean isRightExtended = false;
     private boolean isLeftExtended = false;
+
+    private RelativeEncoder leftEncoder;
+    private RelativeEncoder rightEncoder;
 
     private double climbSpeed = 0.6;
 
@@ -32,18 +35,6 @@ public class Climber extends SubsystemBase {
         rightClimbMotor.setNeutralMode(NeutralMode.Brake);
 
         leftClimbMotor.setInverted(true);
-
-        // Instantiate piston double solenoids with the Pneumatics Hub port and the
-        // solenoid ports from RobotMap
-        // leftExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH,
-        // RobotMap.LEFT_CLIMBER_FORWARD_SOLENOID,
-        // RobotMap.LEFT_CLIMBER_REVERSE_SOLENOID);
-        // rightExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH,
-        // RobotMap.RIGHT_CLIMBER_FORWARD_SOLENOID,
-        // RobotMap.RIGHT_CLIMBER_REVERSE_SOLENOID);
-        // retractRightPiston();
-        // retractLeftPiston();
-
     }
 
     public void leftWinchExtend() {
@@ -73,11 +64,12 @@ public class Climber extends SubsystemBase {
         rightClimbMotor.set(ControlMode.PercentOutput, 0);
     }
 
-    // TODO: add getLeftEncoder and getRightEncoder once we figure out what kind of
-    // encoders
-
     public double getLeftEncoderPosition() {
         return leftClimbMotor.getSelectedSensorPosition();
+    }
+
+    public double getRightEncoderPosition() {
+        return rightClimbMotor.getSelectedSensorPosition();
     }
 
     public void extendLeftPiston() {
@@ -122,6 +114,14 @@ public class Climber extends SubsystemBase {
         } else {
             extendRightPiston();
         }
+    }
+
+    public WPI_TalonFX getLeftMotor() {
+        return leftClimbMotor;
+    }
+
+    public WPI_TalonFX getRightMotor() {
+        return rightClimbMotor;
     }
 
 }

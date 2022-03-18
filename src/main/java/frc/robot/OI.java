@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.commands.GetDistanceToTarget;
+import frc.commands.HoldClimberInPlace;
 import frc.commands.ManualTurret;
 import frc.commands.RunHopper;
 // import frc.commands.ClimberLeftExtend;
@@ -24,6 +25,7 @@ import frc.commands.TestAngles;
 import frc.commands.ToggleIntakePistons;
 import frc.commands.TurretTracking;
 import frc.commands.WinchClimber;
+import frc.commands.HoldClimberInPlace.RightOrLeft;
 import frc.commands.WinchClimber.LeftOrRight;
 import frc.util.DPadButton;
 import frc.util.TwoButtonTrigger;
@@ -35,7 +37,7 @@ public class OI {
 
     public XboxController driveController, manipController;
     private JoystickButton manipXBtn, manipABtn, manipBBtn, manipRBumper, manipLBumper, manipBackBtn, manipStartBtn;
-    public JoystickButton driveRBumper, driveLBumper, manipYBtn;
+    public JoystickButton driveRBumper, driveLBumper, manipYBtn, manipRTrigger, manipLTrigger;
     public DPadButton manipUpDPadButton, manipDownDPadButton, manipLeftDPadButton, manipRightDPadButton;
 
 
@@ -111,6 +113,8 @@ public class OI {
         manipLBumper = new JoystickButton(manipController, XboxController.Button.kLeftBumper.value);
         manipBackBtn = new JoystickButton(manipController, XboxController.Button.kBack.value);
         manipStartBtn = new JoystickButton(manipController, XboxController.Button.kStart.value);
+        manipLTrigger= new JoystickButton(manipController, XboxController.Axis.kLeftTrigger.value);
+        manipRTrigger = new JoystickButton(manipController, XboxController.Axis.kRightTrigger.value);
         initManualClimber();
     }
     
@@ -160,14 +164,19 @@ public class OI {
         manipRightDPadButton = new DPadButton(manipController, Direction.RIGHT);
         manipRightDPadButton.whenPressed(new InstantCommand(() -> Robot.climber.toggleRightPiston()));
 
-        //new JoystickButton(manipController, XboxController.Button.k.value);
+        // Press Manip LT --> Toggle automatic climber hold
+        manipLTrigger.toggleWhenActive(new HoldClimberInPlace(RightOrLeft.left));
+
+        // Press Manip RT --> Toggle automatic climber hold
+        manipLTrigger.toggleWhenActive(new HoldClimberInPlace(RightOrLeft.right));
+
 
 
     }
 
     public void initAutomaticClimber() {
         // Hold Manip LB and RB --> Stage One Climb with 2 second wait
-        TwoButtonTrigger stageOneTrigger = new TwoButtonTrigger(manipLBumper, manipRBumper);
+        //TwoButtonTrigger stageOneTrigger = new TwoButtonTrigger(manipLBumper, manipRBumper);
         //stageOneTrigger.whenActive(new StageOneClimb(2));  //check time
 
         // Hold Manip LT and RT --> Stage Two Climb

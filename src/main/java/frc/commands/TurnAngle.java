@@ -24,6 +24,7 @@ public class TurnAngle extends CommandBase {
     this.timeout = timeout;
     this.angle = angle;
     targetAngle = Robot.drivetrain.getAngle() + angle;
+    targetAngle = ((targetAngle + 180) % 360) - 180;
 
     pid = new PIDController(0.01, 0, 0);
 
