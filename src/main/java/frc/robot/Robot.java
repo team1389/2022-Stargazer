@@ -164,8 +164,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void testInit() {
-        Robot.intake.retractIntake();
-        Robot.climber.extendLeftPiston();
-        Robot.climber.extendRightPiston();
+        // Robot.intake.retractIntake();
+        // Robot.climber.extendLeftPiston();
+        // Robot.climber.extendRightPiston();
     }
 }

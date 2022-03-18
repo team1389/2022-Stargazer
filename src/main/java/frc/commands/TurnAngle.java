@@ -24,7 +24,15 @@ public class TurnAngle extends CommandBase {
     this.timeout = timeout;
     this.angle = angle;
     targetAngle = Robot.drivetrain.getAngle() + angle;
-    targetAngle = ((targetAngle + 180) % 360) - 180;
+
+    double dir = (targetAngle % 360.0);   
+    //Convert from -360 to 360 to -180 to 180
+    if (Math.abs(dir) > 180.0)
+    {
+        dir = -(Math.signum(dir) * 360.0) + dir;
+    }
+
+    targetAngle = dir;
 
     pid = new PIDController(0.01, 0, 0);
 
