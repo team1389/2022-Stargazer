@@ -37,7 +37,7 @@ public class SetShooterRPM extends CommandBase {
     public void execute() {
         Robot.isShooting = true;
 
-        pidController.setSetpoint(Robot.shooter.targetRPM);
+        pidController.setSetpoint(Robot.shooter.targetRPM + 200);
 
         double power = pidController.calculate(Robot.shooter.getRPM()) + (Robot.shooter.targetRPM/MAX_RPM);
         double error = Robot.shooter.targetRPM - Robot.shooter.getRPM();

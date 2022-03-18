@@ -12,7 +12,7 @@ public class ShootWithSensors extends ParallelCommandGroup {
 
     //TODO: Find this time
     // Time from the indexer starting to the last ball being shot
-    private final double SHOOT_TIME = 4;
+    private final double SHOOT_TIME = 4.5;
 
     private Timer timer;
     public ShootWithSensors() {
