@@ -17,7 +17,7 @@ public class TeleOpDrive extends CommandBase {
     @Override
     public void execute() {
         // Gets the driver's controller inputs
-        double x = Robot.oi.getDriverLeftX();
+        double x = Robot.oi.getDriverRightX();
         double y = Robot.oi.getDriverLeftY();
         double rotation = Robot.oi.getDriverRightX();
         double triggerValue = Robot.oi.getDriverLeftTrigger();
@@ -29,7 +29,7 @@ public class TeleOpDrive extends CommandBase {
 
         if (Math.abs(x) > JOYSTICK_DEADZONE || Math.abs(y) > JOYSTICK_DEADZONE
                 || Math.abs(rotation) > JOYSTICK_DEADZONE) {
-            Robot.drivetrain.drive(x * slowFactor, y * slowFactor);
+            Robot.drivetrain.drive(y * slowFactor, x * slowFactor);
         } else {
             Robot.drivetrain.stop();
         }
