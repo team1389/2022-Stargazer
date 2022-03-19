@@ -50,7 +50,7 @@ public class Drivetrain extends SubsystemBase {
     public void setGyro(Angle angle) {
         // Gyro offset is changed in this method ± 90 because intake is considered front side
         gyro.reset();
-        gyro.setAngleAdjustment(angle.getAbsDegrees() + 90);
+        gyro.setAngleAdjustment(angle.toAbsDegrees() + 90);
     }
     public void stop() {
         power(0, 0);

@@ -20,7 +20,13 @@ public class TurnBy extends SequentialCommandGroup {
 
     public TurnBy(double timeout, Angle angle) {
         // Add your commands in the addCommands() call, e.g.
-        addCommands(new TurnToAngle(timeout, Robot.drivetrain.getAngle().add(angle)));
+        addCommands(new TurnToAngle(timeout, angle, true));
     }
+    @Override
+    public void initialize() {
+        super.initialize();
+
+    }
+
 
 }

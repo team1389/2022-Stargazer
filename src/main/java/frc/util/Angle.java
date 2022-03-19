@@ -22,7 +22,7 @@ public class Angle {
         return new Angle(angle, AngleType.Degree);
     }
 
-    public double getDegrees() {
+    public double toDegrees() {
         var outAngle = angle;
         if (angleType == AngleType.Degree) {
             outAngle = angle;
@@ -32,7 +32,7 @@ public class Angle {
         return outAngle % 360;
     }
 
-    public double getRadians() {
+    public double toRadians() {
         var outAngle = angle;
         if (angleType == AngleType.Radian) {
             outAngle = angle;
@@ -42,7 +42,7 @@ public class Angle {
         return outAngle % (2 * Math.PI);
     }
 
-    public double getAbsDegrees() {
+    public double toAbsDegrees() {
         var outAngle = angle;
         if (angleType == AngleType.Degree) {
             outAngle = angle;
@@ -52,7 +52,7 @@ public class Angle {
         return outAngle;
     }
 
-    public double getAbsRadians() {
+    public double toAbsRadians() {
         var outAngle = angle;
         if (angleType == AngleType.Radian) {
             outAngle = angle;
@@ -65,17 +65,26 @@ public class Angle {
     /**
      * @return angle from -180 to 180
      */
-    public double getDegreesRanged() {
-        var outAngle = getDegrees();
+    public double toDegreesRanged() {
+        var outAngle = toDegrees();
         outAngle = 2 * (outAngle % 180) - outAngle;
         return outAngle;
     }
 
     public Angle add(Angle rhs) {
         if (angleType == AngleType.Degree) {
-            return new Angle(angle + rhs.getAbsDegrees(), AngleType.Degree);
+            return new Angle(angle + rhs.toAbsDegrees(), AngleType.Degree);
         } else {
-            return new Angle(angle + rhs.getAbsRadians(), AngleType.Radian);
+            return new Angle(angle + rhs.toAbsRadians(), AngleType.Radian);
+        }
+    }
+
+
+    public Angle sub(Angle rhs) {
+        if (angleType == AngleType.Degree) {
+            return new Angle(angle - rhs.toAbsDegrees(), AngleType.Degree);
+        } else {
+            return new Angle(angle - rhs.toAbsRadians(), AngleType.Radian);
         }
     }
 }
