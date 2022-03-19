@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.autos.OneBallAuto;
 import frc.autos.ThreeBallAuto;
 import frc.autos.TimedAuto;
 import frc.autos.TwoBallAuto;
@@ -74,15 +73,12 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
-        drivetrain.updateOdometry();
     }
 
 
     @Override
     public void autonomousInit() {
         //Example of setting auto: Scheduler.getInstance().add(YOUR AUTO);
-        Robot.drivetrain.coordinateAbsoluteEncoders();
-        Robot.drivetrain.setGyro(0);
 
         autoCommand = new ThreeBallAuto();
         CommandScheduler.getInstance().schedule(autoCommand);
@@ -107,24 +103,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        Robot.drivetrain.coordinateAbsoluteEncoders();
-        Robot.drivetrain.setGyro(0);
-
-        Robot.drivetrain.fieldOriented = false;
-
-        SwerveTelemetry frontLeftTelemetry = new SwerveTelemetry(Robot.drivetrain.frontLeft);
-        SwerveTelemetry backLeftTelemetry = new SwerveTelemetry(Robot.drivetrain.backLeft);
-        SwerveTelemetry frontRightTelemetry = new SwerveTelemetry(Robot.drivetrain.frontRight);
-        SwerveTelemetry backRightTelemetry = new SwerveTelemetry(Robot.drivetrain.backRight);
-        //SendableRegistry.add(frontLeftTelemetry, "Swerve");
-        SendableRegistry.addLW(frontLeftTelemetry, "FL Swerve");
-        SendableRegistry.addLW(backLeftTelemetry, "BL Swerve");
-        SendableRegistry.addLW(frontRightTelemetry, "FR Swerve");
-        SendableRegistry.addLW(backRightTelemetry, "BR Swerve");
-
-        SmartDashboard.putNumber("TargetRPM", 5000);
-
-
         // Set to 1 to turn off, 3 to turn on, 2 to ~~unleash death~~ blink
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
 
@@ -164,6 +142,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void testInit() {
+        // STARTING CONFIG
         Robot.intake.retractIntake();
         Robot.climber.extendLeftPiston();
         Robot.climber.extendRightPiston();

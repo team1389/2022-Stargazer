@@ -10,23 +10,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Robot;
+import frc.util.Angle;
 
-public class TurnAngle extends CommandBase {
+public class TurnToAngle extends CommandBase {
   Timer timer;
-  double angle, timeout;
-  double targetAngle;
+  double timeout;
+  Angle angle, targetAngle;
   PIDController pid;
 
-  public TurnAngle(double timeout, double angle) {
+  public TurnToAngle(double timeout, Angle angle) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
     timer = new Timer();
     this.timeout = timeout;
     this.angle = angle;
-    targetAngle = Robot.drivetrain.getAngle() + angle;
+    targetAngle = Robot.drivetrain.getAngle().add(angle);
     // targetAngle = 2*(targetAngle%180) - (targetAngle%360);
-    SmartDashboard.putNumber("Target Angle", targetAngle);
+    SmartDashboard.putNumber("Target Angle", targetAngle.getDegrees());
 
     pid = new PIDController(0.01, 0, 0);
 
@@ -36,30 +37,31 @@ public class TurnAngle extends CommandBase {
   @Override
   public void initialize() {
     super.initialize();
-    targetAngle = Robot.drivetrain.getAngle() + angle;
-    
-    pid.setSetpoint(targetAngle);
-    timer.reset();
-    timer.start();
+    // targetAngle = Robot.drivetrain.getAngle() + angle;
+    // 
+    // pid.setSetpoint(targetAngle);
+    // timer.reset();
+    // timer.start();
   }
 
   @Override
   public void execute() {
-    double power = pid.calculate(Robot.drivetrain.getAngle());
-    power = Math.max(-0.3, Math.min(0.3, power));
-
-    Robot.drivetrain.drive(0, 0, -power, 1);
-    SmartDashboard.putNumber("Current Angle", Robot.drivetrain.getAngle());
+    // double power = pid.calculate(Robot.drivetrain.getAngle());
+    // power = Math.max(-0.3, Math.min(0.3, power));
+// 
+    // Robot.drivetrain.drive(0, 0, -power, 1);
+    // SmartDashboard.putNumber("Current Angle", Robot.drivetrain.getAngle());
   }
 
   @Override
   public boolean isFinished() {
-    return Math.abs(Robot.drivetrain.getAngle() - targetAngle) <= 4 || timer.hasElapsed(timeout);
+      return true;
+    // return Math.abs(Robot.drivetrain.getAngle() - targetAngle) <= 4 || timer.hasElapsed(timeout);
   }
 
   @Override
   public void end(boolean interrupted) {
-    Robot.drivetrain.drive(0.0, 0.0, 0.0, 1);
+    // Robot.drivetrain.drive(0.0, 0.0, 0.0, 1);
   }
   
 }

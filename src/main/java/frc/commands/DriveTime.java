@@ -10,42 +10,43 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Robot;
 
 public class DriveTime extends CommandBase {
-  /** Creates a new ManualAuto. */
-  Timer timer;
-  double x, y, angle, timeout;
+    /** Creates a new ManualAuto. */
+    Timer timer;
+    double timeout;
+    double power;
+    double turnPower;
 
-  public DriveTime(double timeout, double x, double y, double angle) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
+    public DriveTime(double timeout, double power, double turnPower) {
+        // Add your commands in the addCommands() call, e.g.
+        // addCommands(new FooCommand(), new BarCommand());
 
-    timer = new Timer();
-    this.timeout = timeout;
-    this.x = x;
-    this.y = y;
-    this.angle = angle;
+        timer = new Timer();
+        this.timeout = timeout;
+        this.power = power;
+        this.turnPower = turnPower;
 
-    addRequirements(Robot.drivetrain);
-  }
+        addRequirements(Robot.drivetrain);
+    }
 
-  @Override
-  public void initialize() {
-    timer.reset();
-    timer.start();
-  }
+    @Override
+    public void initialize() {
+        timer.reset();
+        timer.start();
+    }
 
-  @Override
-  public void execute() {
-    Robot.drivetrain.drive(x, y, angle, 1);
-  }
+    @Override
+    public void execute() {
+        Robot.drivetrain.drive(power, turnPower);
+    }
 
-  @Override
-  public boolean isFinished() {
-    return timer.hasElapsed(timeout);
-  }
+    @Override
+    public boolean isFinished() {
+        return timer.hasElapsed(timeout);
+    }
 
-  @Override
-  public void end(boolean interrupted) {
-    Robot.drivetrain.drive(0.0, 0.0, 0.0, 1);
-  }
-  
+    @Override
+    public void end(boolean interrupted) {
+        Robot.drivetrain.stop();
+    }
+
 }

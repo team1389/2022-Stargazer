@@ -18,17 +18,19 @@ import frc.robot.Robot;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TimedAuto extends SequentialCommandGroup {
-  /** Creates a new TimedAuto. */
-  public TimedAuto() {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-            new InstantCommand(() -> Robot.intake.extendIntake()),
-            // new InstantCommand(() -> Robot.climber.extendLeftPiston()),
-            // new InstantCommand(() -> Robot.climber.extendRightPiston()),
-            new ParallelCommandGroup(new RunIntake(2.2), new DriveTime(1.483666, 0, 0.3, 0), new TurnTurret(1.5)),
-            new DriveTime(0.7, 0, -0.3, 0),
-            new Shoot()
-        );
-  }
+    /** Creates a new TimedAuto. */
+    public TimedAuto() {
+        // Add your commands in the addCommands() call, e.g.
+        // addCommands(new FooCommand(), new BarCommand());
+        addCommands(
+                new InstantCommand(() -> Robot.intake.extendIntake()),
+                // new InstantCommand(() -> Robot.climber.extendLeftPiston()),
+                // new InstantCommand(() -> Robot.climber.extendRightPiston()),
+                new ParallelCommandGroup(
+                        new RunIntake(2.2),
+                        // TODO: fix this: new DriveTime(1.483666, 0, 0.3, 0),
+                        new TurnTurret(1.5)),
+                // TODO: fix this: new DriveTime(0.7, 0, -0.3, 0),
+                new Shoot());
+    }
 }

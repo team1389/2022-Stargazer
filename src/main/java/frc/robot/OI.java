@@ -18,17 +18,18 @@ import frc.commands.RunIntake;
 import frc.commands.SetShooterRPM;
 import frc.commands.Shoot;
 import frc.commands.ShootWithSensors;
-import frc.commands.StageOneClimb;
-import frc.commands.StageTwoClimb;
+// import frc.commands.StageOneClimb;
+// import frc.commands.StageTwoClimb;
 import frc.commands.TeleOpDrive;
-import frc.commands.TestAngles;
 import frc.commands.ToggleIntakePistons;
 import frc.commands.TurretTracking;
 import frc.commands.WinchClimber;
 import frc.commands.HoldClimberInPlace.RightOrLeft;
 import frc.commands.WinchClimber.LeftOrRight;
+import frc.util.Angle;
 import frc.util.DPadButton;
 import frc.util.TwoButtonTrigger;
+import frc.util.Angle.AngleType;
 import frc.util.DPadButton.Direction;
 
 
@@ -70,12 +71,12 @@ public class OI {
         manipController = new XboxController(1);
 
         // Driver RBumper Button --> Toggle Field Oriented
-        driveRBumper = new JoystickButton(driveController, XboxController.Button.kRightBumper.value);
-        driveRBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.toggleFieldOriented()));
+        // driveRBumper = new JoystickButton(driveController, XboxController.Button.kRightBumper.value);
+        // driveRBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.toggleFieldOriented()));
 
         // Driver Left Bumper Button --> Reset field oriented angle
         driveLBumper = new JoystickButton(driveController, XboxController.Button.kLeftBumper.value);
-        driveLBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.setGyro(-90)));
+        driveLBumper.whenPressed(new InstantCommand(() -> Robot.drivetrain.setGyro(new Angle(-90, AngleType.Degree))));
 
         //Hold Manip Y --> run hopper
         manipYBtn = new JoystickButton(manipController, XboxController.Button.kY.value);
