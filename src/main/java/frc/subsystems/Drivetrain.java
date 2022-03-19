@@ -38,8 +38,13 @@ public class Drivetrain extends SubsystemBase {
      * @param turnPower value from -1 to 1, -1 is left, 1 is right
      */
     public void drive(double power, double turnPower) {
-        var leftPower = Math.max(power - turnPower, 1);
-        var rightPower = Math.max(power + turnPower, 1);
+        var leftPower = power - turnPower;
+        var rightPower = power + turnPower;
+        double max = Math.max(leftPower, rightPower);
+        if (max > 1) {
+            leftPower /= max;
+            rightPower /= max;
+        }
         power(leftPower, rightPower);
     }
 
@@ -48,10 +53,12 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void setGyro(Angle angle) {
-        // Gyro offset is changed in this method ± 90 because intake is considered front side
+        // Gyro offset is changed in this method ± 90 because intake is considered front
+        // side
         gyro.reset();
         gyro.setAngleAdjustment(angle.toAbsDegrees() + 90);
     }
+
     public void stop() {
         power(0, 0);
     }
